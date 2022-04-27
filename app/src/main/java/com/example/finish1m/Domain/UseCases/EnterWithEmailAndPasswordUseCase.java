@@ -1,4 +1,4 @@
 package com.example.finish1m.Domain.UseCases;
 
-public class EnterWithEmailAndPassword {
+public class EnterWithEmailAndPasswordUseCase {
 }
