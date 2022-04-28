@@ -36,4 +36,5 @@
     <string name="wrong_email">Неверная почта</string>
     <string name="diffrent_password">Пароли не совпадают</string>
     <string name="short_password">Пароль должен содержать не менее 6 символов</string>
+    <string name="cancel">Отмена</string>
 </resources>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Event {
 
+    public static final int NEWS = 1;
     private String id;
     private int type;
 
