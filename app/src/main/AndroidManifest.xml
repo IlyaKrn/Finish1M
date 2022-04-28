@@ -10,6 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finish1M">
         <activity
+            android:name=".Presentation.ChatSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.HubActivityActivity"
+            android:exported="false"
+            android:label="@string/title_activity_hub_activity"
+            android:theme="@style/Theme.Finish1M.NoActionBar" />
+        <activity
+            android:name=".Presentation.EnterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.StartActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
