@@ -6,9 +6,9 @@ import java.util.HashMap;
 public class Chat {
 
     private String id;
-    private HashMap<String, Message> messages;
+    private ArrayList<Message> messages;
 
-    public Chat(String id, HashMap<String, Message> messages, ArrayList<String> members) {
+    public Chat(String id, ArrayList<Message> messages, ArrayList<String> members) {
         this.id = id;
         this.messages = messages;
     }
@@ -24,11 +24,11 @@ public class Chat {
         this.id = id;
     }
 
-    public HashMap<String, Message> getMessages() {
+    public ArrayList<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(HashMap<String, Message> messages) {
+    public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
 
