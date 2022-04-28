@@ -10,6 +10,6 @@ import java.util.ArrayList;
 public interface UserRepository {
 
     void getUserList(OnGetDataListener<ArrayList<User>> listener);
-    void getUserById(String eventId, OnGetDataListener<User> listener);
+    void getUserByEmail(String userEmail, OnGetDataListener<User> listener);
     void setUser(User user, OnSetDataListener listener);
 }

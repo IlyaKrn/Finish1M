@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "95081388065",
+    "firebase_url": "https://forpurityarzamasregion-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "forpurityarzamasregion",
+    "storage_bucket": "forpurityarzamasregion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95081388065:android:5b10080c95a7ab0361ab60",
+        "android_client_info": {
+          "package_name": "com.example.finish1m"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95081388065-msouut7i0279f5b59rn2artgriqonem4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN37M6Vn3n97eduMkEFN1ihTxnC0OVAFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95081388065-msouut7i0279f5b59rn2artgriqonem4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

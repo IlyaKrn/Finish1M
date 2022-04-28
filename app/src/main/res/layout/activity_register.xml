@@ -92,12 +92,6 @@
             android:layout_gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/bt_register_final"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/register_button"
-                android:visibility="gone"/>
-            <Button
                 android:id="@+id/bt_register"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

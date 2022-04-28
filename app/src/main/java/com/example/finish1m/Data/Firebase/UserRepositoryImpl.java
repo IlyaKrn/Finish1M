@@ -51,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void getUserById(String email, OnGetDataListener<User> listener) {
+    public void getUserByEmail(String email, OnGetDataListener<User> listener) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
         for (Character c : email.toCharArray()){
             String s = String.valueOf(c);

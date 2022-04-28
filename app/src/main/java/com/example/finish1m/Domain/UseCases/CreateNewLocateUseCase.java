@@ -6,13 +6,13 @@ import com.example.finish1m.Domain.Interfaces.LocateRepository;
 import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.Locate;
 
-public class AddLocateUseCase {
+public class CreateNewLocateUseCase {
 
     private LocateRepository repository;
     private Locate locate;
     private OnSetDataListener listener;
 
-    public AddLocateUseCase(LocateRepository repository, Locate locate, OnSetDataListener listener) {
+    public CreateNewLocateUseCase(LocateRepository repository, Locate locate, OnSetDataListener listener) {
         this.repository = repository;
         this.locate = locate;
         this.listener = listener;
