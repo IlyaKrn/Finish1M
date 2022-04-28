@@ -32,4 +32,8 @@
     <string name="error">Ошибка</string>
     <string name="email_verification_email_sended">Проверьте почту для верификации</string>
     <string name="you_not_registred">Вы не зарегистрированы</string>
+    <string name="wrong_password">Неверный пароль</string>
+    <string name="wrong_email">Неверная почта</string>
+    <string name="diffrent_password">Пароли не совпадают</string>
+    <string name="short_password">Пароль должен содержать не менее 6 символов</string>
 </resources>

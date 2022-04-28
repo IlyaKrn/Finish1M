@@ -56,7 +56,10 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onVoidData() {
-                            Toast.makeText(EnterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
+                            binding.tvPasswordErr.setVisibility(View.VISIBLE);
+                            binding.tvPasswordErr.setText(R.string.wrong_password);
+                            binding.tvEmailErr.setVisibility(View.VISIBLE);
+                            binding.tvEmailErr.setText(R.string.wrong_email);
                         }
 
                         @Override
@@ -66,19 +69,22 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onCanceled() {
-                            Toast.makeText(EnterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
+                            binding.tvPasswordErr.setVisibility(View.VISIBLE);
+                            binding.tvPasswordErr.setText(R.string.wrong_password);
+                            binding.tvEmailErr.setVisibility(View.VISIBLE);
+                            binding.tvEmailErr.setText(R.string.wrong_email);
                         }
                     });
                         enterWithEmailAndPasswordUseCase.execute();
                     }
                     else {
-                        binding.etPassword.setVisibility(View.VISIBLE);
-                        binding.etPassword.setText(R.string.empty_edit_text_error);
+                        binding.tvPasswordErr.setVisibility(View.VISIBLE);
+                        binding.tvPasswordErr.setText(R.string.empty_edit_text_error);
                     }
                 }
                 else {
-                    binding.etEmail.setVisibility(View.VISIBLE);
-                    binding.etEmail.setText(R.string.empty_edit_text_error);
+                    binding.tvEmailErr.setVisibility(View.VISIBLE);
+                    binding.tvEmailErr.setText(R.string.empty_edit_text_error);
                 }
             }
         });
@@ -100,7 +106,10 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onCanceled() {
-                            Toast.makeText(EnterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
+                            binding.tvPasswordErr.setVisibility(View.VISIBLE);
+                            binding.tvPasswordErr.setText(R.string.wrong_password);
+                            binding.tvEmailErr.setVisibility(View.VISIBLE);
+                            binding.tvEmailErr.setText(R.string.wrong_email);
                         }
                     });
                     resetPasswordUseCase.execute();

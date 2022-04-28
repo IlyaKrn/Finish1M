@@ -83,16 +83,46 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                                         @Override
                                                                         public void onCanceled() {
-                                                                            Toast.makeText(RegisterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                                                         }
                                                                     });
                                                                     createNewUserUseCase.execute();
                                                                 }
+                                                                else {
+                                                                    binding.tvPasswordErr.setVisibility(View.VISIBLE);
+                                                                    binding.tvPasswordErr.setText(R.string.short_password);
+                                                                }
+                                                            }
+                                                            else {
+                                                                binding.tvPasswordErr.setVisibility(View.VISIBLE);
+                                                                binding.tvPasswordErr.setText(R.string.diffrent_password);
+                                                                binding.tvSecondPasswordErr.setVisibility(View.VISIBLE);
+                                                                binding.tvSecondPasswordErr.setText(R.string.diffrent_password);
                                                             }
                                                         }
+                                                        else {
+                                                            binding.tvSecondPasswordErr.setVisibility(View.VISIBLE);
+                                                            binding.tvSecondPasswordErr.setText(R.string.empty_edit_text_error);
+                                                        }
+                                                    }
+                                                    else {
+                                                        binding.tvNameErr.setVisibility(View.VISIBLE);
+                                                        binding.tvNameErr.setText(R.string.empty_edit_text_error);
                                                     }
                                                 }
+                                                else {
+                                                    binding.tvEmailErr.setVisibility(View.VISIBLE);
+                                                    binding.tvEmailErr.setText(R.string.empty_edit_text_error);
+                                                }
                                             }
+                                            else {
+                                                binding.tvFamilyErr.setVisibility(View.VISIBLE);
+                                                binding.tvFamilyErr.setText(R.string.empty_edit_text_error);
+                                            }
+                                        }
+                                        else {
+                                            binding.tvNameErr.setVisibility(View.VISIBLE);
+                                            binding.tvNameErr.setText(R.string.empty_edit_text_error);
                                         }
                                     }
                                 });
@@ -105,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             @Override
                             public void onCanceled() {
-                                Toast.makeText(RegisterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                             }
                         });
                         registerWithEmailAndPasswordUseCase.execute();
