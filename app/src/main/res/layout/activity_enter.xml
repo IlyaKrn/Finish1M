@@ -12,8 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:text="@string/enter_title"
-        android:textStyle="bold"
-        android:textSize="48sp"/>
+        style="@style/text.title.main"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,27 +21,32 @@
         <EditText
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            style="@style/editText.span.main"
             android:id="@+id/et_email"
             android:hint="@string/et_email" />
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/tv_email_err"
+            style="@style/text.warning.main"
             android:visibility="gone"/>
         <EditText
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/et_password"
+            style="@style/editText.span.main"
             android:hint="@string/et_password"
             android:inputType="textPassword" />
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            style="@style/text.warning.main"
             android:id="@+id/tv_password_err"
             android:visibility="gone" />
         <CheckBox
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            style="@style/text.span.main"
             android:id="@+id/cb_always_use"
             android:text="@string/always_use_this_account"
             android:checked="true"/>
@@ -60,12 +64,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/enter_button"
+            style="@style/button.default"
             android:layout_gravity="center"/>
         <Button
             android:id="@+id/bt_reset_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            style="@style/button.default"
             android:text="@string/reset_password"/>
     </LinearLayout>
 

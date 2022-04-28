@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TableMessageImages">
+        <attr name="messageType" format="flags">
+            <flag name="system" value="1"/>
+            <flag name="my" value="2"/>
+            <flag name="not_my" value="3"/>
+        </attr>
+
+    </declare-styleable>
+
+
+    <!--BACKGROUND-->
+
+    <attr name="button_default_background" format="color|reference"/>
+    <attr name="button_red_background" format="color|reference"/>
+    <attr name="button_gray_background" format="color|reference"/>
+
+    <attr name="button_fab_default_background" format="color|reference"/>
+    <attr name="button_fab_red_background" format="color|reference"/>
+    <attr name="button_fab_gray_background" format="color|reference"/>
+
+    <attr name="button_toolbar_default_background" format="color|reference"/>
+    <attr name="button_toolbar_red_background" format="color|reference"/>
+    <attr name="button_toolbar_gray_background" format="color|reference"/>
+
+    <attr name="toolbar_default_background" format="color|reference"/>
+    <attr name="toolbar_red_background" format="color|reference"/>
+    <attr name="toolbar_gray_background" format="color|reference"/>
+
+    <attr name="dialog_default_background" format="color|reference"/>
+    <attr name="dialog_red_background" format="color|reference"/>
+    <attr name="dialog_gray_background" format="color|reference"/>
+
+    <attr name="recyclerView_default_background" format="color|reference"/>
+    <attr name="recyclerView_red_background" format="color|reference"/>
+    <attr name="recyclerView_gray_background" format="color|reference"/>
+
+    <attr name="recyclerViewItem_default_background" format="color|reference"/>
+    <attr name="recyclerViewItem_red_background" format="color|reference"/>
+    <attr name="recyclerViewItem_gray_background" format="color|reference"/>
+
+    <attr name="iconColor" format="color|reference"/>
+
+
+    <!--TEXT COLOR-->
+
+    <attr name="button_default_text_color" format="color|reference"/>
+    <attr name="button_red_text_color" format="color|reference"/>
+    <attr name="button_gray_text_color" format="color|reference"/>
+    <attr name="text_title_main_color"  format="color|reference"/>
+    <attr name="text_title_second_color"  format="color|reference"/>
+    <attr name="text_span_main_color"  format="color|reference"/>
+    <attr name="text_span_second_color"  format="color|reference"/>
+    <attr name="text_paragraph_main_color"  format="color|reference"/>
+    <attr name="text_paragraph_second_color"  format="color|reference"/>
+    <attr name="editText_span_main_color"  format="color|reference"/>
+    <attr name="editText_span_second_color"  format="color|reference"/>
+    <attr name="editText_paragraph_main_color"  format="color|reference"/>
+    <attr name="editText_paragraph_second_color"  format="color|reference"/>
+    <attr name="editText_span_hint_main_color"  format="color|reference"/>
+    <attr name="editText_span_hint_second_color"  format="color|reference"/>
+    <attr name="editText_paragraph_hint_main_color"  format="color|reference"/>
+    <attr name="editText_paragraph_hint_second_color"  format="color|reference"/>
+    <attr name="editText_span_tint_main_color"   format="color|reference"/>
+    <attr name="editText_span_tint_second_color"   format="color|reference"/>
+    <attr name="editText_paragraph_tint_main_color"   format="color|reference"/>
+    <attr name="editText_paragraph_tint_second_color"  format="color|reference"/>
+
+
+</resources>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <!--BUTTONS-->
+    <style name="button">
+        <item name="android:padding">@dimen/button_padding</item>
+        <item name="android:layout_margin">@dimen/button_margin</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="tint">?iconColor</item>
+        <item name="android:elevation">@dimen/button_elevation</item>
+    </style>
+    <!--DRG-->
+    <style name="button.default" parent="button">
+        <item name="android:background">@drawable/corner_button_default</item>
+        <item name="android:textColor">?button_default_text_color</item>
+    </style>
+    <style name="button.red" parent="button">
+        <item name="android:background">@drawable/corner_button_red</item>
+        <item name="android:textColor">?button_red_text_color</item>
+    </style>
+    <style name="button.gray" parent="button">
+        <item name="android:background">@drawable/corner_button_gray</item>
+        <item name="android:textColor">?button_gray_text_color</item>
+    </style>
+    <!--TOOLBAR BUTTONS-->
+    <style name="button.toolbar" parent="button">
+        <item name="android:layout_height">@dimen/button_toolbarHeightAndWidth</item>
+        <item name="android:layout_width">@dimen/button_toolbarHeightAndWidth</item>
+        <item name="android:layout_margin">@dimen/button_toolbarMargin</item>
+        <item name="android:elevation">@dimen/button_toolbarElevation</item>
+    </style>
+    <!--DRG-->
+    <style name="button.toolbar.default" parent="button.toolbar">
+        <item name="android:background">@drawable/corner_button_toolbar_default</item>
+        <item name="android:textColor">?button_default_text_color</item>
+    </style>
+    <style name="button.toolbar.red" parent="button.toolbar">
+        <item name="android:background">@drawable/corner_button_toolbar_red</item>
+        <item name="android:textColor">?button_red_text_color</item>
+    </style>
+    <style name="button.toolbar.gray" parent="button.toolbar">
+        <item name="android:background">@drawable/corner_button_toolbar_gray</item>
+        <item name="android:textColor">?button_gray_text_color</item>
+    </style>
+    <!--FAB BUTTONS-->
+    <style name="fab">
+        <item name="android:padding">@dimen/button_fabPadding</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:layout_marginBottom">@dimen/button_fabMarginBottom</item>
+        <item name="android:layout_marginEnd">@dimen/button_fabMargin</item>
+    </style>
+    <!--DRG-->
+    <style name="fab.default" parent="fab">
+        <item name="android:backgroundTint">?button_fab_default_background</item>
+    </style>
+    <style name="fab.red" parent="fab">
+        <item name="android:backgroundTint">?button_fab_red_background</item>
+    </style>
+    <style name="fab.gray" parent="fab">
+        <item name="android:backgroundTint">?button_fab_gray_background</item>
+    </style>
+
+
+    <!--DIALOGS-->
+    <style name="dialog">
+        <item name="android:padding">@dimen/dialog_padding</item>
+        <item name="android:layout_margin">@dimen/dialog_margin</item>
+        <item name="elevation">@dimen/dialog_elevation</item>
+    </style>
+    <!--DRG-->
+    <style name="dialog.default" parent="dialog">
+        <item name="android:background">@drawable/corner_dialog_default</item>
+    </style>
+    <style name="dialog.red" parent="dialog">
+        <item name="android:background">@drawable/corner_dialog_red</item>
+    </style>
+    <style name="dialog.gray" parent="dialog">
+        <item name="android:background">@drawable/corner_dialog_gray</item>
+    </style>
+
+
+
+    <!--TOOLBARS-->
+    <style name="toolbar">
+        <item name="android:padding">@dimen/toolbar_padding</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:elevation">@dimen/toolbar_elevation</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:layout_margin">@dimen/toolbar_margin</item>
+
+        <item name="android:contentInsetStart">4dp</item>
+        <item name="android:contentInsetLeft">4dp</item>
+        <item name="contentInsetEnd">4dp</item>
+        <item name="contentInsetRight">4dp</item>
+        <item name="contentInsetLeft">4dp</item>
+        <item name="contentInsetStart">4dp</item>
+    </style>
+    <!--DRG-->
+    <style name="toolbar.default" parent="toolbar">
+        <item name="android:background">@drawable/corner_toolbar_default</item>
+    </style>
+    <style name="toolbar.red" parent="toolbar">
+        <item name="android:background">@drawable/corner_toolbar_red</item>
+    </style>
+    <style name="toolbar.gray" parent="toolbar">
+        <item name="android:background">@drawable/corner_toolbar_gray</item>
+    </style>
+
+
+
+
+    <!--RECYCLER VIEWS-->
+    <style name="recyclerView">
+        <item name="android:elevation">@dimen/recyclerView_elevation</item>
+    </style>
+    <!--DRG-->
+    <style name="recyclerView.default" parent="recyclerView">
+        <item name="android:background">?recyclerView_default_background</item>
+    </style>
+    <style name="recyclerView.red" parent="recyclerView">
+        <item name="android:background" parent="toolbar">?recyclerView_red_background</item>
+    </style>
+    <style name="recyclerView.gray" parent="recyclerView">
+        <item name="android:background" parent="toolbar">?recyclerView_gray_background</item>
+    </style>
+    <!--ITEMS-->
+    <style name="recyclerViewItem">
+
+    </style>
+    <!--DRG-->
+    <style name="recyclerViewItem.default" parent="recyclerViewItem">
+        <item name="android:background">?recyclerViewItem_default_background</item>
+    </style>
+    <style name="recyclerViewItem.red" parent="recyclerViewItem">
+        <item name="android:background">?recyclerViewItem_red_background</item>
+    </style>
+    <style name="recyclerViewItem.gray" parent="recyclerViewItem">
+        <item name="android:background">?recyclerViewItem_gray_background</item>
+    </style>
+
+
+
+
+    <!--TEXT STYLES-->
+    <style name="text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:padding">@dimen/text_padding</item>
+    </style>
+    <!--TYPES-->
+    <style name="text.title">
+        <item name="android:gravity">center</item>
+    </style>
+    <!--FONTS-->
+    <style name="text.title.main" parent="text.title">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?text_title_main_color</item>
+    </style>
+    <style name="text.title.second" parent="text.title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?text_title_second_color</item>
+    </style>
+    <style name="text.span">
+        <item name="android:gravity">start</item>
+    </style>
+    <!--FONTS-->
+    <style name="text.span.main" parent="text.span">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?text_span_main_color</item>
+    </style>
+    <style name="text.span.second" parent="text.span">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?text_span_second_color</item>
+    </style>
+    <style name="text.paragraph">
+        <item name="android:gravity">fill_vertical</item>
+    </style>
+    <!--FONTS-->
+    <style name="text.paragraph.main" parent="text.paragraph">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?text_paragraph_main_color</item>
+    </style>
+    <style name="text.paragraph.second" parent="text.paragraph">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?text_paragraph_second_color</item>
+    </style>
+    <style name="text.warning">
+        <item name="android:textColor">@color/design_default_color_error</item>
+    </style>
+    <!--FONTS-->
+    <style name="text.warning.main" parent="text.warning">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text.warning.second" parent="text.warning">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="editText">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!--TYPES-->
+
+    <style name="editText.span">
+        <item name="android:gravity">start</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <!--FONTS-->
+    <style name="editText.span.main" parent="editText.span">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textColor">?editText_span_main_color</item>
+        <item name="android:textColorHint">?editText_span_main_color</item>
+        <item name="android:backgroundTint">?editText_span_main_color</item>
+    </style>
+    <style name="editText.span.second" parent="editText.span">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textColor">?editText_span_second_color</item>
+        <item name="android:textColorHint">?editText_span_second_color</item>
+        <item name="android:backgroundTint">?editText_span_second_color</item>
+    </style>
+    <style name="editText.paragraph">
+        <item name="android:gravity">fill_vertical</item>
+        <item name="android:singleLine">false</item>
+    </style>
+    <!--FONTS-->
+    <style name="editText.paragraph.main" parent="editText.paragraph">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?editText_paragraph_main_color</item>
+        <item name="android:textColorHint">?editText_paragraph_main_color</item>
+        <item name="android:backgroundTint">?editText_paragraph_main_color</item>
+    </style>
+    <style name="editText.paragraph.second" parent="editText.paragraph">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?editText_paragraph_second_color</item>
+        <item name="android:textColorHint">?editText_paragraph_second_color</item>
+        <item name="android:backgroundTint">?editText_paragraph_second_color</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--FONTS-->
+    <style name="font.headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">96sp</item>
+    </style>
+    <style name="font.headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textSize">60sp</item>
+    </style>
+    <style name="font.headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize">48sp</item>
+    </style>
+    <style name="font.headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textSize">34sp</item>
+    </style>
+    <style name="font.headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="font.headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="font.subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="font.subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="font.body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="font.body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="font.button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="font.caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="font.overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+
+
+</resources>
