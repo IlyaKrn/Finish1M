@@ -20,70 +20,86 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     @Override
     public void EnterWithEmailAndPassword(String email, String password, OnSetDataListener listener) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void RegisterWithEmailAndPassword(String email, String password, OnSetDataListener listener) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void sendVerificationEmail(String email, OnSetDataListener listener) {
-        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void ResetPassword(String email, OnSetDataListener listener) {
-        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override

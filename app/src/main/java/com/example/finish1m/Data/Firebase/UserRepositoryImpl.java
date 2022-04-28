@@ -33,74 +33,87 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void getUserList(OnGetDataListener<ArrayList<User>> listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_USER).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (context != null) {
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_USER).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (context != null) {
 
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onCanceled();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onCanceled();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void getUserByEmail(String email, OnGetDataListener<User> listener) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
-        for (Character c : email.toCharArray()){
-            String s = String.valueOf(c);
-            if (s.equals("."))
-                s = PATH_POINT;
-            userRef = userRef.child(s);
+        try {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
+            for (Character c : email.toCharArray()){
+                String s = String.valueOf(c);
+                if (s.equals("."))
+                    s = PATH_POINT;
+                userRef = userRef.child(s);
+            }
+
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (context != null) {
+                        User c = snapshot.getValue(User.class);
+                        assert c != null;
+                        listener.onGetData(c);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onCanceled();
+                    }
+                }
+            });
+        } catch (Exception e){
+            listener.onFailed();
         }
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (context != null) {
-                    User c = snapshot.getValue(User.class);
-                    assert c != null;
-                    listener.onGetData(c);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onCanceled();
-                }
-            }
-        });
     }
 
     @Override
     public void setUser(User user, OnSetDataListener listener) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
-        for (Character c : user.getEmail().toCharArray()){
-            String s = String.valueOf(c);
-            if (s.equals("."))
-                s = PATH_POINT;
-            userRef = userRef.child(s);
+        try {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
+            for (Character c : user.getEmail().toCharArray()){
+                String s = String.valueOf(c);
+                if (s.equals("."))
+                    s = PATH_POINT;
+                userRef = userRef.child(s);
+            }
+
+            userRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
+                }
+            });
+        } catch (Exception e){
+            listener.onFailed();
         }
 
-        userRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
-                }
-            }
-        });
     }
 }

@@ -32,71 +32,83 @@ public class LocateRepositoryImpl implements LocateRepository {
 
     @Override
     public void getLocateList(OnGetDataListener<ArrayList<Locate>> listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Locate> temp = new ArrayList<>();
-                if (context != null) {
-                    for (DataSnapshot s : snapshot.getChildren()){
-                        Locate l = s.getValue(Locate.class);
-                        assert l != null;
-                        temp.add(l);
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Locate> temp = new ArrayList<>();
+                    if (context != null) {
+                        for (DataSnapshot s : snapshot.getChildren()){
+                            Locate l = s.getValue(Locate.class);
+                            assert l != null;
+                            temp.add(l);
+                        }
+                    }
+                    if(temp.size() > 0)
+                        listener.onGetData(temp);
+                    else
+                        listener.onVoidData();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onFailed();
                     }
                 }
-                if(temp.size() > 0)
-                    listener.onGetData(temp);
-                else
-                    listener.onVoidData();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onFailed();
-                }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void getLocateById(String locateId, OnGetDataListener<Locate> listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(locateId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (context != null) {
-                    Locate l = snapshot.getValue(Locate.class);
-                    if (l != null) {
-                        listener.onGetData(l);
-                    }
-                    else {
-                        listener.onVoidData();
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(locateId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (context != null) {
+                        Locate l = snapshot.getValue(Locate.class);
+                        if (l != null) {
+                            listener.onGetData(l);
+                        }
+                        else {
+                            listener.onVoidData();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onCanceled();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onCanceled();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void setLocate(Locate locate, OnSetDataListener listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(locate.getId()).setValue(locate).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(locate.getId()).setValue(locate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 }

@@ -31,71 +31,83 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public void getEventList(OnGetDataListener<ArrayList<Event>> listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Event> temp = new ArrayList<>();
-                if (context != null) {
-                    for (DataSnapshot s : snapshot.getChildren()){
-                        Event l = s.getValue(Event.class);
-                        assert l != null;
-                        temp.add(l);
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Event> temp = new ArrayList<>();
+                    if (context != null) {
+                        for (DataSnapshot s : snapshot.getChildren()){
+                            Event l = s.getValue(Event.class);
+                            assert l != null;
+                            temp.add(l);
+                        }
+                    }
+                    if(temp.size() > 0)
+                        listener.onGetData(temp);
+                    else
+                        listener.onVoidData();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onFailed();
                     }
                 }
-                if(temp.size() > 0)
-                    listener.onGetData(temp);
-                else
-                    listener.onVoidData();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onFailed();
-                }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void getEventById(String eventId, OnGetDataListener<Event> listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(eventId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (context != null) {
-                    Event l = snapshot.getValue(Event.class);
-                    if (l != null) {
-                        listener.onGetData(l);
-                    }
-                    else {
-                        listener.onVoidData();
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(eventId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (context != null) {
+                        Event l = snapshot.getValue(Event.class);
+                        if (l != null) {
+                            listener.onGetData(l);
+                        }
+                        else {
+                            listener.onVoidData();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onCanceled();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onCanceled();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 
     @Override
     public void setEvent(Event event, OnSetDataListener listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(event.getId()).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(event.getId()).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 }

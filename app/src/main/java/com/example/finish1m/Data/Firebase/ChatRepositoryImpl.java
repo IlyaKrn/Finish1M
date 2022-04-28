@@ -28,43 +28,52 @@ public class ChatRepositoryImpl implements ChatRepository {
 
     @Override
     public void getChatById(String chatId, OnGetDataListener<Chat> listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(chatId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (context != null) {
-                    Chat l = snapshot.getValue(Chat.class);
-                    if (l != null) {
-                        listener.onGetData(l);
-                    }
-                    else {
-                        listener.onVoidData();
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(chatId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (context != null) {
+                        Chat l = snapshot.getValue(Chat.class);
+                        if (l != null) {
+                            listener.onGetData(l);
+                        }
+                        else {
+                            listener.onVoidData();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (context != null) {
-                    listener.onCanceled();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (context != null) {
+                        listener.onCanceled();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
+
     }
 
     @Override
     public void setChat(Chat chat, OnSetDataListener listener) {
-        FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(chat.getId()).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (context != null) {
-                    if(task.isSuccessful())
-                        listener.onSetData();
-                    else if (task.isCanceled())
-                        listener.onCanceled();
-                    else
-                        listener.onFailed();
+        try {
+            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(chat.getId()).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (context != null) {
+                        if(task.isSuccessful())
+                            listener.onSetData();
+                        else if (task.isCanceled())
+                            listener.onCanceled();
+                        else
+                            listener.onFailed();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e){
+            listener.onFailed();
+        }
     }
 }
