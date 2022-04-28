@@ -80,10 +80,12 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onVoidData() {
                 locates.clear();
-                googleMap.clear();
-                for (Locate l : locates) {
-                    if (googleMap != null) {
-                        googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                if (googleMap != null) {
+                    googleMap.clear();
+                    for (Locate l : locates) {
+                        if (googleMap != null) {
+                            googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                        }
                     }
                 }
             }
@@ -101,6 +103,27 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
 
         });
         getLocateListUseCase.execute();
+
+        View.OnClickListener onAddListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.fabCancel.setVisibility(View.VISIBLE);
+                binding.fabAddLocate.setVisibility(View.VISIBLE);
+                view.setVisibility(View.GONE);
+                if (isAdd){
+                    isAdd = false;
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.add_locate_mod_disabled, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    isAdd = true;
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.add_locate_mod_enabled, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+
+        binding.fabAddLocate.setOnClickListener(onAddListener);
+        binding.fabCancel.setOnClickListener(onAddListener);
 
 
         return binding.getRoot();

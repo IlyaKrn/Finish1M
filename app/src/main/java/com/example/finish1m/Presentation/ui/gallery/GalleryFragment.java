@@ -35,7 +35,7 @@ public class GalleryFragment extends Fragment {
     private GetProjectListUseCase getProjectListUseCase;
 
     private ProjectListAdapter adapter;
-    private ArrayList<Project> projects;
+    private ArrayList<Project> projects = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);

@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
     private GetEventListUseCase getEventListUseCase;
 
     private EventListAdapter adapter;
-    private ArrayList<Event> events = new ArrayList<Event>();
+    private ArrayList<Event> events = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
