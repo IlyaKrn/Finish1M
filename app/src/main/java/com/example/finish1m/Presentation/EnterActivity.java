@@ -49,6 +49,7 @@ public class EnterActivity extends AppCompatActivity {
                         enterWithEmailAndPasswordUseCase = new EnterWithEmailAndPasswordUseCase(userRepository, authRepository, email, password, new OnGetDataListener<User>() {
                         @Override
                         public void onGetData(User data) {
+                            PresentationConfig.user = data;
                             Intent intent = new Intent(EnterActivity.this, HubActivityActivity.class);
                             startActivity(intent);
                             finish();

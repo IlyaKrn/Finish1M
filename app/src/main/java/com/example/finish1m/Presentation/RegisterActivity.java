@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.finish1m.Data.Firebase.AuthRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.AuthRepository;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.User;
@@ -71,9 +72,30 @@ public class RegisterActivity extends AppCompatActivity {
                                                                     createNewUserUseCase = new CreateNewUserUseCase(userRepository, new User(firstName, lastName, email, false, false, null), new OnSetDataListener(){
                                                                         @Override
                                                                         public void onSetData() {
-                                                                            Intent intent = new Intent(RegisterActivity.this, HubActivityActivity.class);
-                                                                            startActivity(intent);
-                                                                            finish();
+                                                                            enterWithEmailAndPasswordUseCase = new EnterWithEmailAndPasswordUseCase(userRepository, authRepository, email, password, new OnGetDataListener<User>() {
+                                                                                @Override
+                                                                                public void onGetData(User data) {
+                                                                                    PresentationConfig.user = data;
+                                                                                    Intent intent = new Intent(RegisterActivity.this, HubActivityActivity.class);
+                                                                                    startActivity(intent);
+                                                                                    finish();
+                                                                                }
+
+                                                                                @Override
+                                                                                public void onVoidData() {
+                                                                                    Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                                                }
+
+                                                                                @Override
+                                                                                public void onFailed() {
+                                                                                    Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                                                                }
+
+                                                                                @Override
+                                                                                public void onCanceled() {
+                                                                                    Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                            });
                                                                         }
 
                                                                         @Override

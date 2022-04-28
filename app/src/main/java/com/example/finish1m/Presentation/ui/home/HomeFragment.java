@@ -20,6 +20,7 @@ import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.GetEventListUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
+import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.FragmentHomeBinding;
 
@@ -68,7 +69,7 @@ public class HomeFragment extends Fragment {
         });
         getEventListUseCase.execute();
 
-        adapter = new EventListAdapter(getContext(), events);
+        adapter = new EventListAdapter(getActivity(), getContext(), events);
         binding.rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvEvents.setAdapter(adapter);
         binding.btAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +80,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        if(!PresentationConfig.user.isAdmin())
+            binding.btAddEvent.setVisibility(View.GONE);
         return binding.getRoot();
     }
 
