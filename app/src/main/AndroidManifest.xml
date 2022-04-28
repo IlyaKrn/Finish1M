@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finish1M">
         <activity
+            android:name=".Presentation.CreateNewLocateAciActivity"
+            android:exported="false" />
+        <activity
             android:name=".Presentation.CreateNewProjectActivity"
             android:exported="false" />
         <activity

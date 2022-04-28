@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/drawable-v24/corner_button_default.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_create_new_event.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_create_new_locate_aci.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_create_new_project.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_enter.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_hub_activity.xml" value="0.36666666666666664" />
@@ -20,6 +21,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_slideshow.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/ic_menu_spots.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/item_list_event.xml" value="0.33" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/map_info_window.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/nav_header_hub_activity.xml" value="0.36666666666666664" />
       </map>
     </option>
