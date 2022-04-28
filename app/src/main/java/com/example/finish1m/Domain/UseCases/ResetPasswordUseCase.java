@@ -17,21 +17,6 @@ public class ResetPasswordUseCase {
     }
 
     public void  execute(){
-        repository.ResetPassword(email, new OnSetDataListener() {
-            @Override
-            public void onSetData() {
-                listener.onSetData();
-            }
-
-            @Override
-            public void onFailed() {
-                listener.onFailed();
-            }
-
-            @Override
-            public void onCanceled() {
-                listener.onCanceled();
-            }
-        });
+        repository.ResetPassword(email, listener);
     }
 }

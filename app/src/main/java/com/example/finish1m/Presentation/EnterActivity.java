@@ -61,7 +61,7 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailed() {
-                            Toast.makeText(EnterActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EnterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -71,6 +71,14 @@ public class EnterActivity extends AppCompatActivity {
                     });
                         enterWithEmailAndPasswordUseCase.execute();
                     }
+                    else {
+                        binding.etPassword.setVisibility(View.VISIBLE);
+                        binding.etPassword.setText(R.string.empty_edit_text_error);
+                    }
+                }
+                else {
+                    binding.etEmail.setVisibility(View.VISIBLE);
+                    binding.etEmail.setText(R.string.empty_edit_text_error);
                 }
             }
         });
@@ -82,12 +90,12 @@ public class EnterActivity extends AppCompatActivity {
                     resetPasswordUseCase = new ResetPasswordUseCase(authRepository, email, new OnSetDataListener() {
                         @Override
                         public void onSetData() {
-
+                            Toast.makeText(EnterActivity.this, R.string.email_reset_password_sended, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onFailed() {
-
+                            Toast.makeText(EnterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -96,6 +104,10 @@ public class EnterActivity extends AppCompatActivity {
                         }
                     });
                     resetPasswordUseCase.execute();
+                }
+                else {
+                    binding.tvEmailErr.setVisibility(View.VISIBLE);
+                    binding.tvEmailErr.setText(R.string.empty_edit_text_error);
                 }
             }
         });

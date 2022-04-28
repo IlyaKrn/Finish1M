@@ -52,7 +52,7 @@ public class EventRepositoryImpl implements EventRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        listener.onFailed();
+                        listener.onCanceled();
                     }
                 }
             });

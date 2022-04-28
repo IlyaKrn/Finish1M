@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.finish1m.Data.Firebase.AuthRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
@@ -41,26 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         userRepository = new UserRepositoryImpl(this);
         authRepository = new AuthRepositoryImpl(this);
-
-        sendVerificationEmailUseCase = new SendVerificationEmailUseCase(authRepository, binding.etEmail.getText().toString(), new OnSetDataListener(){
-            @Override
-            public void onSetData() {
-
-            }
-
-            @Override
-            public void onFailed() {
-
-            }
-
-            @Override
-            public void onCanceled() {
-
-            }
-        });
-
-
-
 
         binding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,12 +100,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailed() {
-
+                                Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCanceled() {
-
+                                Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                             }
                         });
                         registerWithEmailAndPasswordUseCase.execute();
@@ -138,7 +119,24 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String email = binding.etEmail.getText().toString();
                 if(!TextUtils.isEmpty(email))
-                    sendVerificationEmailUseCase.execute();
+                    sendVerificationEmailUseCase = new SendVerificationEmailUseCase(authRepository, email, new OnSetDataListener(){
+                        @Override
+                        public void onSetData() {
+                            Toast.makeText(RegisterActivity.this, R.string.email_verification_email_sended, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailed() {
+                            Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCanceled() {
+                            Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                sendVerificationEmailUseCase.execute();
             }
         });
 

@@ -26,4 +26,9 @@
     <string name="access_denied">Доступ запрещен</string>
     <string name="get_data_failed">Ошибка при получении данных</string>
     <string name="et_password_empty">Введите Эл. почту</string>
+    <string name="empty_edit_text_error">Заполните поле</string>
+    <string name="email_reset_password_sended">Проверьте почту для сброса пароля</string>
+    <string name="email_reset_password_error">Ошибка</string>
+    <string name="error">Ошибка</string>
+    <string name="email_verification_email_sended">Проверьте почту для верификации</string>
 </resources>

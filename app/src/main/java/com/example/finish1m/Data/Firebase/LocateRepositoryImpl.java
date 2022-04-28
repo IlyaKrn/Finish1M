@@ -53,7 +53,7 @@ public class LocateRepositoryImpl implements LocateRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        listener.onFailed();
+                        listener.onCanceled();
                     }
                 }
             });
