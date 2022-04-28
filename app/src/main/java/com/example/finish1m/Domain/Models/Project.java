@@ -1,32 +1,25 @@
 package com.example.finish1m.Domain.Models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Event {
-
-    public static final int NEWS = 1;
-    public static final int EVENT = 2;
+public class Project {
 
     private String id;
-    private int type;
 
     private String title;
     private String message;
     private String chatId;
     private ArrayList<String> imageRefs;
-    private ArrayList<String> members;
+    private ArrayList<HashMap<String, String>> follows;
 
-    public Event(String id, int type, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<String> members) {
+    public Project(String id, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<HashMap<String, String>> follows) {
         this.id = id;
-        this.type = type;
         this.title = title;
         this.message = message;
         this.chatId = chatId;
         this.imageRefs = imageRefs;
-        this.members = members;
-    }
-
-    public Event() {
+        this.follows = follows;
     }
 
     public String getId() {
@@ -69,20 +62,11 @@ public class Event {
         this.imageRefs = imageRefs;
     }
 
-    public ArrayList<String> getMembers() {
-        return members;
+    public ArrayList<HashMap<String, String>> getFollows() {
+        return follows;
     }
 
-    public void setMembers(ArrayList<String> members) {
-        this.members = members;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
+    public void setFollows(ArrayList<HashMap<String, String>> follows) {
+        this.follows = follows;
     }
 }
-
