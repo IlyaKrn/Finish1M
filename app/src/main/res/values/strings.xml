@@ -31,4 +31,5 @@
     <string name="email_reset_password_error">Ошибка</string>
     <string name="error">Ошибка</string>
     <string name="email_verification_email_sended">Проверьте почту для верификации</string>
+    <string name="you_not_registred">Вы не зарегистрированы</string>
 </resources>

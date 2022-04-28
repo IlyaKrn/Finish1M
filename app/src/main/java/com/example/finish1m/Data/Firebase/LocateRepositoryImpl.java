@@ -100,10 +100,8 @@ public class LocateRepositoryImpl implements LocateRepository {
                     if (context != null) {
                         if(task.isSuccessful())
                             listener.onSetData();
-                        else if (task.isCanceled())
-                            listener.onCanceled();
                         else
-                            listener.onFailed();
+                            listener.onCanceled();
                     }
                 }
             });

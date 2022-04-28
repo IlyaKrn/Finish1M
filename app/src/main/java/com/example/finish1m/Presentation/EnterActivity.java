@@ -56,7 +56,7 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onVoidData() {
-                            Toast.makeText(EnterActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EnterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -66,7 +66,7 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onCanceled() {
-                            Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EnterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
                         }
                     });
                         enterWithEmailAndPasswordUseCase.execute();
@@ -100,7 +100,7 @@ public class EnterActivity extends AppCompatActivity {
 
                         @Override
                         public void onCanceled() {
-                            Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EnterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
                         }
                     });
                     resetPasswordUseCase.execute();

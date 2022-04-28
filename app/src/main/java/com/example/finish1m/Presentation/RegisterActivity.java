@@ -78,12 +78,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                                         @Override
                                                                         public void onFailed() {
-
+                                                                            Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                                                                         }
 
                                                                         @Override
                                                                         public void onCanceled() {
-
+                                                                            Toast.makeText(RegisterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
                                                                         }
                                                                     });
                                                                     createNewUserUseCase.execute();
@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             @Override
                             public void onCanceled() {
-                                Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
                             }
                         });
                         registerWithEmailAndPasswordUseCase.execute();
@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         @Override
                         public void onCanceled() {
-                            Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, R.string.you_not_registred, Toast.LENGTH_SHORT).show();
                         }
                     });
 

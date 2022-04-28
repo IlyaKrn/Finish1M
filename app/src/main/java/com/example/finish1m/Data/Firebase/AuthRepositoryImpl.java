@@ -27,10 +27,8 @@ public class AuthRepositoryImpl implements AuthRepository {
                     if (context != null) {
                         if(task.isSuccessful())
                             listener.onSetData();
-                        else if (task.isCanceled())
-                            listener.onCanceled();
                         else
-                            listener.onFailed();
+                            listener.onCanceled();
                     }
                 }
             });
@@ -48,10 +46,8 @@ public class AuthRepositoryImpl implements AuthRepository {
                     if (context != null) {
                         if(task.isSuccessful())
                             listener.onSetData();
-                        else if (task.isCanceled())
-                            listener.onCanceled();
                         else
-                            listener.onFailed();
+                            listener.onCanceled();
                     }
                 }
             });
@@ -69,10 +65,8 @@ public class AuthRepositoryImpl implements AuthRepository {
                     if (context != null) {
                         if(task.isSuccessful())
                             listener.onSetData();
-                        else if (task.isCanceled())
-                            listener.onCanceled();
                         else
-                            listener.onFailed();
+                            listener.onCanceled();
                     }
                 }
             });
@@ -90,10 +84,8 @@ public class AuthRepositoryImpl implements AuthRepository {
                     if (context != null) {
                         if(task.isSuccessful())
                             listener.onSetData();
-                        else if (task.isCanceled())
-                            listener.onCanceled();
                         else
-                            listener.onFailed();
+                            listener.onCanceled();
                     }
                 }
             });
@@ -107,7 +99,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         try {
             return FirebaseAuth.getInstance().getCurrentUser().isEmailVerified();
         } catch (Exception e){
-            return  false;
+            return false;
         }
     }
 }
