@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface EventRepository {
 
-    void getEventListeners(OnGetDataListener<ArrayList<Event>> listener);
+    void getEventList(OnGetDataListener<ArrayList<Event>> listener);
     void getEventById(String eventId, OnGetDataListener<Event> listener);
     void setEvent(Event event, OnSetDataListener listener);
 }

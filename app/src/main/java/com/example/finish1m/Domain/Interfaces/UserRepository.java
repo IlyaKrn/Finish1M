@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface UserRepository {
 
-    void getUserListeners(OnGetDataListener<ArrayList<User>> listener);
+    void getUserList(OnGetDataListener<ArrayList<User>> listener);
     void getUserById(String eventId, OnGetDataListener<Event> listener);
     void setUser(User user, OnSetDataListener listener);
 }

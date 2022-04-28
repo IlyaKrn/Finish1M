@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Event {
 
     private String id;
+    private int type;
 
     private int year;
     private int month;
@@ -19,8 +20,9 @@ public class Event {
     private ArrayList<String> imageRefs;
     private ArrayList<String> members;
 
-    public Event(String id, int year, int month, int day, int hour, int minute, int second, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<String> members) {
+    public Event(String id, int type, int year, int month, int day, int hour, int minute, int second, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<String> members) {
         this.id = id;
+        this.type = type;
         this.year = year;
         this.month = month;
         this.day = day;
@@ -131,6 +133,14 @@ public class Event {
 
     public void setSecond(int second) {
         this.second = second;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
 

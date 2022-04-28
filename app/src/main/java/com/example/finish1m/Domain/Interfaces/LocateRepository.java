@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface LocateRepository {
 
-    void getLocateListeners(OnGetDataListener<ArrayList<Locate>> listener);
+    void getLocateList(OnGetDataListener<ArrayList<Locate>> listener);
     void getLocateById(String eventId, OnGetDataListener<Event> listener);
     void setLocate(Locate locate, OnSetDataListener listener);
 }
