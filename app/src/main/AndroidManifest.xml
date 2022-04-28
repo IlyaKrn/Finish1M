@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finish1M">
         <activity
+            android:name=".Presentation.CreateNewEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".Presentation.ChatSettingsActivity"
             android:exported="false" />
         <activity
@@ -37,7 +40,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity android:name=".Presentation.RegisterActivity" />
     </application>
 
