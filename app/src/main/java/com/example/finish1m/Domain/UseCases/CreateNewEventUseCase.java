@@ -68,7 +68,6 @@ public class CreateNewEventUseCase {
                     event.setImageRefs(imageRefs);
                     eventRepository.setEvent(event, listener);
                 }
-                eventRepository.setEvent(event, listener);
             }
 
             @Override
