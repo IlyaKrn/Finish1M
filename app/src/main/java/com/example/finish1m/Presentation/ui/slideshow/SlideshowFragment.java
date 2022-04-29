@@ -3,25 +3,21 @@ package com.example.finish1m.Presentation.ui.slideshow;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.finish1m.Data.Firebase.LocateRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Locate;
 import com.example.finish1m.Domain.UseCases.GetLocateListUseCase;
-import com.example.finish1m.Domain.UseCases.RefactorLocateUseCase;
 import com.example.finish1m.Presentation.Adapters.MapInfoWindowAdapter;
-import com.example.finish1m.Presentation.CreateNewLocateAciActivity;
+import com.example.finish1m.Presentation.CreateNewLocateActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.PresentationConfig;
@@ -144,7 +140,9 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
                 if (isAdd) {
-                    Intent intent = new Intent(getActivity(), CreateNewLocateAciActivity.class);
+                    Intent intent = new Intent(getActivity(), CreateNewLocateActivity.class);
+                    intent.putExtra("longitude", latLng.longitude);
+                    intent.putExtra("latitude", latLng.latitude);
                     startActivity(intent);
 
                     isAdd = false;

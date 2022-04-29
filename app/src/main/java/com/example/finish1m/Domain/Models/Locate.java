@@ -8,17 +8,19 @@ public class Locate {
 
     private double longitude;
     private double latitude;
+    private String title;
     private String message;
-    private String userEmail;
+    private String chatId;
 
     private ArrayList<String> imageRefs;
 
-    public Locate(String id, double longitude, double latitude, String message, String userEmail, ArrayList<String> imageRefs) {
+    public Locate(String id, double longitude, double latitude, String title, String message, String chatId, ArrayList<String> imageRefs) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.title = title;
         this.message = message;
-        this.userEmail = userEmail;
+        this.chatId = chatId;
         this.imageRefs = imageRefs;
     }
 
@@ -57,19 +59,27 @@ public class Locate {
         this.message = message;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public ArrayList<String> getImageRefs() {
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
         this.imageRefs = imageRefs;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 }
