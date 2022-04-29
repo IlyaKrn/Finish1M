@@ -58,17 +58,19 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/et_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/editText.span.main"
                     android:hint="@string/project_title"/>
                 <TextView
+                    android:id="@+id/tv_title_err"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     style="@style/text.warning.main"
-                    android:id="@+id/tv_title_err"
                     android:visibility="gone" />
                 <EditText
+                    android:id="@+id/et_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/editText.span.main"
