@@ -48,4 +48,7 @@
     <string name="create_new_project">Новый проект</string>
     <string name="project_title">Название</string>
     <string name="project_message">Описание</string>
+    <string name="event_create">Создать</string>
+    <string name="project_create">Создать</string>
+    <string name="locate_create">Создать</string>
 </resources>
