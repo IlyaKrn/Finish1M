@@ -1,6 +1,6 @@
 package com.example.finish1m.Data.Firebase;
 
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_LOCATE;
+import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_CHAT;
 
 import android.content.Context;
 
@@ -29,7 +29,7 @@ public class ChatRepositoryImpl implements ChatRepository {
     @Override
     public void getChatById(String chatId, OnGetDataListener<Chat> listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(chatId).addValueEventListener(new ValueEventListener() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_CHAT).child(chatId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (context != null) {
@@ -59,7 +59,7 @@ public class ChatRepositoryImpl implements ChatRepository {
     @Override
     public void setChat(Chat chat, OnSetDataListener listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(chat.getId()).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_CHAT).child(chat.getId()).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
@@ -79,6 +79,6 @@ public class ChatRepositoryImpl implements ChatRepository {
 
     @Override
     public String getNewId() {
-        return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_CHAT).push().getKey();
+        return FirebaseDatabase.getInstance().getReference(DATABASE_CHAT).push().getKey();
     }
 }

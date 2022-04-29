@@ -1,7 +1,5 @@
 package com.example.finish1m.Data.Firebase;
 
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_EVENT;
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_LOCATE;
 import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_PROJECT;
 
 import android.content.Context;
@@ -94,7 +92,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     @Override
     public void setProject(Project project, OnSetDataListener listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(project.getId()).setValue(project).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_PROJECT).child(project.getId()).setValue(project).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {

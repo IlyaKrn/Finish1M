@@ -52,4 +52,5 @@
     <string name="project_create">Создать</string>
     <string name="locate_create">Создать</string>
     <string name="message_start_chat">Добро пожаловать в новый чат</string>
+    <string name="event_create_success">Мероприятие создано</string>
 </resources>

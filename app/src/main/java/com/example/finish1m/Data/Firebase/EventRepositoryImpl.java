@@ -1,7 +1,6 @@
 package com.example.finish1m.Data.Firebase;
 
 import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_EVENT;
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_LOCATE;
 
 import android.content.Context;
 
@@ -64,7 +63,7 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public void getEventById(String eventId, OnGetDataListener<Event> listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(eventId).addValueEventListener(new ValueEventListener() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).child(eventId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (context != null) {
@@ -93,7 +92,7 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public void setEvent(Event event, OnSetDataListener listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(event.getId()).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).child(event.getId()).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {

@@ -10,9 +10,5 @@ public class FirebaseConfig {
 
 
     public static final String STORAGE_DEFAULT_ICON = "images/default_image.png";
-    public static final String STORAGE_LOCATE = "images/locate/";
-    public static final String STORAGE_USER = "images/user/";
-    public static final String STORAGE_EVENT = "images/event/";
-    public static final String STORAGE_PROJECT = "images/project/";
-    public static final String STORAGE_CHAT = "images/chat/";
+    public static final String STORAGE_IMAGES_ALL = "images/all";
 }
