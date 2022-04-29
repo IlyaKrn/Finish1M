@@ -42,4 +42,10 @@
     <string name="create_new_event">Новое мероприятие</string>
     <string name="event_title">Название</string>
     <string name="event_message">Описание</string>
+    <string name="create_new_locate">Новая метка</string>
+    <string name="locate_title">Название</string>
+    <string name="locate_message">Описание</string>
+    <string name="create_new_project">Новый проект</string>
+    <string name="project_title">Название</string>
+    <string name="project_message">Описание</string>
 </resources>
