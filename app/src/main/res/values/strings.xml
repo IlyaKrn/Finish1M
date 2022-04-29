@@ -39,4 +39,7 @@
     <string name="cancel">Отмена</string>
     <string name="add_locate_mod_disabled">Режим добавления метки выключен</string>
     <string name="add_locate_mod_enabled">Режим добавления метки включен</string>
+    <string name="create_new_event">Новое мероприятие</string>
+    <string name="event_title">Название</string>
+    <string name="event_message">Описание</string>
 </resources>

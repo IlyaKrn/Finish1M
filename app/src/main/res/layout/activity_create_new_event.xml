@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Presentation.CreateNewEventActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        style="@style/toolbar.default">
+
+        <ImageButton
+            android:id="@+id/bt_close"
+            style="@style/button.toolbar.default"
+            android:src="@android:drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text.title.second"
+            android:text="@string/create_new_event"
+            android:layout_gravity="start"
+            android:textAlignment="textStart"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/editText.span.main"
+            android:hint="@string/event_title"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            style="@style/text.warning.main"
+            android:id="@+id/tv_title_err"
+            android:visibility="gone" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/editText.span.main"
+            android:hint="@string/event_message"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            style="@style/text.warning.main"
+            android:id="@+id/tv_message_err"
+            android:visibility="gone" />
+
+        <GridLayout
+            android:id="@+id/gl_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_add_image"
+        style="@style/fab.default"
+        android:src="@android:drawable/ic_input_add" />
+
+</FrameLayout>
