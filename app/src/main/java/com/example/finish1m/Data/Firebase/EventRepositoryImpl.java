@@ -108,4 +108,9 @@ public class EventRepositoryImpl implements EventRepository {
             listener.onFailed();
         }
     }
+
+    @Override
+    public String getNewId() {
+        return FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).push().getKey();
+    }
 }

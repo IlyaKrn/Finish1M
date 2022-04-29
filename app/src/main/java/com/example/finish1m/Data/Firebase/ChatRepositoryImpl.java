@@ -76,4 +76,9 @@ public class ChatRepositoryImpl implements ChatRepository {
             listener.onFailed();
         }
     }
+
+    @Override
+    public String getNewId() {
+        return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_CHAT).push().getKey();
+    }
 }

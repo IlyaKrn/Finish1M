@@ -109,4 +109,9 @@ public class LocateRepositoryImpl implements LocateRepository {
             listener.onFailed();
         }
     }
+
+    @Override
+    public String getNewId() {
+        return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_LOCATE).push().getKey();
+    }
 }

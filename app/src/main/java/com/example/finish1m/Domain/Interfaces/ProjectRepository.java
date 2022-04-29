@@ -10,4 +10,5 @@ public interface ProjectRepository {
     void getProjectList(OnGetDataListener<ArrayList<Project>> listener);
     void getProjectById(String eventId, OnGetDataListener<Project> listener);
     void setProject(Project project, OnSetDataListener listener);
+    String getNewId();
 }

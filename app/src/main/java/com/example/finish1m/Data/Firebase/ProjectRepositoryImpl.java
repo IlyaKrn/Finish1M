@@ -109,4 +109,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             listener.onFailed();
         }
     }
+
+    @Override
+    public String getNewId() {
+        return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_PROJECT).push().getKey();
+    }
 }

@@ -11,4 +11,5 @@ public interface EventRepository {
     void getEventList(OnGetDataListener<ArrayList<Event>> listener);
     void getEventById(String eventId, OnGetDataListener<Event> listener);
     void setEvent(Event event, OnSetDataListener listener);
+    String getNewId();
 }

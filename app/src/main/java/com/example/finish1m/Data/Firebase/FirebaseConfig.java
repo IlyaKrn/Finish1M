@@ -6,6 +6,7 @@ public class FirebaseConfig {
     public static final String DATABASE_USER = "users/";
     public static final String DATABASE_EVENT = "events/";
     public static final String DATABASE_PROJECT = "projects/";
+    public static final String DATABASE_CHAT = "chats/";
 
 
     public static final String STORAGE_DEFAULT_ICON = "images/default_image.png";

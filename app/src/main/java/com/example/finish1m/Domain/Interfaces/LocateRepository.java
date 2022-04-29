@@ -12,4 +12,5 @@ public interface LocateRepository {
     void getLocateList(OnGetDataListener<ArrayList<Locate>> listener);
     void getLocateById(String eventId, OnGetDataListener<Locate> listener);
     void setLocate(Locate locate, OnSetDataListener listener);
+    String getNewId();
 }

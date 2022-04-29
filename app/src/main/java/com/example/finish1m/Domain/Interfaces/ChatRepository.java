@@ -8,5 +8,6 @@ public interface ChatRepository {
 
     void getChatById(String chatId, OnGetDataListener<Chat> listener);
     void setChat(Chat chat, OnSetDataListener listener);
+    String getNewId();
 
 }

@@ -114,4 +114,9 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
     }
+
+    @Override
+    public String getNewId() {
+        return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_USER).push().getKey();
+    }
 }
