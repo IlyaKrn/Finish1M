@@ -35,6 +35,7 @@ import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
 import com.example.finish1m.Presentation.ChatActivity;
+import com.example.finish1m.Presentation.CreateNewFollowActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.FollowsListActivity;
@@ -101,6 +102,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
 
             if (!PresentationConfig.user.isAdmin()){
                 btMenu.setVisibility(View.GONE);
+                btUsers.setVisibility(View.GONE);
             }
 
 
@@ -110,7 +112,9 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(activity, CreateNewFollowActivity.class);
+                    intent.putExtra("chatId", item.getChatId());
+                    activity.startActivity(intent);
                 }
             });
             btChat.setOnClickListener(new View.OnClickListener() {
