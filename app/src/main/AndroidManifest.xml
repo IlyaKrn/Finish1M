@@ -31,10 +31,6 @@
             android:exported="false"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Presentation.ChatSettingsActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
             android:name=".Presentation.ChatActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>

@@ -13,6 +13,12 @@ public class RefactorLocateUseCase {
     private Locate locate;
     private OnSetDataListener listener;
 
+    public RefactorLocateUseCase(LocateRepository repository, Locate locate, OnSetDataListener listener) {
+        this.repository = repository;
+        this.locate = locate;
+        this.listener = listener;
+    }
+
     public void execute(){
         repository.setLocate(locate, listener);
     }
