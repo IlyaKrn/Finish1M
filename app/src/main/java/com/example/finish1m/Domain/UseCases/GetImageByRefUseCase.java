@@ -13,7 +13,7 @@ public class GetImageByRefUseCase {
     private String ref;
     private OnGetDataListener listener;
 
-    private HashMap<String, Bitmap> cache = new HashMap<>();
+    private static HashMap<String, Bitmap> cache = new HashMap<>();
 
     public GetImageByRefUseCase(ImageRepository repository, String ref, OnGetDataListener<Bitmap> listener) {
         this.repository = repository;
