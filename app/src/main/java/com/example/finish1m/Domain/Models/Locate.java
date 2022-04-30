@@ -60,6 +60,8 @@ public class Locate {
     }
 
     public ArrayList<String> getImageRefs() {
+        if (imageRefs == null)
+            return new ArrayList<>();
         return imageRefs;
     }
 

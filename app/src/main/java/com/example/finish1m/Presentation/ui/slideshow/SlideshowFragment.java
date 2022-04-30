@@ -3,6 +3,7 @@ package com.example.finish1m.Presentation.ui.slideshow;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.LocateRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Locate;
+import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetLocateListUseCase;
 import com.example.finish1m.Presentation.Adapters.MapInfoWindowAdapter;
 import com.example.finish1m.Presentation.CreateNewLocateActivity;
@@ -41,6 +44,7 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
     private LocateRepositoryImpl locateRepository;
+    private ImageRepositoryImpl imageRepository;
     private MapInfoWindowAdapter adapter;
     private GetLocateListUseCase getLocateListUseCase;
 
@@ -56,22 +60,47 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onGetData(ArrayList<Locate> data) {
                 Map<Locate, Bitmap> cache = new HashMap<>();
-                final int[] count = {0};
+                locates.clear();
+                locates.addAll(data);
                 for (Locate l : locates){
-                    /*
-                    l.getIconAsync(getContext(), new OnGetIcon() {
-                        @Override
-                        public void onLoad(Bitmap bitmap) {
-                            count[0]++;
-                            cache.put(l, bitmap);
-                            Log.e("ffff", "fffffff");
-                            if (locateMainList.size() == count[0])
-                                mapAdapter.loadCache(cache);
-                        }
-                    });
+                    final int[] count = {0};
+                    for (int i = 0; i < l.getImageRefs().size(); i++) {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                            @Override
+                            public void onGetData(Bitmap data) {
+                                count[0]++;
+                                cache.put(l, data);
+                                if (locates.size() == count[0])
+                                    adapter.loadCache(cache);
+                            }
 
-                     */
+                            @Override
+                            public void onVoidData() {
+                                count[0]++;
+                                if (locates.size() == count[0])
+                                    adapter.loadCache(cache);
+                            }
+
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        getImageByRefUseCase.execute();
+                    }
                 }
+                if (googleMap != null) {
+                    googleMap.clear();
+                    for (Locate l : locates){
+                        googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                    }
+                }
+
             }
 
             @Override

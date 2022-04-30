@@ -62,6 +62,8 @@ public class Event {
     }
 
     public ArrayList<String> getImageRefs() {
+        if (imageRefs == null)
+            return new ArrayList<>();
         return imageRefs;
     }
 
@@ -70,6 +72,8 @@ public class Event {
     }
 
     public ArrayList<String> getMembers() {
+        if (members == null)
+            return new ArrayList<>();
         return members;
     }
 

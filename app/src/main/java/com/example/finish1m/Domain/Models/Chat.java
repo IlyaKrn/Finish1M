@@ -1,5 +1,7 @@
 package com.example.finish1m.Domain.Models;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +27,8 @@ public class Chat {
     }
 
     public ArrayList<Message> getMessages() {
+        if (messages == null)
+            return new ArrayList<>();
         return messages;
     }
 

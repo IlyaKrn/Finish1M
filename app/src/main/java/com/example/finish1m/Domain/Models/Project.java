@@ -55,6 +55,8 @@ public class Project {
     }
 
     public ArrayList<String> getImageRefs() {
+        if (imageRefs == null)
+            return new ArrayList<>();
         return imageRefs;
     }
 
@@ -63,6 +65,8 @@ public class Project {
     }
 
     public ArrayList<HashMap<String, String>> getFollows() {
+        if (follows == null)
+            return new ArrayList<>();
         return follows;
     }
 

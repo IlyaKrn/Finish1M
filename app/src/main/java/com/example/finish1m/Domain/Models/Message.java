@@ -35,6 +35,8 @@ public class Message {
     }
 
     public ArrayList<String> getImageRefs() {
+        if (imageRefs == null)
+            return new ArrayList<>();
         return imageRefs;
     }
 
