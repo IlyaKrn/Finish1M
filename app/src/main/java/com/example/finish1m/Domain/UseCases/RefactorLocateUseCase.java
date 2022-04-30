@@ -20,6 +20,6 @@ public class RefactorLocateUseCase {
     }
 
     public void execute(){
-        repository.setLocate(locate, listener);
+        repository.setLocate(locate.getId(), locate, listener);
     }
 }

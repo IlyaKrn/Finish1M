@@ -35,7 +35,7 @@ public class CreateNewLocateUseCase {
     }
 
     public void execute(){
-        chatRepository.setChat(chat, new OnSetDataListener() {
+        chatRepository.setChat(chat.getId(), chat, new OnSetDataListener() {
             @Override
             public void onSetData() {
                 final int[] count = {0};
@@ -49,7 +49,7 @@ public class CreateNewLocateUseCase {
                                 imageRefs.add(ref);
                                 if (count[0] == images.size()) {
                                     locate.setImageRefs(imageRefs);
-                                    locateRepository.setLocate(locate, listener);
+                                    locateRepository.setLocate(locate.getId(), locate, listener);
                                 }
                             }
 
@@ -68,7 +68,7 @@ public class CreateNewLocateUseCase {
                 }
                 else{
                     locate.setImageRefs(imageRefs);
-                    locateRepository.setLocate(locate, listener);
+                    locateRepository.setLocate(locate.getId(), locate, listener);
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.example.finish1m.Presentation.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +14,14 @@ import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
@@ -34,7 +36,10 @@ import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.PresentationConfig;
+import com.example.finish1m.Presentation.RefactorEventActivity;
+import com.example.finish1m.Presentation.UserListActivity;
 import com.example.finish1m.R;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,13 +169,32 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             btUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
-
+                    Intent intent = new Intent(activity, UserListActivity.class);
+                    intent.putExtra("users", item.getMembers());
+                    activity.startActivity(intent);
                 }
             });
             btMenu.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("RestrictedApi")
                 @Override
                 public void onClick(View view) {
+                    PopupMenu menu = new PopupMenu(context, view);
+                    menu.inflate(R.menu.popup_menu_chat_list_item);
+                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch(menuItem.getItemId()) {
+                                case R.id.refactor:
+                                    Intent intent = new Intent(activity, RefactorEventActivity.class);
+                                    intent.putExtra("eventId", item.getId());
+                                    activity.startActivity(intent);
+                                    break;
+                            }
 
+                            return false;
+                        }
+                    });
+                    menu.show();
                 }
             });
 

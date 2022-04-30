@@ -19,6 +19,6 @@ public class RefactorProjectUseCase {
     }
 
     public void execute(){
-        repository.setProject(project, listener);
+        repository.setProject(project.getId(), project, listener);
     }
 }

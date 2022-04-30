@@ -13,6 +13,6 @@ public class RefactorUserUseCase {
     private OnSetDataListener listener;
 
     public void execute(){
-        repository.setUser(user, listener);
+        repository.setUser(user.getEmail(), user, listener);
     }
 }

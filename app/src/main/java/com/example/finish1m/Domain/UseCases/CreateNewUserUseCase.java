@@ -18,6 +18,6 @@ public class CreateNewUserUseCase {
     }
 
     public void execute(){
-        userRepository.setUser(user, listener);
+        userRepository.setUser(user.getEmail(), user, listener);
     }
 }

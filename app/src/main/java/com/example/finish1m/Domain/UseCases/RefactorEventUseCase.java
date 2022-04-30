@@ -17,7 +17,7 @@ public class RefactorEventUseCase {
     }
 
     public void execute(){
-        repository.setEvent(event, listener);
+        repository.setEvent(event.getId(), event, listener);
     }
 
 }

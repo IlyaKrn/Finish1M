@@ -56,9 +56,9 @@ public class ChatRepositoryImpl implements ChatRepository {
     }
 
     @Override
-    public void setChat(Chat chat, OnSetDataListener listener) {
+    public void setChat(String id, Chat chat, OnSetDataListener listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_CHAT).child(chat.getId()).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_CHAT).child(id).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {

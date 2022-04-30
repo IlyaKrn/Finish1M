@@ -90,7 +90,7 @@ public class LocateRepositoryImpl implements LocateRepository {
     }
 
     @Override
-    public void setLocate(Locate locate, OnSetDataListener listener) {
+    public void setLocate(String id, Locate locate, OnSetDataListener listener) {
         try {
             FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(locate.getId()).setValue(locate).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

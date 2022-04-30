@@ -90,7 +90,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public void setProject(Project project, OnSetDataListener listener) {
+    public void setProject(String id, Project project, OnSetDataListener listener) {
         try {
             FirebaseDatabase.getInstance().getReference(DATABASE_PROJECT).child(project.getId()).setValue(project).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

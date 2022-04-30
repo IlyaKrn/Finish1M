@@ -87,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void setUser(User user, OnSetDataListener listener) {
+    public void setUser(String email, User user, OnSetDataListener listener) {
         try {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
             for (Character c : user.getEmail().toCharArray()){

@@ -33,7 +33,7 @@ public class CreateNewEventUseCase {
     }
 
     public void execute(){
-        chatRepository.setChat(chat, new OnSetDataListener() {
+        chatRepository.setChat(chat.getId(), chat, new OnSetDataListener() {
             @Override
             public void onSetData() {
                 final int[] count = {0};
@@ -47,7 +47,7 @@ public class CreateNewEventUseCase {
                                 imageRefs.add(ref);
                                 if (count[0] == images.size()) {
                                     event.setImageRefs(imageRefs);
-                                    eventRepository.setEvent(event, listener);
+                                    eventRepository.setEvent(event.getId(), event, listener);
                                 }
                             }
 
@@ -66,7 +66,7 @@ public class CreateNewEventUseCase {
                 }
                 else{
                     event.setImageRefs(imageRefs);
-                    eventRepository.setEvent(event, listener);
+                    eventRepository.setEvent(event.getId(), event, listener);
                 }
             }
 

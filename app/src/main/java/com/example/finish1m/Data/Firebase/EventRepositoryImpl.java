@@ -89,7 +89,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public void setEvent(Event event, OnSetDataListener listener) {
+    public void setEvent(String id, Event event, OnSetDataListener listener) {
         try {
             FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).child(event.getId()).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
