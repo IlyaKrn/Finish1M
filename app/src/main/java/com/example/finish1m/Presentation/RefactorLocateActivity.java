@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.finish1m.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class RefactorLocateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_refactor_locate);
     }
 }
