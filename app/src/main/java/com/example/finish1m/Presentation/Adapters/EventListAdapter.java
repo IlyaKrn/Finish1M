@@ -189,7 +189,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                     activity.startActivity(intent);
                                     break;
                                 case R.id.delete:
-                                    if(item.getType() == Event.EVENT) {
+                                    if (item.getType() == Event.EVENT) {
                                         DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить событие?", new OnConfirmListener() {
                                             @Override
                                             public void onConfirm(DialogConfirm d) {
