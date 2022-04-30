@@ -17,6 +17,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_refactor_user.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_start.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_user_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/app_bar_hub_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/content_hub_activity.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/dialog_confirm.xml" value="0.33" />
@@ -29,6 +30,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/map_info_window.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/nav_header_hub_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/menu/hub.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/menu/popup_menu_chat_list_item.xml" value="0.35104166666666664" />
       </map>
     </option>
   </component>

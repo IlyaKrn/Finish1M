@@ -56,4 +56,6 @@
     <string name="locate_create_success">Метка добавлена</string>
     <string name="profile_refactor">Настройки профиля</string>
     <string name="profile_exit">Выйти</string>
+    <string name="refactor">Изменить</string>
+    <string name="delete">Удалить</string>
 </resources>
