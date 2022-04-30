@@ -64,34 +64,36 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
                 locates.addAll(data);
                 for (Locate l : locates){
                     final int[] count = {0};
-                    for (int i = 0; i < l.getImageRefs().size(); i++) {
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
-                            @Override
-                            public void onGetData(Bitmap data) {
-                                count[0]++;
-                                cache.put(l, data);
-                                if (locates.size() == count[0])
-                                    adapter.loadCache(cache);
-                            }
+                    if (l.getImageRefs() != null) {
+                        for (int i = 0; i < l.getImageRefs().size(); i++) {
+                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                                @Override
+                                public void onGetData(Bitmap data) {
+                                    count[0]++;
+                                    cache.put(l, data);
+                                    if (locates.size() == count[0])
+                                        adapter.loadCache(cache);
+                                }
 
-                            @Override
-                            public void onVoidData() {
-                                count[0]++;
-                                if (locates.size() == count[0])
-                                    adapter.loadCache(cache);
-                            }
+                                @Override
+                                public void onVoidData() {
+                                    count[0]++;
+                                    if (locates.size() == count[0])
+                                        adapter.loadCache(cache);
+                                }
 
-                            @Override
-                            public void onFailed() {
-                                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                            }
+                                @Override
+                                public void onFailed() {
+                                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                                }
 
-                            @Override
-                            public void onCanceled() {
-                                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        getImageByRefUseCase.execute();
+                                @Override
+                                public void onCanceled() {
+                                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            getImageByRefUseCase.execute();
+                        }
                     }
                 }
                 if (googleMap != null) {

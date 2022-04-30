@@ -58,28 +58,18 @@ public class Project {
     }
 
     public ArrayList<String> getImageRefs() {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
-        else
-            this.imageRefs = imageRefs;
+        this.imageRefs = imageRefs;
     }
 
     public ArrayList<HashMap<String, String>> getFollows() {
-        if (follows == null)
-            this.follows = new ArrayList<>();
         return follows;
     }
 
     public void setFollows(ArrayList<HashMap<String, String>> follows) {
-        if (follows == null)
-            this.follows = new ArrayList<>();
-        else
-            this.follows = follows;
+        this.follows = follows;
     }
 }

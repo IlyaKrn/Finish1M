@@ -51,27 +51,6 @@ public class Locate {
         this.latitude = latitude;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public ArrayList<String> getImageRefs() {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
-        return imageRefs;
-    }
-
-    public void setImageRefs(ArrayList<String> imageRefs) {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
-        else
-            this.imageRefs = imageRefs;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -80,11 +59,27 @@ public class Locate {
         this.title = title;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getChatId() {
         return chatId;
     }
 
     public void setChatId(String chatId) {
         this.chatId = chatId;
+    }
+
+    public ArrayList<String> getImageRefs() {
+        return imageRefs;
+    }
+
+    public void setImageRefs(ArrayList<String> imageRefs) {
+        this.imageRefs = imageRefs;
     }
 }

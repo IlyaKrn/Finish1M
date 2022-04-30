@@ -29,12 +29,28 @@ public class Event {
     public Event() {
     }
 
+    public static int getNEWS() {
+        return NEWS;
+    }
+
+    public static int getEVENT() {
+        return EVENT;
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -62,37 +78,19 @@ public class Event {
     }
 
     public ArrayList<String> getImageRefs() {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
-        else
-            this.imageRefs = imageRefs;
+        this.imageRefs = imageRefs;
     }
 
     public ArrayList<String> getMembers() {
-        if (members == null)
-            this.members = new ArrayList<>();
         return members;
     }
 
     public void setMembers(ArrayList<String> members) {
-        if (members == null)
-            this.members = new ArrayList<>();
-        else
-            this.imageRefs = members;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
+        this.members = members;
     }
 }
 

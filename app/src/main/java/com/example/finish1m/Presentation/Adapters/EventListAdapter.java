@@ -91,11 +91,14 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             btReg.setText("Вы записаны");
 
             boolean isRegistered = false;
-            for (String s : item.getMembers()) {
-                if (s.equals(PresentationConfig.user.getEmail()))
-                    isRegistered = true;
-                break;
+            if (item.getMembers() != null) {
+                for (String s : item.getMembers()) {
+                    if (s.equals(PresentationConfig.user.getEmail()))
+                        isRegistered = true;
+                    break;
+                }
             }
+
             if(!isRegistered){
                 btChat.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
@@ -118,7 +121,11 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                item.getMembers().add(PresentationConfig.user.getEmail());
+                                ArrayList<String> m = item.getMembers();
+                                if (m == null)
+                                    m = new ArrayList<>();
+                                m.add(PresentationConfig.user.getEmail());
+                                item.setMembers(m);
                                 RefactorEventUseCase refactorEventUseCase = new RefactorEventUseCase(eventRepository, item, new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
@@ -171,33 +178,35 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             GetEventByIdUseCase getEventListUseCase = new GetEventByIdUseCase(eventRepository, item.getId(), new OnGetDataListener<Event>() {
                 @Override
                 public void onGetData(Event data) {
-                    for (int i = 0; i < item.getImageRefs().size(); i++) {
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
-                            @Override
-                            public void onGetData(Bitmap data1) {
-                                if(item.getId().equals(data.getId()));{
-                                    ImageView iv = new ImageView(context);
-                                    iv.setImageBitmap(data1);
-                                    glImages.addView(iv);
+                    if (item.getImageRefs() != null) {
+                        for (int i = 0; i < item.getImageRefs().size(); i++) {
+                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                                @Override
+                                public void onGetData(Bitmap data1) {
+                                    if(item.getId().equals(data.getId()));{
+                                        ImageView iv = new ImageView(context);
+                                        iv.setImageBitmap(data1);
+                                        glImages.addView(iv);
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onVoidData() {
+                                @Override
+                                public void onVoidData() {
 
-                            }
+                                }
 
-                            @Override
-                            public void onFailed() {
-                                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                            }
+                                @Override
+                                public void onFailed() {
+                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                }
 
-                            @Override
-                            public void onCanceled() {
-                                Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        getImageByRefUseCase.execute();
+                                @Override
+                                public void onCanceled() {
+                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            getImageByRefUseCase.execute();
+                        }
                     }
                 }
 

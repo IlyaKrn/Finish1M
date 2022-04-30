@@ -35,15 +35,10 @@ public class Message {
     }
 
     public ArrayList<String> getImageRefs() {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
-        if (imageRefs == null)
-            this.imageRefs = new ArrayList<>();
-        else
-            this.imageRefs = imageRefs;
+        this.imageRefs = imageRefs;
     }
 }
