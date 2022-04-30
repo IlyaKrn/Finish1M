@@ -50,12 +50,4 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/bt_menu"
-        style="@style/button.toolbar.default"
-        android:layout_gravity="end|top"
-        android:background="@color/invisible"
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_menu_spots" />
-
 </LinearLayout>

@@ -59,4 +59,5 @@
     <string name="refactor">Изменить</string>
     <string name="delete">Удалить</string>
     <string name="event_delete_success">Мероприятие удалено</string>
+    <string name="locate_delete_success">Метка удалена</string>
 </resources>

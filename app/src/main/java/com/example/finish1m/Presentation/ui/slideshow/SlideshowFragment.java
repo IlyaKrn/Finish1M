@@ -16,7 +16,9 @@ import androidx.fragment.app.Fragment;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.LocateRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Locate;
+import com.example.finish1m.Domain.UseCases.DeleteLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetLocateListUseCase;
 import com.example.finish1m.Presentation.Adapters.MapInfoWindowAdapter;
@@ -54,6 +56,8 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+
+        adapter = new MapInfoWindowAdapter(getActivity(), getContext(), locates);
 
         locateRepository = new LocateRepositoryImpl(getContext());
         getLocateListUseCase = new GetLocateListUseCase(locateRepository, new OnGetDataListener<ArrayList<Locate>>() {
@@ -120,13 +124,13 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
 
 
             @Override
-            public void onFailed () {
-
+            public void onFailed() {
+                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onCanceled () {
-
+            public void onCanceled() {
+                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -193,7 +197,26 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
                         public void onConfirm(DialogConfirm d) {
                             for (Locate l : locates) {
                                 if (new LatLng(l.getLatitude(), l.getLongitude()).equals(marker.getPosition())) {
+                                    DeleteLocateByIdUseCase deleteEventByIdUseCase = new DeleteLocateByIdUseCase(locateRepository, l.getId(), new OnSetDataListener() {
+                                        @Override
+                                        public void onSetData() {
+                                            Toast.makeText(getContext(), R.string.locate_delete_success, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
 
+                                        @Override
+                                        public void onFailed() {
+                                            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
+
+                                        @Override
+                                        public void onCanceled() {
+                                            Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
+                                    });
+                                    deleteEventByIdUseCase.execute();
                                 }
                             }
                         }
