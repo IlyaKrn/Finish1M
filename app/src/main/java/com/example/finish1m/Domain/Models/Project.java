@@ -59,21 +59,27 @@ public class Project {
 
     public ArrayList<String> getImageRefs() {
         if (imageRefs == null)
-            return new ArrayList<>();
+            this.imageRefs = new ArrayList<>();
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
-        this.imageRefs = imageRefs;
+        if (imageRefs == null)
+            this.imageRefs = new ArrayList<>();
+        else
+            this.imageRefs = imageRefs;
     }
 
     public ArrayList<HashMap<String, String>> getFollows() {
         if (follows == null)
-            return new ArrayList<>();
+            this.follows = new ArrayList<>();
         return follows;
     }
 
     public void setFollows(ArrayList<HashMap<String, String>> follows) {
-        this.follows = follows;
+        if (follows == null)
+            this.follows = new ArrayList<>();
+        else
+            this.follows = follows;
     }
 }

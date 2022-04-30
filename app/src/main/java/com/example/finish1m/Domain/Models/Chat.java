@@ -28,12 +28,15 @@ public class Chat {
 
     public ArrayList<Message> getMessages() {
         if (messages == null)
-            return new ArrayList<>();
+            this.messages = new ArrayList<>();
         return messages;
     }
 
     public void setMessages(ArrayList<Message> messages) {
-        this.messages = messages;
+        if (messages == null)
+            this.messages = new ArrayList<>();
+        else
+            this.messages = messages;
     }
 
 }

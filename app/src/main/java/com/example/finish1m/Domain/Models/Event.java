@@ -63,22 +63,28 @@ public class Event {
 
     public ArrayList<String> getImageRefs() {
         if (imageRefs == null)
-            return new ArrayList<>();
+            this.imageRefs = new ArrayList<>();
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
-        this.imageRefs = imageRefs;
+        if (imageRefs == null)
+            this.imageRefs = new ArrayList<>();
+        else
+            this.imageRefs = imageRefs;
     }
 
     public ArrayList<String> getMembers() {
         if (members == null)
-            return new ArrayList<>();
+            this.members = new ArrayList<>();
         return members;
     }
 
     public void setMembers(ArrayList<String> members) {
-        this.members = members;
+        if (members == null)
+            this.members = new ArrayList<>();
+        else
+            this.imageRefs = members;
     }
 
     public int getType() {

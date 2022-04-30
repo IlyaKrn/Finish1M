@@ -61,12 +61,15 @@ public class Locate {
 
     public ArrayList<String> getImageRefs() {
         if (imageRefs == null)
-            return new ArrayList<>();
+            this.imageRefs = new ArrayList<>();
         return imageRefs;
     }
 
     public void setImageRefs(ArrayList<String> imageRefs) {
-        this.imageRefs = imageRefs;
+        if (imageRefs == null)
+            this.imageRefs = new ArrayList<>();
+        else
+            this.imageRefs = imageRefs;
     }
 
     public String getTitle() {
