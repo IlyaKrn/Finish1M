@@ -175,7 +175,6 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 }
             });
             btMenu.setOnClickListener(new View.OnClickListener() {
-                @SuppressLint("RestrictedApi")
                 @Override
                 public void onClick(View view) {
                     PopupMenu menu = new PopupMenu(context, view);
@@ -188,6 +187,9 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                     Intent intent = new Intent(activity, RefactorEventActivity.class);
                                     intent.putExtra("eventId", item.getId());
                                     activity.startActivity(intent);
+                                    break;
+                                case R.id.delete:
+
                                     break;
                             }
 
