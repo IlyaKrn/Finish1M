@@ -26,6 +26,7 @@ import com.example.finish1m.databinding.FragmentSlideshowBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -120,7 +121,8 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
 
         binding.fabAddLocate.setOnClickListener(onAddListener);
         binding.fabCancel.setOnClickListener(onAddListener);
-
+        SupportMapFragment mapView = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapView.getMapAsync(this);
 
         return binding.getRoot();
     }

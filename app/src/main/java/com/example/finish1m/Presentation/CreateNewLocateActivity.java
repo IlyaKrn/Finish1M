@@ -29,6 +29,7 @@ import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewLocateBinding;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -86,7 +87,7 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
                         createNewEventUseCase = new CreateNewLocateUseCase(locateRepository, chatRepository, imageRepository, l, c, images, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(CreateNewLocateActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateNewLocateActivity.this, R.string.locate_create_success, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
@@ -124,6 +125,9 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
                 startActivityForResult(intent, 1);
             }
         });
+
+        SupportMapFragment mapView = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapView.getMapAsync(this);
 
     }
 
