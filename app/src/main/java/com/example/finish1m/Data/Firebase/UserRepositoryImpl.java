@@ -1,16 +1,15 @@
 package com.example.finish1m.Data.Firebase;
 
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_USER;
+import static com.example.finish1m.Data.Firebase.Database.FirebaseConfig.DATABASE_USER;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.finish1m.Data.Firebase.Database.FirebaseConfig;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
-import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

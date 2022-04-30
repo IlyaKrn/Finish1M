@@ -1,6 +1,6 @@
 package com.example.finish1m.Data.Firebase;
 
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_EVENT;
+import static com.example.finish1m.Data.Firebase.Database.FirebaseConfig.DATABASE_EVENT;
 
 import android.content.Context;
 
@@ -10,7 +10,6 @@ import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Event;
-import com.example.finish1m.Domain.Models.Locate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;

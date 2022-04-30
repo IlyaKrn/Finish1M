@@ -1,4 +1,4 @@
-package com.example.finish1m.Data.Firebase;
+package com.example.finish1m.Data.Firebase.Database;
 
 public class FirebaseConfig {
 

@@ -1,15 +1,15 @@
 package com.example.finish1m.Data.Firebase;
 
-import static com.example.finish1m.Data.Firebase.FirebaseConfig.DATABASE_PROJECT;
+import static com.example.finish1m.Data.Firebase.Database.FirebaseConfig.DATABASE_PROJECT;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.finish1m.Data.Firebase.Database.FirebaseConfig;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.ProjectRepository;
-import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.Project;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

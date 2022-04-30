@@ -10,13 +10,18 @@ import android.widget.Toast;
 
 import com.example.finish1m.Data.Firebase.AuthRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Data.SQLite.SQLiteRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.AuthRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
+import com.example.finish1m.Domain.Interfaces.SQLiteRepository;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
+import com.example.finish1m.Domain.Models.SQLiteUser;
 import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.EnterWithEmailAndPasswordUseCase;
+import com.example.finish1m.Domain.UseCases.GetSQLiteUserUseCase;
 import com.example.finish1m.Domain.UseCases.ResetPasswordUseCase;
+import com.example.finish1m.Domain.UseCases.WriteSQLiteUserUseCase;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityEnterBinding;
 
@@ -26,7 +31,10 @@ public class EnterActivity extends AppCompatActivity {
 
     private UserRepositoryImpl userRepository;
     private AuthRepositoryImpl authRepository;
+    private SQLiteRepositoryImpl sqLiteRepository;
 
+    private GetSQLiteUserUseCase getSQLiteUserUseCase;
+    private WriteSQLiteUserUseCase writeSQLiteUserUseCase;
     private EnterWithEmailAndPasswordUseCase enterWithEmailAndPasswordUseCase;
     private ResetPasswordUseCase resetPasswordUseCase;
 
@@ -38,6 +46,31 @@ public class EnterActivity extends AppCompatActivity {
 
         userRepository = new UserRepositoryImpl(this);
         authRepository = new AuthRepositoryImpl(this);
+        sqLiteRepository = new SQLiteRepositoryImpl(this);
+
+        getSQLiteUserUseCase = new GetSQLiteUserUseCase(sqLiteRepository, new OnGetDataListener<SQLiteUser>() {
+            @Override
+            public void onGetData(SQLiteUser data) {
+                binding.etEmail.setText(data.getEmail());
+                binding.etPassword.setText(data.getPassword());
+            }
+
+            @Override
+            public void onVoidData() {
+
+            }
+
+            @Override
+            public void onFailed() {
+                Toast.makeText(EnterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCanceled() {
+                Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+            }
+        });
+        getSQLiteUserUseCase.execute();
 
         binding.btEnter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +83,43 @@ public class EnterActivity extends AppCompatActivity {
                         @Override
                         public void onGetData(User data) {
                             PresentationConfig.user = data;
+                            if (binding.cbAlwaysUse.isChecked()) {
+                                writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, new SQLiteUser(email, password), new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(EnterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, null, new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(EnterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            writeSQLiteUserUseCase.execute();
                             Intent intent = new Intent(EnterActivity.this, HubActivityActivity.class);
                             startActivity(intent);
                             finish();

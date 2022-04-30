@@ -9,7 +9,7 @@ public class GetSQLiteUserUseCase {
     private SQLiteRepository repository;
     private OnGetDataListener listener;
 
-    public GetSQLiteUserUseCase(SQLiteRepository repository, OnGetDataListener listener) {
+    public GetSQLiteUserUseCase(SQLiteRepository repository, OnGetDataListener<SQLiteUser> listener) {
         this.repository = repository;
         this.listener = listener;
     }

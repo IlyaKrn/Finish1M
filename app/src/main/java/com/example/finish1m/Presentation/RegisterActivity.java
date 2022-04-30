@@ -10,15 +10,18 @@ import android.widget.Toast;
 
 import com.example.finish1m.Data.Firebase.AuthRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Data.SQLite.SQLiteRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.AuthRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
+import com.example.finish1m.Domain.Models.SQLiteUser;
 import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.CreateNewUserUseCase;
 import com.example.finish1m.Domain.UseCases.EnterWithEmailAndPasswordUseCase;
 import com.example.finish1m.Domain.UseCases.RegisterWithEmailAndPasswordUseCase;
 import com.example.finish1m.Domain.UseCases.SendVerificationEmailUseCase;
+import com.example.finish1m.Domain.UseCases.WriteSQLiteUserUseCase;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityEnterBinding;
 import com.example.finish1m.databinding.ActivityRegisterBinding;
@@ -29,7 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private UserRepository userRepository;
     private AuthRepository authRepository;
+    private SQLiteRepositoryImpl sqLiteRepository;
 
+    private WriteSQLiteUserUseCase writeSQLiteUserUseCase;
     private RegisterWithEmailAndPasswordUseCase registerWithEmailAndPasswordUseCase;
     private EnterWithEmailAndPasswordUseCase enterWithEmailAndPasswordUseCase;
     private SendVerificationEmailUseCase sendVerificationEmailUseCase;
@@ -43,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         userRepository = new UserRepositoryImpl(this);
         authRepository = new AuthRepositoryImpl(this);
+        sqLiteRepository = new SQLiteRepositoryImpl(this);
 
         binding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +82,43 @@ public class RegisterActivity extends AppCompatActivity {
                                                                                 @Override
                                                                                 public void onGetData(User data) {
                                                                                     PresentationConfig.user = data;
+                                                                                    if (binding.cbAlwaysUse.isChecked()) {
+                                                                                        writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, new SQLiteUser(email, password), new OnSetDataListener() {
+                                                                                            @Override
+                                                                                            public void onSetData() {
+
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onFailed() {
+                                                                                                Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onCanceled() {
+                                                                                                Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                    else {
+                                                                                        writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, null, new OnSetDataListener() {
+                                                                                            @Override
+                                                                                            public void onSetData() {
+
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onFailed() {
+                                                                                                Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onCanceled() {
+                                                                                                Toast.makeText(RegisterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                    writeSQLiteUserUseCase.execute();
                                                                                     Intent intent = new Intent(RegisterActivity.this, HubActivityActivity.class);
                                                                                     startActivity(intent);
                                                                                     finish();
