@@ -65,6 +65,7 @@ public class GalleryFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
             }
         });
+        getProjectListUseCase.execute();
 
         adapter = new ProjectListAdapter(getActivity(), getContext(), projects);
         binding.rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -22,6 +22,9 @@ public class Project {
         this.follows = follows;
     }
 
+    public Project() {
+    }
+
     public String getId() {
         return id;
     }
