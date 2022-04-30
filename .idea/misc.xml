@@ -10,6 +10,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_create_new_locate_aci.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_create_new_project.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_enter.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_follows_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_hub_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_profile.xml" value="0.36666666666666664" />
@@ -31,6 +32,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/nav_header_hub_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/menu/hub.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/menu/popup_menu_chat_list_item.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/menu/popup_menu_project_list_item.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

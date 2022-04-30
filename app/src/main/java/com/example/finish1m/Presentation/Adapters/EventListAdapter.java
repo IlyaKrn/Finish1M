@@ -1,6 +1,5 @@
 package com.example.finish1m.Presentation.Adapters;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -21,8 +19,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuPopupHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
@@ -43,8 +39,6 @@ import com.example.finish1m.R;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
 
@@ -178,7 +172,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     PopupMenu menu = new PopupMenu(context, view);
-                    menu.inflate(R.menu.popup_menu_chat_list_item);
+                    menu.inflate(R.menu.popup_menu_event_list_item);
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {

@@ -11,9 +11,9 @@ public class Project {
     private String message;
     private String chatId;
     private ArrayList<String> imageRefs;
-    private ArrayList<HashMap<String, String>> follows;
+    private ArrayList<Follow> follows;
 
-    public Project(String id, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<HashMap<String, String>> follows) {
+    public Project(String id, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<Follow> follows) {
         this.id = id;
         this.title = title;
         this.message = message;
@@ -65,11 +65,11 @@ public class Project {
         this.imageRefs = imageRefs;
     }
 
-    public ArrayList<HashMap<String, String>> getFollows() {
+    public ArrayList<Follow> getFollows() {
         return follows;
     }
 
-    public void setFollows(ArrayList<HashMap<String, String>> follows) {
+    public void setFollows(ArrayList<Follow> follows) {
         this.follows = follows;
     }
 }
