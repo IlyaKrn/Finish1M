@@ -54,4 +54,6 @@
     <string name="message_start_chat">Добро пожаловать в новый чат</string>
     <string name="event_create_success">Мероприятие создано</string>
     <string name="locate_create_success">Метка добавлена</string>
+    <string name="profile_refactor">Настройки профиля</string>
+    <string name="profile_exit">Выйти</string>
 </resources>
