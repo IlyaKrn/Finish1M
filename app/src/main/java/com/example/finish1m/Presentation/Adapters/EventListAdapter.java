@@ -22,7 +22,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
+import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Event;
+import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
+import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
+import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
+import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.PresentationConfig;
@@ -33,10 +41,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
-    private Map<String, Bitmap> cache = new HashMap<>();
+
+    private ImageRepositoryImpl imageRepository;
+    private EventRepositoryImpl eventRepository;
 
     public EventListAdapter(Activity activity, Context context, ArrayList<Event> items) {
         super(activity, context, items);
+        this.imageRepository = new ImageRepositoryImpl(context);
+        this.eventRepository = new EventRepositoryImpl(context);
     }
 
     @Override
@@ -65,182 +77,146 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             progressBar = itemView.findViewById(R.id.progress);
             btUsers = itemView.findViewById(R.id.bt_users);
             btChat = itemView.findViewById(R.id.bt_chat);
+            btMenu = itemView.findViewById(R.id.bt_menu);
         }
 
         @Override
         public void bind(int position) {
             item = getItem(position);
-            tvTitle.setText(item.getTitle());
+            glImages.removeAllViews();
             btReg.setVisibility(View.VISIBLE);
+            btChat.setVisibility(View.VISIBLE);
             btUsers.setVisibility(View.VISIBLE);
-            tvMessage.setText(item.getMessage());
-            if (item.getType() == Event.NEWS) {
-                btReg.setVisibility(View.GONE);
-                btUsers.setVisibility(View.GONE);
+            btMenu.setVisibility(View.VISIBLE);
+            btReg.setText("Вы записаны");
+
+            boolean isRegistered = false;
+            for (String s : item.getMembers()) {
+                if (s.equals(PresentationConfig.user.getEmail()))
+                    isRegistered = true;
+                break;
             }
+            if(!isRegistered){
+                btChat.setVisibility(View.GONE);
+                btUsers.setVisibility(View.GONE);
+                btReg.setText("Записаться");
+            }
+            if (!PresentationConfig.user.isAdmin()){
+                btMenu.setVisibility(View.GONE);
+            }
+
+
+            tvTitle.setText(item.getTitle());
+            tvMessage.setText(item.getMessage());
+
+            boolean finalIsRegistered = isRegistered;
             btReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Запись", "Да", "Вы действительно хотите участвовать в мероприятии?", new OnConfirmListener() {
-                        @Override
-                        public void onConfirm(DialogConfirm d) {
-                            d.freeze();
-                            item.getMembers().add(PresentationConfig.user.getEmail());
-                        }
+                    if(!finalIsRegistered) {
+                        DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Запись", "Да", "Вы действительно хотите участвовать в мероприятии?", new OnConfirmListener() {
+                            @Override
+                            public void onConfirm(DialogConfirm d) {
+                                d.freeze();
+                                item.getMembers().add(PresentationConfig.user.getEmail());
+                                RefactorEventUseCase refactorEventUseCase = new RefactorEventUseCase(eventRepository, item, new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+                                        Toast.makeText(activity, ";ifyuldydtul", Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
 
-                    });
-                    dialog.create(R.id.fragmentContainerView);
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+                                });
+                                refactorEventUseCase.execute();
+                            }
+
+                        });
+                        dialog.create(R.id.fragmentContainerView);
+                    }
+                }
+            });
+            btChat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(activity, ChatActivity.class);
+                    intent.putExtra("chatId", item.getChatId());
+                    activity.startActivity(intent);
+                }
+            });
+            btUsers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
 
                 }
             });
-       /*     ivImage.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-            Event.getEventById(context, item.id, new OnGetDataListener<Event>() {
+            btMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+
+            GetEventByIdUseCase getEventListUseCase = new GetEventByIdUseCase(eventRepository, item.getId(), new OnGetDataListener<Event>() {
                 @Override
                 public void onGetData(Event data) {
-                    if (cache.get(item.id) != null) {
-                        if (data.id.equals(item.id)) {
-                            ivImage.setImageBitmap(cache.get(item.id));
-                            ivImage.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    } else {
-                        data.getIconAsync(context, new OnGetIcon() {
+                    for (int i = 0; i < item.getImageRefs().size(); i++) {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
                             @Override
-                            public void onLoad(Bitmap bitmap) {
-                                cache.put(data.id, bitmap);
-                                if (data.id.equals(item.id)) {
-                                    ivImage.setImageBitmap(bitmap);
-                                    ivImage.setVisibility(View.VISIBLE);
-                                    progressBar.setVisibility(View.GONE);
-                                    if (data.iconRef == null){
-                                        ivImage.setVisibility(View.GONE);
-                                    }
+                            public void onGetData(Bitmap data1) {
+                                if(item.getId().equals(data.getId()));{
+                                    ImageView iv = new ImageView(context);
+                                    iv.setImageBitmap(data1);
+                                    glImages.addView(iv);
                                 }
+                            }
+
+                            @Override
+                            public void onVoidData() {
 
                             }
+
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            }
                         });
+                        getImageByRefUseCase.execute();
                     }
                 }
 
                 @Override
                 public void onVoidData() {
-
+                    Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
-                public void onNoConnection() {
-
+                public void onFailed() {
+                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onCanceled() {
-
+                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                 }
             });
-
-
-            btReg.setText("Записаться");
-            for (String s : item.userIds){
-                if (s.equals(user.id)){
-                    btReg.setText("Вы записаны");
-                    btReg.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    });
-                }
-            }
-
-            btUsers.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity, UserListActivity.class);
-                    intent.putExtra("users", item.userIds);
-                    intent.putExtra("user", user);
-                    activity.startActivity(intent);
-                }
-            });
-
-            btChat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(activity, ChatActivity.class);
-                    i.putExtra(CHAT_ID, item.chatId);
-                    i.putExtra(USER_INTENT, user);
-
-                    activity.startActivity(i);
-                }
-            });
-            itemView.findViewById(R.id.bt_menu).setVisibility(View.GONE);
-
-            btChat.setVisibility(View.GONE);
-            for (String s : item.userIds){
-                if (s.equals(user.id)){
-                    btChat.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-
-        @Override
-        public void bindAdmin(int position) {
-            btMenu = itemView.findViewById(R.id.bt_menu);
-            itemView.findViewById(R.id.bt_menu).setVisibility(View.VISIBLE);
-            btMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(activity, v);
-                    popup.inflate(R.menu.popup_menu_event_admin);
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch (menuItem.getItemId()) {
-                                // ямы на дорогах
-                                case R.id.delete:
-                                    DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Удалить", "Удалить", "Вы действительно хотите удалить ", new OnConfirmListener() {
-                                        @Override
-                                        public void onConfirm(DialogConfirm d) {
-                                            d.freeze();
-                                            item.setNewData(context, null, new OnSetDataListener<Event>() {
-                                                @Override
-                                                public void onSetData(Event data) {
-                                                    d.destroy();
-                                                }
-
-                                                @Override
-                                                public void onNoConnection() {
-
-                                                }
-
-                                                @Override
-                                                public void onCanceled() {
-
-                                                }
-                                            });
-                                        }
-
-                                        @Override
-                                        public void onCancel(DialogConfirm d) {
-                                            d.destroy();
-                                        }
-                                    });
-                                    dialog.create(R.id.fragmentContainerView);
-                                    break;
-                                // лужи
-                                case R.id.refactor:
-                                    DialogRefactorEvent d = new DialogRefactorEvent((AppCompatActivity) activity, item);
-                                    d.create(R.id.fragmentContainerView);
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popup.show();
-                }
-            });
-
-        */
+            getEventListUseCase.execute();
         }
     }
 }
