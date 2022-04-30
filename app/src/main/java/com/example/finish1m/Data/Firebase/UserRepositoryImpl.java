@@ -90,7 +90,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void setUser(String email, User user, OnSetDataListener listener) {
         try {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(DATABASE_USER);
-            for (Character c : user.getEmail().toCharArray()){
+            for (Character c : email.toCharArray()){
                 String s = String.valueOf(c);
                 if (s.equals("."))
                     s = PATH_POINT;

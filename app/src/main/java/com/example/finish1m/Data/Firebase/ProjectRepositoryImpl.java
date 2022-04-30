@@ -92,7 +92,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     @Override
     public void setProject(String id, Project project, OnSetDataListener listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_PROJECT).child(project.getId()).setValue(project).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_PROJECT).child(id).setValue(project).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {

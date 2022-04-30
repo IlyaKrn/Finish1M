@@ -91,7 +91,7 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public void setEvent(String id, Event event, OnSetDataListener listener) {
         try {
-            FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).child(event.getId()).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).child(id).setValue(event).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
