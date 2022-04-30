@@ -134,7 +134,6 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                 RefactorEventUseCase refactorEventUseCase = new RefactorEventUseCase(eventRepository, item, new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
-                                        Toast.makeText(activity, ";ifyuldydtul", Toast.LENGTH_SHORT).show();
                                         d.destroy();
                                     }
 
