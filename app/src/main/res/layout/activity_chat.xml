@@ -10,7 +10,6 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarMain"
         style="@style/toolbar.default"
         android:layout_width="match_parent">
 
