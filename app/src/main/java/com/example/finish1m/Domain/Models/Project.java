@@ -72,4 +72,16 @@ public class Project {
     public void setFollows(ArrayList<Follow> follows) {
         this.follows = follows;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", chatId='" + chatId + '\'' +
+                ", imageRefs=" + imageRefs +
+                ", follows=" + follows +
+                '}';
+    }
 }

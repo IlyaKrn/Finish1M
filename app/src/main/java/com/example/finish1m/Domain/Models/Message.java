@@ -41,4 +41,13 @@ public class Message {
     public void setImageRefs(ArrayList<String> imageRefs) {
         this.imageRefs = imageRefs;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "message='" + message + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", imageRefs=" + imageRefs +
+                '}';
+    }
 }

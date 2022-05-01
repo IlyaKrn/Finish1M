@@ -92,5 +92,18 @@ public class Event {
     public void setMembers(ArrayList<String> members) {
         this.members = members;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id='" + id + '\'' +
+                ", type=" + type +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", chatId='" + chatId + '\'' +
+                ", imageRefs=" + imageRefs +
+                ", members=" + members +
+                '}';
+    }
 }
 

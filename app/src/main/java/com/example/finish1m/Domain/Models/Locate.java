@@ -82,4 +82,17 @@ public class Locate {
     public void setImageRefs(ArrayList<String> imageRefs) {
         this.imageRefs = imageRefs;
     }
+
+    @Override
+    public String toString() {
+        return "Locate{" +
+                "id='" + id + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", chatId='" + chatId + '\'' +
+                ", imageRefs=" + imageRefs +
+                '}';
+    }
 }

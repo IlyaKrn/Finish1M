@@ -17,4 +17,12 @@ public class SQLiteUser {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return "SQLiteUser{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

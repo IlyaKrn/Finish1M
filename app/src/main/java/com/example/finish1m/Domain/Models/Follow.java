@@ -48,4 +48,14 @@ public class Follow {
     public void setImageRefs(ArrayList<String> imageRefs) {
         this.imageRefs = imageRefs;
     }
+
+    @Override
+    public String toString() {
+        return "Follow{" +
+                "id='" + id + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", message='" + message + '\'' +
+                ", imageRefs=" + imageRefs +
+                '}';
+    }
 }

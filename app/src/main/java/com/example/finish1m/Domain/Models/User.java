@@ -70,4 +70,16 @@ public class User {
     public void setIconRef(String iconRef) {
         this.iconRef = iconRef;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", isBanned=" + isBanned +
+                ", isAdmin=" + isAdmin +
+                ", iconRef='" + iconRef + '\'' +
+                '}';
+    }
 }

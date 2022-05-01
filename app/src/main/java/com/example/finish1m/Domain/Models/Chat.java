@@ -33,4 +33,12 @@ public class Chat {
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id='" + id + '\'' +
+                ", messages=" + messages +
+                '}';
+    }
 }
