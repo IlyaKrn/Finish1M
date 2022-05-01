@@ -1,9 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Presentation.RefactorLocateActivity">
+    tools:context=".Presentation.CreateNewLocateActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        style="@style/toolbar.default">
+
+        <ImageButton
+            android:id="@+id/bt_close"
+            style="@style/button.toolbar.default"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text.title.second"
+            android:text="@string/refactor_locate"
+            android:layout_gravity="start"
+            android:textAlignment="textStart"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:overScrollMode="ifContentScrolls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                style="@style/toolbar.default"
+                android:layout_margin="0dp"
+                android:elevation="0dp"
+                android:background="?recyclerView_default_background"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_elevation"
+                style="@style/toolbar.default"
+                android:layout_margin="0dp"
+                android:elevation="0dp"
+                android:background="?recyclerView_default_background"/>
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:padding="8dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/editText.span.main"
+                    android:hint="@string/locate_title"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    style="@style/text.warning.main"
+                    android:id="@+id/tv_title_err"
+                    android:visibility="gone" />
+                <EditText
+                    android:id="@+id/et_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/editText.span.main"
+                    android:hint="@string/locate_message"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    style="@style/text.warning.main"
+                    android:id="@+id/tv_message_err"
+                    android:visibility="gone" />
+
+                <GridLayout
+                    android:id="@+id/gl_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="1"/>
+
+                <Button
+                    android:id="@+id/bt_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/button.default"
+                    android:text="@string/locate_create"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_add_image"
+        style="@style/fab.default"
+        android:src="@android:drawable/ic_input_add" />
+
+</FrameLayout>
