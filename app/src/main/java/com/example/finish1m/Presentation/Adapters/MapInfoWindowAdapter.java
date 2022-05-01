@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
@@ -32,13 +34,11 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private final View rootView;
     private final Context context;
     private final ArrayList<Locate> locates;
-    private Map<Locate, Bitmap> cache;
+    private Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>();
 
+    private GridLayout glImages;
     private TextView title;
     private TextView snippet;
-    private ImageView icon;
-    private ProgressBar progress;
-    private FrameLayout ivContainer;
     private Activity activity;
 
 
@@ -51,25 +51,34 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     }
 
 
-    public void loadCache(Map<Locate, Bitmap> c){
+    public void loadCache(Map<Locate, ArrayList<Bitmap>> c){
         this.cache = c;
     }
 
     private void setData(Marker marker){
         title = rootView.findViewById(R.id.tv_title);
         snippet = rootView.findViewById(R.id.tv_snippet);
-        icon = rootView.findViewById(R.id.icon);
-        progress = rootView.findViewById(R.id.progress);
-        ivContainer = rootView.findViewById(R.id.ll_iv_container);
-        ivContainer.getLayoutParams().width = ivContainer.getHeight();
+        glImages = rootView.findViewById(R.id.gl_images);
 
+        glImages.removeAllViews();
 
         for(Locate l : locates){
             if (marker.getPosition().equals(new LatLng(l.getLatitude(), l.getLongitude()))){
                 title.setText(l.getTitle());
                 snippet.setText(l.getMessage());
-                if (cache != null && cache.get(l) != null)
-                    icon.setImageBitmap(cache.get(l));
+                if (l.getImageRefs() != null) {
+                    for (String s : l.getImageRefs()){
+                        if (cache != null && cache.get(l) != null) {
+                            for (Bitmap b : cache.get(l)) {
+                                ImageView iv = new ImageView(context);
+                                iv.setImageBitmap(b);
+                                glImages.addView(iv);
+                            }
+                        }
+                    }
+                }
+
+
             }
         }
 

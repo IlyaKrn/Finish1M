@@ -44,8 +44,7 @@
             android:id="@+id/gl_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:visibility="visible" />
+            android:columnCount="1" />
 
     </LinearLayout>
 

@@ -60,21 +60,24 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
         adapter = new MapInfoWindowAdapter(getActivity(), getContext(), locates);
 
         locateRepository = new LocateRepositoryImpl(getContext());
+        imageRepository = new ImageRepositoryImpl(getContext());
+
         getLocateListUseCase = new GetLocateListUseCase(locateRepository, new OnGetDataListener<ArrayList<Locate>>() {
             @Override
             public void onGetData(ArrayList<Locate> data) {
-                Map<Locate, Bitmap> cache = new HashMap<>();
+                Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>();
                 locates.clear();
                 locates.addAll(data);
                 for (Locate l : locates){
                     final int[] count = {0};
+                    cache.put(l, new ArrayList<>());
                     if (l.getImageRefs() != null) {
                         for (int i = 0; i < l.getImageRefs().size(); i++) {
                             GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
                                 @Override
                                 public void onGetData(Bitmap data) {
                                     count[0]++;
-                                    cache.put(l, data);
+                                    cache.get(l).add(data);
                                     if (locates.size() == count[0])
                                         adapter.loadCache(cache);
                                 }
