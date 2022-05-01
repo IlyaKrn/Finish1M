@@ -79,6 +79,7 @@ public class ChatActivity extends AppCompatActivity {
                 Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
             }
         });
+        getChatByIdUseCase.execute();
 
         adapter = new MessageListAdapter(this, this, messages);
         binding.rvMessages.setLayoutManager(new LinearLayoutManager(this));
