@@ -1,9 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Presentation.ChatActivity">
+    tools:context="Presentation.ChatActivity"
+    android:orientation="vertical"
+    android:background="?recyclerView_default_background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarMain"
+        style="@style/toolbar.default"
+        android:layout_width="match_parent">
+
+        <ImageButton
+            android:id="@+id/bt_close"
+            style="@style/button.toolbar.default"
+            app:srcCompat="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text.title.second"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_rv_messages_container"
+        android:overScrollMode="ifContentScrolls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                style="@style/toolbar.default"
+                android:layout_margin="0dp"
+                android:elevation="0dp"
+                android:background="?recyclerView_default_background"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_elevation"
+                style="@style/toolbar.default"
+                android:layout_margin="0dp"
+                android:elevation="0dp"
+                android:background="?recyclerView_default_background"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_messages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/recyclerView.default" />
+
+            <View
+                android:layout_width="match_parent"
+                style="@style/toolbar.default"
+                android:layout_margin="0dp"
+                android:elevation="0dp"
+                android:background="?recyclerView_default_background"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_elevation"
+                style="@style/toolbar.default"
+                android:layout_margin="0dp"
+                android:elevation="0dp"
+                android:background="?recyclerView_default_background"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <GridLayout
+        android:id="@+id/gl_images"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="60dp"/>
+
+
+    <androidx.appcompat.widget.Toolbar
+        style="@style/toolbar.default"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent">
+
+        <ImageButton
+            android:id="@+id/bt_add_image"
+            style="@style/button.toolbar.default"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxHeight="120dp">
+
+            <EditText
+                android:id="@+id/et_send"
+                style="@style/editText.span.second"
+                android:hint="Написать сообщение" />
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/bt_send"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            style="@style/button.toolbar.default"
+            app:srcCompat="@android:drawable/ic_menu_send" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+</FrameLayout>
