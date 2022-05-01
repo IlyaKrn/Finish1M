@@ -103,14 +103,12 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Message message = new Message(Objects.requireNonNull(binding.etSend.getText().toString()), PresentationConfig.user.getEmail(), null);
-                Log.e("sdffsd", message.toString());
                 createNewMessageUseCase = new CreateNewMessageUseCase(chatRepository, imageRepository, getIntent().getStringExtra("chatId"), message, images, new OnSetDataListener() {
                     @Override
                     public void onSetData() {
                         images.clear();
                         binding.glImages.removeAllViews();
                         binding.etSend.setText("");
-
                     }
 
                     @Override
