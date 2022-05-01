@@ -21,6 +21,7 @@ public class CreateNewMessageUseCase {
     private Message message;
     private ArrayList<Bitmap> images;
     private OnSetDataListener listener;
+    private boolean isAdd;
 
     public CreateNewMessageUseCase(ChatRepository chatRepository, ImageRepository imageRepository, String id, Message message, ArrayList<Bitmap> images, OnSetDataListener listener) {
         this.chatRepository = chatRepository;
@@ -29,43 +30,48 @@ public class CreateNewMessageUseCase {
         this.message = message;
         this.images = images;
         this.listener = listener;
+        this.isAdd = true;
     }
 
     public void execute(){
+        isAdd = true;
         chatRepository.getChatById(id, new OnGetDataListener<Chat>() {
             @Override
             public void onGetData(Chat data) {
-                if(images.size() > 0) {
-                    final int[] count = {0};
-                    message.setImageRefs(new ArrayList<>());
-                    for (Bitmap b : images) {
-                        imageRepository.setImage(b, new OnSetImageListener() {
-                            @Override
-                            public void onSetData(String ref) {
-                                count[0]++;
-                                message.getImageRefs().add(ref);
-                                if (count[0] == images.size()) {
-                                    data.getMessages().add(message);
-                                    chatRepository.setChat(id, data, listener);
+                if(isAdd) {
+                    isAdd = false;
+                    if (images.size() > 0) {
+                        final int[] count = {0};
+                        message.setImageRefs(new ArrayList<>());
+                        for (Bitmap b : images) {
+                            imageRepository.setImage(b, new OnSetImageListener() {
+                                @Override
+                                public void onSetData(String ref) {
+                                    count[0]++;
+                                    message.getImageRefs().add(ref);
+                                    if (count[0] == images.size()) {
+                                        data.getMessages().add(message);
+                                        chatRepository.setChat(id, data, listener);
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailed() {
-                                listener.onFailed();
-                            }
+                                @Override
+                                public void onFailed() {
+                                    listener.onFailed();
+                                }
 
-                            @Override
-                            public void onCanceled() {
-                                listener.onCanceled();
-                            }
-                        });
+                                @Override
+                                public void onCanceled() {
+                                    listener.onCanceled();
+                                }
+                            });
+                        }
                     }
-                }
-                else{
-                    message.setImageRefs(new ArrayList<>());
-                    data.getMessages().add(message);
-                    chatRepository.setChat(id, data, listener);
+                    else {
+                        message.setImageRefs(new ArrayList<>());
+                        data.getMessages().add(message);
+                        chatRepository.setChat(id, data, listener);
+                    }
                 }
             }
 
