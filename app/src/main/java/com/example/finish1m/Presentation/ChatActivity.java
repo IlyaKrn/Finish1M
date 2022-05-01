@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.finish1m.Data.Firebase.ChatRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Chat;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewMessageUseCase;
@@ -26,6 +28,7 @@ import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityChatBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -99,7 +102,35 @@ public class ChatActivity extends AppCompatActivity {
         binding.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Message message = new Message(Objects.requireNonNull(binding.etSend.getText().toString()), PresentationConfig.user.getEmail(), null);
+                Log.e("sdffsd", message.toString());
+                createNewMessageUseCase = new CreateNewMessageUseCase(chatRepository, imageRepository, getIntent().getStringExtra("chatId"), message, images, new OnSetDataListener() {
+                    @Override
+                    public void onSetData() {
+                        images.clear();
+                        binding.glImages.removeAllViews();
+                        binding.etSend.setText("");
 
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        Toast.makeText(ChatActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                        images.clear();
+                        binding.glImages.removeAllViews();
+                        binding.etSend.setText("");
+
+                    }
+
+                    @Override
+                    public void onCanceled() {
+                        Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                        images.clear();
+                        binding.glImages.removeAllViews();
+                        binding.etSend.setText("");
+                    }
+                });
+                createNewMessageUseCase.execute();
             }
         });
 
