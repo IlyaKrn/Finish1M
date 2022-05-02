@@ -2,8 +2,16 @@ package com.example.finish1m.Presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.finish1m.Data.SQLite.SQLiteRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
@@ -11,22 +19,14 @@ import com.example.finish1m.Domain.UseCases.WriteSQLiteUserUseCase;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.ActivityHubActivityBinding;
+import com.example.finish1m.databinding.ActivityHubBinding;
 import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 public class HubActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityHubActivityBinding binding;
+    private ActivityHubBinding binding;
 
     private SQLiteRepositoryImpl sqLiteRepository;
 
@@ -36,7 +36,7 @@ public class HubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHubActivityBinding.inflate(getLayoutInflater());
+        binding = ActivityHubBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         sqLiteRepository = new SQLiteRepositoryImpl(this);
