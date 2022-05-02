@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Presentation.StartActivity"
-    android:padding="90dp">
+    android:padding="90dp"
+    android:orientation="vertical">
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:layout_marginBottom="112dp"
-      android:layout_gravity="bottom">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:src="@drawable/ic_app"/>
 
-      <Button
-          android:id="@+id/bt_enter"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          style="@style/button.default"
-          android:text="@string/enter_button"/>
-      <Button
-          android:id="@+id/bt_register"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          style="@style/button.default"
-          android:text="@string/register_button"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
 
-  </LinearLayout>
+        <Button
+            android:id="@+id/bt_enter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/button.default"
+            android:text="@string/enter_button"/>
+        <Button
+            android:id="@+id/bt_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/button.default"
+            android:text="@string/register_button"/>
+
+    </LinearLayout>
 
 
-</LinearLayout>
+</FrameLayout>
