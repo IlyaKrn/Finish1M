@@ -23,7 +23,6 @@ import com.example.finish1m.Domain.UseCases.RegisterWithEmailAndPasswordUseCase;
 import com.example.finish1m.Domain.UseCases.SendVerificationEmailUseCase;
 import com.example.finish1m.Domain.UseCases.WriteSQLiteUserUseCase;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.ActivityEnterBinding;
 import com.example.finish1m.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -119,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                                                         });
                                                                                     }
                                                                                     writeSQLiteUserUseCase.execute();
-                                                                                    Intent intent = new Intent(RegisterActivity.this, HubActivityActivity.class);
+                                                                                    Intent intent = new Intent(RegisterActivity.this, HubActivity.class);
                                                                                     startActivity(intent);
                                                                                     finish();
                                                                                 }

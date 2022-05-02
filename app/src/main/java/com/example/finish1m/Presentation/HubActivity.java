@@ -3,7 +3,6 @@ package com.example.finish1m.Presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
 
 import com.example.finish1m.Data.SQLite.SQLiteRepositoryImpl;
@@ -13,7 +12,6 @@ import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityHubActivityBinding;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class HubActivityActivity extends AppCompatActivity {
+public class HubActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHubActivityBinding binding;
@@ -69,27 +67,27 @@ public class HubActivityActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile_exit:
-                        DialogConfirm dialog = new DialogConfirm(HubActivityActivity.this, "Выход", "Выйти", "Вы вуйствительно хотите выйти из аккаунта?", new OnConfirmListener(){
+                        DialogConfirm dialog = new DialogConfirm(HubActivity.this, "Выход", "Выйти", "Вы вуйствительно хотите выйти из аккаунта?", new OnConfirmListener(){
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, null, new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
-                                        Intent intent = new Intent(HubActivityActivity.this, StartActivity.class);
+                                        Intent intent = new Intent(HubActivity.this, StartActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
 
                                     @Override
                                     public void onFailed() {
-                                        Intent intent = new Intent(HubActivityActivity.this, StartActivity.class);
+                                        Intent intent = new Intent(HubActivity.this, StartActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
 
                                     @Override
                                     public void onCanceled() {
-                                        Intent intent = new Intent(HubActivityActivity.this, StartActivity.class);
+                                        Intent intent = new Intent(HubActivity.this, StartActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -101,7 +99,7 @@ public class HubActivityActivity extends AppCompatActivity {
                 break;
             case R.id.profile_refactor:
 
-                        Intent intent = new Intent(HubActivityActivity.this, RefactorUserActivity.class);
+                        Intent intent = new Intent(HubActivity.this, RefactorUserActivity.class);
                         intent.putExtra("userEmail", PresentationConfig.user.getEmail());
                         startActivity(intent);
 

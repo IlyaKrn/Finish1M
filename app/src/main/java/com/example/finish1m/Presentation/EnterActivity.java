@@ -11,11 +11,8 @@ import android.widget.Toast;
 import com.example.finish1m.Data.Firebase.AuthRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
 import com.example.finish1m.Data.SQLite.SQLiteRepositoryImpl;
-import com.example.finish1m.Domain.Interfaces.AuthRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
-import com.example.finish1m.Domain.Interfaces.SQLiteRepository;
-import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.SQLiteUser;
 import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.EnterWithEmailAndPasswordUseCase;
@@ -120,7 +117,7 @@ public class EnterActivity extends AppCompatActivity {
                                 });
                             }
                             writeSQLiteUserUseCase.execute();
-                            Intent intent = new Intent(EnterActivity.this, HubActivityActivity.class);
+                            Intent intent = new Intent(EnterActivity.this, HubActivity.class);
                             startActivity(intent);
                             finish();
                         }
