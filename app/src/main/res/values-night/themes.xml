@@ -85,7 +85,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Theme.SmartArzamas.NoActionBar" parent="Theme.Finish1M">
+    <style name="Theme.Finish1M.NoActionBar" parent="Theme.Finish1M">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>

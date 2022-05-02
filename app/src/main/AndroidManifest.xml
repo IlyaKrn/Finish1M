@@ -9,29 +9,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finish1M.NoActionBar">
-        <activity
-            android:name=".Presentation.CreateNewFollowActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Presentation.FollowsListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Presentation.UserListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Presentation.RefactorProjectActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Presentation.RefactorEventActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Presentation.RefactorLocateActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".Presentation.CreateNewFollowActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.FollowsListActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.UserListActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.RefactorProjectActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.RefactorEventActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".Presentation.RefactorLocateActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
         <activity
             android:name=".Presentation.RefactorUserActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
@@ -55,15 +61,14 @@
         <activity
             android:name=".Presentation.HubActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="false"
-            android:label="@string/title_activity_hub_activity"
-            android:theme="@style/Theme.Finish1M.NoActionBar" />
+            android:exported="false"/>
         <activity
             android:name=".Presentation.EnterActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".Presentation.RegisterActivity"
@@ -71,6 +76,7 @@
             android:exported="false" />
         <activity
             android:name=".Presentation.StartActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

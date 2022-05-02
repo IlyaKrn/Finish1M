@@ -83,18 +83,10 @@
 
     </style>
 
-    <style name="Theme.SmartArzamas.NoActionBar" parent="Theme.Finish1M">
+    <style name="Theme.Finish1M.NoActionBar" parent="Theme.Finish1M">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="Theme.Finish1M.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.Finish1M.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Finish1M.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

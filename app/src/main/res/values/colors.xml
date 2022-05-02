@@ -52,17 +52,17 @@
     <color name="design_black_main">#21201E</color>
     <color name="design_black_dark">#000000</color>
 
-    <color name="design_default_light">#ffedff</color>
-    <color name="design_default_main">#CDBBF7</color>
-    <color name="design_default_dark">#9b8bc4</color>
+    <color name="design_default_light">#52cf6a</color>
+    <color name="design_default_main">#019d3c</color>
+    <color name="design_default_dark">#005f33</color>
 
-    <color name="design_red_light">#edffff</color>
-    <color name="design_red_main">#B9F5FE</color>
-    <color name="design_red_dark">#87c2cb</color>
+    <color name="design_red_light">#d4465c</color>
+    <color name="design_red_main">#9d0133</color>
+    <color name="design_red_dark">#68000d</color>
 
-    <color name="design_gray_light">#fffffe</color>
-    <color name="design_gray_main">#FEE9CA</color>
-    <color name="design_gray_dark">#cbb89a</color>
+    <color name="design_gray_light">#d46631</color>
+    <color name="design_gray_main">#9d3801</color>
+    <color name="design_gray_dark">#690200</color>
 
 
 
