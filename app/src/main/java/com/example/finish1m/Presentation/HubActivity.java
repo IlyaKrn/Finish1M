@@ -60,7 +60,7 @@ public class HubActivity extends AppCompatActivity {
         navigationView.getHeaderView(0).findViewById(R.id.tv_vk_ref).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(PresentationConfig.REF_VK_MAIN));
                 startActivity(browserIntent);
             }
         });
