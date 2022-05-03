@@ -1,35 +1,32 @@
-package com.example.finish1m.Presentation.ui.gallery;
+package com.example.finish1m.Presentation.ui.projects;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
-import com.example.finish1m.Domain.Interfaces.ProjectRepository;
 import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.UseCases.GetProjectListUseCase;
 import com.example.finish1m.Presentation.Adapters.ProjectListAdapter;
 import com.example.finish1m.Presentation.CreateNewProjectActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.FragmentGalleryBinding;
+import com.example.finish1m.databinding.FragmentProjectsBinding;
 
 import java.util.ArrayList;
 
 
-public class GalleryFragment extends Fragment {
+public class ProjectsFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentProjectsBinding binding;
 
     private ProjectRepositoryImpl projectRepository;
     private GetProjectListUseCase getProjectListUseCase;
@@ -38,7 +35,7 @@ public class GalleryFragment extends Fragment {
     private ArrayList<Project> projects = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentProjectsBinding.inflate(inflater, container, false);
 
         projectRepository = new ProjectRepositoryImpl(getContext());
         getProjectListUseCase = new GetProjectListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {

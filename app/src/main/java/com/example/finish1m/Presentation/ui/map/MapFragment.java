@@ -1,9 +1,8 @@
-package com.example.finish1m.Presentation.ui.slideshow;
+package com.example.finish1m.Presentation.ui.map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.FragmentSlideshowBinding;
+import com.example.finish1m.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,9 +39,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentMapBinding binding;
 
     private GoogleMap googleMap;
     private LocateRepositoryImpl locateRepository;
@@ -55,7 +54,7 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
 
         adapter = new MapInfoWindowAdapter(getActivity(), getContext(), locates);
 

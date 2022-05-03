@@ -1,35 +1,32 @@
-package com.example.finish1m.Presentation.ui.home;
+package com.example.finish1m.Presentation.ui.events;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Event;
-import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.GetEventListUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.FragmentHomeBinding;
+import com.example.finish1m.databinding.FragmentEventsBinding;
 
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment {
+public class EventsFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentEventsBinding binding;
 
     private EventRepositoryImpl eventRepository;
 
@@ -39,7 +36,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<Event> events = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentEventsBinding.inflate(inflater, container, false);
 
         eventRepository = new EventRepositoryImpl(getContext());
 

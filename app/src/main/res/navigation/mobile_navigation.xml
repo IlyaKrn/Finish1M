@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_events">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.finish1m.Presentation.ui.home.HomeFragment"
+        android:id="@+id/nav_events"
+        android:name="com.example.finish1m.Presentation.ui.events.EventsFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_events" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.finish1m.Presentation.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_projects"
+        android:name="com.example.finish1m.Presentation.ui.projects.ProjectsFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_projects" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.finish1m.Presentation.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_map"
+        android:name="com.example.finish1m.Presentation.ui.map.MapFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_map" />
 </navigation>
