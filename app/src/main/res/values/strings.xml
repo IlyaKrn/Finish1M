@@ -63,4 +63,5 @@
     <string name="refactor_event">Изменение мероприятия</string>
     <string name="refactor_locate">зменение метки</string>
     <string name="refactor_project">Изменение проекта</string>
+    <string name="menu_my_home">Мои мероприятия</string>
 </resources>
