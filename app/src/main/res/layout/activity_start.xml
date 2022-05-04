@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Presentation.StartActivity"
-    android:padding="90dp"
+    android:padding="56dp"
     android:orientation="vertical">
 
     <ImageView
