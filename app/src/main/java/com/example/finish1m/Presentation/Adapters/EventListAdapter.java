@@ -25,6 +25,7 @@ import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Event;
+import com.example.finish1m.Domain.UseCases.AddUserToEventByEmailUseCase;
 import com.example.finish1m.Domain.UseCases.DeleteEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
@@ -126,7 +127,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                     m = new ArrayList<>();
                                 m.add(PresentationConfig.user.getEmail());
                                 item.setMembers(m);
-                                RefactorEventUseCase refactorEventUseCase = new RefactorEventUseCase(eventRepository, item, new OnSetDataListener() {
+                                AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.user.getEmail(), new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
                                         d.destroy();
@@ -144,7 +145,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                         d.destroy();
                                     }
                                 });
-                                refactorEventUseCase.execute();
+                                addUserToEventByEmailUseCase.execute();
                             }
 
                         });
