@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ import com.example.finish1m.R;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
 
@@ -161,7 +163,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 @Override
                 public void onClick(View view){
                     Intent intent = new Intent(activity, UserListActivity.class);
-                    intent.putExtra("users", item.getMembers());
+                    intent.putExtra("users", item.getMembers().toArray());
                     activity.startActivity(intent);
                 }
             });

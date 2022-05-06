@@ -12,6 +12,12 @@ public class RefactorUserUseCase {
     private User user;
     private OnSetDataListener listener;
 
+    public RefactorUserUseCase(UserRepository repository, User user, OnSetDataListener listener) {
+        this.repository = repository;
+        this.user = user;
+        this.listener = listener;
+    }
+
     public void execute(){
         repository.setUser(user.getEmail(), user, listener);
     }

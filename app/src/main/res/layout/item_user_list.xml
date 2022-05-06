@@ -1,0 +1,48 @@
+<LinearLayout android:id="@+id/item_body"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/userItem_padding">
+
+    <LinearLayout
+        android:layout_width="@dimen/userItem_iconHeightAndWidth"
+        android:layout_height="@dimen/userItem_iconHeightAndWidth"
+        android:orientation="vertical">
+
+        <com.example.finish1m.Presentation.Views.IconView
+            android:id="@+id/user_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/text.span.main"/>
+
+        <TextView
+            android:id="@+id/tv_user_email"
+            style="@style/text.span.second"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/bt_item_menu"
+        style="@style/button.toolbar.default"
+        android:layout_gravity="center_vertical|end"
+        android:src="@drawable/ic_menu_spots"/>
+</LinearLayout>
