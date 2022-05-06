@@ -8,15 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.Models.User;
+import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
+import com.example.finish1m.Domain.UseCases.GetUserByEmailUseCase;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.Presentation.Views.IconView;
 import com.example.finish1m.Presentation.Views.TableMessageImages;
@@ -100,45 +104,29 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             notMy_tlImages.removeBitmaps();
             my_tlImages.removeBitmaps();
             if (item.getImageRefs() != null){
-                if (savedImages.get(item.getMessage()) != null){
-                    ArrayList<Bitmap> bitmaps = savedImages.get(item.getMessage());
-                    if (item.getUserEmail() != null){
-                        if (item.getUserEmail().equals(PresentationConfig.user.getEmail())){
-                            my_tlImages.setBitmaps(bitmaps);
-                        }
-                        else {
-                            notMy_tlImages.setBitmaps(bitmaps);
-                        }
-                    }
-                    else {
-                        system_tlImages.setBitmaps(bitmaps);
-                    }
-                }
-                else {
-                    /*
-                    item.getIconsAsync(context, new OnGetIcons() {
-                        @Override
-                        public void onGet(ArrayList<Bitmap> bitmaps, Message message) {
-                            savedImages.put(message.id, bitmaps);
-                            if (item.equals(message)) {
-                                if (item.userId != null){
-                                    if (item.userId.equals(user.id)){
-                                        my_tlImages.setBitmaps(bitmaps);
-                                    }
-                                    else {
-                                        notMy_tlImages.setBitmaps(bitmaps);
-                                    }
-                                }
-                                else {
-                                    system_tlImages.setBitmaps(bitmaps);
-                                }
-                            }
-                        }
-                    });
+                int[] count = {0};
 
-                     */
-
-                }
+                /*
+                   item.getIconsAsync(context, new OnGetIcons() {
+                       @Override
+                       public void onGet(ArrayList<Bitmap> bitmaps, Message message) {
+                           savedImages.put(message.id, bitmaps);
+                           if (item.equals(message)) {
+                               if (item.userId != null){
+                                   if (item.userId.equals(user.id)){
+                                       my_tlImages.setBitmaps(bitmaps);
+                                   }
+                                   else {
+                                       notMy_tlImages.setBitmaps(bitmaps);
+                                   }
+                               }
+                               else {
+                                   system_tlImages.setBitmaps(bitmaps);
+                               }
+                           }
+                       }
+                   });
+                    */
             }
             else {
                 system_tlImages.removeBitmaps();
@@ -160,27 +148,45 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                     notMy_ivIcon.setVisibility(View.GONE);
                     notMy_progressImage.setVisibility(View.VISIBLE);
                     notMy_tvMessage.setText(item.getMessage());
-                    /*
-                    User.getUserById(context, item.userId, new OnGetDataListener<User>() {
+
+                    GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
                         @Override
                         public void onGetData(User data) {
                             u = data;
-                            if (u.id.equals(item.userId))
-                                notMy_tvName.setText(user.name);
-                            if (savedIcons.get(u.id) != null){
-                                if (u.id.equals(item.userId)) {
-                                    notMy_ivIcon.setImageBitmap(savedIcons.get(u.id));
-                                    notMy_ivIcon.setVisibility(View.VISIBLE);
-                                    notMy_progressImage.setVisibility(View.GONE);
-                                }
-                            }
-                            else {
-                                user.getIconAsync(context, new OnGetIcon() {
+                            if (u.getEmail().equals(item.getUserEmail())) {
+                                notMy_tvName.setText(data.getFirstName());
+                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
                                     @Override
-                                    public void onLoad(Bitmap bitmap) {
-                                        savedIcons.put(u.id, bitmap);
-                                        if (u.id.equals(item.userId)) {
-                                            notMy_ivIcon.setImageBitmap(bitmap);
+                                    public void onGetData(Bitmap data) {
+                                        if (u.getEmail().equals(item.getUserEmail())) {
+                                            notMy_ivIcon.setImageBitmap(data);
+                                            notMy_ivIcon.setVisibility(View.VISIBLE);
+                                            notMy_progressImage.setVisibility(View.GONE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onVoidData() {
+                                        if (u.getEmail().equals(item.getUserEmail())) {
+                                            notMy_ivIcon.setImageBitmap(null);
+                                            notMy_ivIcon.setVisibility(View.VISIBLE);
+                                            notMy_progressImage.setVisibility(View.GONE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+                                        if (u.getEmail().equals(item.getUserEmail())) {
+                                            notMy_ivIcon.setImageBitmap(null);
+                                            notMy_ivIcon.setVisibility(View.VISIBLE);
+                                            notMy_progressImage.setVisibility(View.GONE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+                                        if (u.getEmail().equals(item.getUserEmail())) {
+                                            notMy_ivIcon.setImageBitmap(null);
                                             notMy_ivIcon.setVisibility(View.VISIBLE);
                                             notMy_progressImage.setVisibility(View.GONE);
                                         }
@@ -195,7 +201,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                         }
 
                         @Override
-                        public void onNoConnection() {
+                        public void onFailed() {
 
                         }
 
@@ -203,7 +209,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                         public void onCanceled() {
 
                         }
-                    });*/
+                    });
                 }
 
 

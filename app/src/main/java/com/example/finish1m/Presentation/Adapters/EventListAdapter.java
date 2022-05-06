@@ -94,9 +94,10 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             boolean isRegistered = false;
             if (item.getMembers() != null) {
                 for (String s : item.getMembers()) {
-                    if (s.equals(PresentationConfig.user.getEmail()))
+                    if (s.equals(PresentationConfig.user.getEmail())) {
                         isRegistered = true;
-                    break;
+                        break;
+                    }
                 }
             }
 
@@ -122,11 +123,6 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                ArrayList<String> m = item.getMembers();
-                                if (m == null)
-                                    m = new ArrayList<>();
-                                m.add(PresentationConfig.user.getEmail());
-                                item.setMembers(m);
                                 AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.user.getEmail(), new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
