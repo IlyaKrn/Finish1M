@@ -106,28 +106,39 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             my_tlImages.removeBitmaps();
             if (item.getImageRefs() != null){
                 int[] count = {0};
+                for (String ref : item.getImageRefs()){
+                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, ref, new OnGetDataListener<Bitmap>() {
+                        @Override
+                        public void onGetData(Bitmap data) {
+                            if (item.getUserEmail() != null) {
+                                if (item.getUserEmail().equals(PresentationConfig.user.getEmail())) {
+                                    my_tlImages.addImage(data);
+                                    Log.e("lkjgkjg", "khgljkh");
+                                } else {
+                                    my_tlImages.addImage(data);
+                                }
+                            } else {
+                                my_tlImages.addImage(data);
+                            }
+                        }
 
-                /*
-                   item.getIconsAsync(context, new OnGetIcons() {
-                       @Override
-                       public void onGet(ArrayList<Bitmap> bitmaps, Message message) {
-                           savedImages.put(message.id, bitmaps);
-                           if (item.equals(message)) {
-                               if (item.userId != null){
-                                   if (item.userId.equals(user.id)){
-                                       my_tlImages.setBitmaps(bitmaps);
-                                   }
-                                   else {
-                                       notMy_tlImages.setBitmaps(bitmaps);
-                                   }
-                               }
-                               else {
-                                   system_tlImages.setBitmaps(bitmaps);
-                               }
-                           }
-                       }
-                   });
-                    */
+                        @Override
+                        public void onVoidData() {
+                            count[0]++;
+                        }
+
+                        @Override
+                        public void onFailed() {
+                            count[0]++;
+                        }
+
+                        @Override
+                        public void onCanceled() {
+                            count[0]++;
+                        }
+                    });
+                    getImageByRefUseCase.execute();
+                }
             }
             else {
                 system_tlImages.removeBitmaps();

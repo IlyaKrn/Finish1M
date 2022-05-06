@@ -29,7 +29,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     @Override
     public void getImageByRef(String ref, OnGetDataListener<Bitmap> listener) {
         try {
-            FirebaseStorage.getInstance().getReference().child(ref).getBytes(1024*1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
+            FirebaseStorage.getInstance().getReference().child(ref).getBytes(1024*1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
                 @Override
                 public void onComplete(@NonNull Task<byte[]> task) {
                     if (context != null) {
@@ -71,7 +71,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     private void getDefaultImage(OnGetDataListener<Bitmap> listener){
         try {
-            FirebaseStorage.getInstance().getReference().child(FirebaseConfig.STORAGE_DEFAULT_ICON).getBytes(1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
+            FirebaseStorage.getInstance().getReference().child(FirebaseConfig.STORAGE_DEFAULT_ICON).getBytes(1024 * 1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
                 @Override
                 public void onComplete(@NonNull Task<byte[]> task) {
                     if (context != null) {

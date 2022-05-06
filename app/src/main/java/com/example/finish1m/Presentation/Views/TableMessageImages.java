@@ -45,37 +45,19 @@ public class TableMessageImages extends GridLayout {
 
     public void setBitmaps(ArrayList<Bitmap> bitmaps) {
         this.bitmaps = bitmaps;
-        if (bitmaps.size() > 0){
-
-            // hard set image width
-            // overwrite when message layout will be exists
-            /*
-            if (type == SYSTEM_MESSAGE)
-                width = (int) (getRootView().getWidth() - (getResources().getDimension(R.dimen.margin_system_message) * 2));
-            else if (type == MY_MESSAGE)
-                width = (int) (getRootView().getWidth() - getResources().getDimension(R.dimen.margin_user_message));
-            else if (type == NOT_MY_MESSAGE)
-                width = (int) (getRootView().getWidth() - getResources().getDimension(R.dimen.margin_user_message) - getResources().getDimension(R.dimen.icon_message));
 
 
-             */
-            getLayoutParams().width = 100;// width;
 
-            ArrayList<ImageView> imageViews = new ArrayList<>();
+    }
 
-            for (Bitmap b : bitmaps) {
-                ImageView imageView = new ImageView(getContext());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(width/columnCount, width/columnCount));
-                imageView.setImageBitmap(b);
-                imageViews.add(imageView);
-            }
-            for (ImageView i : imageViews){
-                addView(i);
-            }
-
-
-        }
+    public void addImage(Bitmap b){
+        this.bitmaps.add(b);
+        getLayoutParams().width = 100;// width;
+        ImageView imageView = new ImageView(getContext());
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(width/columnCount, width/columnCount));
+        imageView.setImageBitmap(b);
+        addView(imageView);
     }
 
     public void removeBitmaps(){
