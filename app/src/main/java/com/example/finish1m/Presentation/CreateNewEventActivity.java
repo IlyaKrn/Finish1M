@@ -2,6 +2,7 @@ package com.example.finish1m.Presentation;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import com.example.finish1m.Domain.Models.Chat;
 import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
+import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewEventBinding;
 
@@ -36,6 +38,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
     private ImageRepositoryImpl imageRepository;
     private CreateNewEventUseCase createNewEventUseCase;
     private ArrayList<Bitmap> images = new ArrayList<>();
+    private ImageListAdapter adapter;
 
 
     @Override
@@ -48,7 +51,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
         chatRepository = new ChatRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
-        binding.glImages.setColumnCount(2);
+
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,13 +94,13 @@ public class CreateNewEventActivity extends AppCompatActivity {
                         createNewEventUseCase.execute();
                     }
                     else {
-                        binding.etTitle.setVisibility(View.VISIBLE);
-                        binding.etTitle.setText(R.string.empty_edit_text_error);
+                        binding.tvTitleErr.setVisibility(View.VISIBLE);
+                        binding.tvTitleErr.setText(R.string.empty_edit_text_error);
                     }
                 }
                 else {
-                    binding.etTitle.setVisibility(View.VISIBLE);
-                    binding.etTitle.setText(R.string.empty_edit_text_error);
+                    binding.tvTitleErr.setVisibility(View.VISIBLE);
+                    binding.tvTitleErr.setText(R.string.empty_edit_text_error);
                 }
             }
         });
@@ -109,6 +112,17 @@ public class CreateNewEventActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+
+        adapter = new ImageListAdapter(this, this, images);
+        adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
+            @Override
+            public void onRemove(int position) {
+                images.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        binding.rvImages.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvImages.setAdapter(adapter);
 
 
 
@@ -124,7 +138,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
             iv.setImageURI(data.getData());
             Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
             images.add(bitmap);
-            binding.glImages.addView(iv);
+            adapter.notifyDataSetChanged();
         }
     }
 }
