@@ -3,6 +3,7 @@ package com.example.finish1m.Presentation.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,31 +168,20 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
 
                                     @Override
                                     public void onVoidData() {
-                                        if (u.getEmail().equals(item.getUserEmail())) {
-                                            notMy_ivIcon.setImageBitmap(null);
-                                            notMy_ivIcon.setVisibility(View.VISIBLE);
-                                            notMy_progressImage.setVisibility(View.GONE);
-                                        }
+
                                     }
 
                                     @Override
                                     public void onFailed() {
-                                        if (u.getEmail().equals(item.getUserEmail())) {
-                                            notMy_ivIcon.setImageBitmap(null);
-                                            notMy_ivIcon.setVisibility(View.VISIBLE);
-                                            notMy_progressImage.setVisibility(View.GONE);
-                                        }
+
                                     }
 
                                     @Override
                                     public void onCanceled() {
-                                        if (u.getEmail().equals(item.getUserEmail())) {
-                                            notMy_ivIcon.setImageBitmap(null);
-                                            notMy_ivIcon.setVisibility(View.VISIBLE);
-                                            notMy_progressImage.setVisibility(View.GONE);
-                                        }
+
                                     }
                                 });
+                                getImageByRefUseCase.execute();
                             }
                         }
 
@@ -210,6 +200,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
 
                         }
                     });
+                    getUserByEmailUseCase.execute();
                 }
 
 

@@ -45,7 +45,7 @@ public class ImageRepositoryImpl implements ImageRepository {
                 }
             });
         } catch (Exception e){
-            listener.onFailed();
+            getDefaultImage(listener);
         }
     }
 
