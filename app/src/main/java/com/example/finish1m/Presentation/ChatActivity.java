@@ -145,6 +145,8 @@ public class ChatActivity extends AppCompatActivity {
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             iv.setImageURI(data.getData());
+            iv.getLayoutParams().width = 300;
+            iv.getLayoutParams().height = 300;
             Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
             images.add(bitmap);
             binding.glImages.addView(iv);
