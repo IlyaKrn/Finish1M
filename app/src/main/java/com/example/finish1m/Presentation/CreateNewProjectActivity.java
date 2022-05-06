@@ -2,6 +2,7 @@ package com.example.finish1m.Presentation;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.CreateNewProjectUseCase;
+import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewEventBinding;
 import com.example.finish1m.databinding.ActivityCreateNewProjectBinding;
@@ -40,6 +42,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
     private ImageRepositoryImpl imageRepository;
     private CreateNewProjectUseCase createNewProjectUseCase;
     private ArrayList<Bitmap> images = new ArrayList<>();
+    private ImageListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
         chatRepository = new ChatRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
-        binding.glImages.setColumnCount(2);
+
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +116,18 @@ public class CreateNewProjectActivity extends AppCompatActivity {
             }
         });
 
+        adapter = new ImageListAdapter(this, this, images);
+        adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
+            @Override
+            public void onRemove(int position) {
+                images.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        binding.rvImages.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvImages.setAdapter(adapter);
+
+
 
     }
 
@@ -125,7 +140,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
             iv.setImageURI(data.getData());
             Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
             images.add(bitmap);
-            binding.glImages.addView(iv);
+            adapter.notifyDataSetChanged();
         }
     }
 }
