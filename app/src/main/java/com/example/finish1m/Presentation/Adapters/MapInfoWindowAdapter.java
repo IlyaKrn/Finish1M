@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -72,6 +73,8 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                             for (Bitmap b : cache.get(l)) {
                                 ImageView iv = new ImageView(context);
                                 iv.setImageBitmap(b);
+                                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(300, 300);
+                                iv.setLayoutParams(p);
                                 glImages.addView(iv);
                             }
                         }
