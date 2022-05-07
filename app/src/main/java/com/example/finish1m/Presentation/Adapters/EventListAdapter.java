@@ -111,6 +111,10 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             if (!PresentationConfig.user.isAdmin()){
                 btMenu.setVisibility(View.GONE);
             }
+            else {
+                btChat.setVisibility(View.VISIBLE);
+                btUsers.setVisibility(View.VISIBLE);
+            }
 
 
             tvTitle.setText(item.getTitle());

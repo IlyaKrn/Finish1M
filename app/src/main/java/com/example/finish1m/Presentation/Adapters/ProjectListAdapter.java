@@ -104,6 +104,10 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 btMenu.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
             }
+            else {
+                btChat.setVisibility(View.VISIBLE);
+                btUsers.setVisibility(View.VISIBLE);
+            }
 
 
             tvTitle.setText(item.getTitle());

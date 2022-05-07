@@ -1,16 +1,59 @@
 package com.example.finish1m.Presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 
-import com.example.finish1m.R;
+import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
+import com.example.finish1m.Domain.Models.Follow;
+import com.example.finish1m.Presentation.Adapters.FollowListAdapter;
+import com.example.finish1m.databinding.ActivityFollowsListBinding;
+
+import java.util.ArrayList;
 
 public class FollowsListActivity extends AppCompatActivity {
+
+    ActivityFollowsListBinding binding;
+
+    private FollowListAdapter adapter;
+    private ArrayList<Follow> follows = new ArrayList<>();
+    private ProjectRepositoryImpl projectRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follows_list);
+        binding = ActivityFollowsListBinding.inflate((getLayoutInflater()));
+        setContentView(binding.getRoot());
+
+        projectRepository = new ProjectRepositoryImpl(this);
+
+        for (int i = 0; i < 3; i++){
+            ArrayList<String> ir = new ArrayList<>();
+            ir.add("images/all/-N1TEqCF_sJVqEq9E7F4");
+            Follow f = new Follow("fgdfgdfgdfg0", "ilyakornoukhov@gmail.com", "dfgdfgdfgdfgdfgdf", ir);
+            follows.add(f);
+        }
+
+
+
+
+
+
+        adapter = new FollowListAdapter(this, this, follows);
+        binding.rvFollows.setAdapter(adapter);
+        binding.rvFollows.setLayoutManager(new LinearLayoutManager(this));
+
+        binding.btClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+
     }
 }
