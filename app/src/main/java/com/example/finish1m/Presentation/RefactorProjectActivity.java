@@ -75,17 +75,17 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
                             @Override
                             public void onVoidData() {
-
+                                Toast.makeText(RefactorProjectActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onFailed() {
-
+                                Toast.makeText(RefactorProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCanceled() {
-
+                                Toast.makeText(RefactorProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                             }
                         });
                         getImageByRefUseCase.execute();
@@ -96,28 +96,23 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
             @Override
             public void onVoidData() {
-
+                Toast.makeText(RefactorProjectActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailed() {
-
+                Toast.makeText(RefactorProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCanceled() {
-
+                Toast.makeText(RefactorProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
             }
         });
         getProjectByIdUseCase.execute();
 
 
-        binding.btClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
