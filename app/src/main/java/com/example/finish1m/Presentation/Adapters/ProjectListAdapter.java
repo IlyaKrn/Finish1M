@@ -117,7 +117,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(activity, CreateNewFollowActivity.class);
-                    intent.putExtra("chatId", item.getChatId());
+                    intent.putExtra("projectId", item.getId());
                     activity.startActivity(intent);
                 }
             });

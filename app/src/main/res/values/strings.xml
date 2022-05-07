@@ -65,4 +65,5 @@
     <string name="refactor_project">Изменение проекта</string>
     <string name="menu_my_home">Мои мероприятия</string>
     <string name="my_message_name">Вы</string>
+    <string name="create_new_follow">Новая заявка</string>
 </resources>

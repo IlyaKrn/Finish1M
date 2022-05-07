@@ -17,6 +17,9 @@ public class Follow {
         this.imageRefs = imageRefs;
     }
 
+    public Follow() {
+    }
+
     public String getId() {
         return id;
     }
