@@ -3,11 +3,17 @@ package com.example.finish1m.Presentation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
+import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Follow;
+import com.example.finish1m.Domain.Models.Project;
+import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
+import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Presentation.Adapters.FollowListAdapter;
 import com.example.finish1m.databinding.ActivityFollowsListBinding;
 
@@ -21,6 +27,8 @@ public class FollowsListActivity extends AppCompatActivity {
     private ArrayList<Follow> follows = new ArrayList<>();
     private ProjectRepositoryImpl projectRepository;
 
+    private GetProjectByIdUseCase getProjectByIdUseCase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +38,43 @@ public class FollowsListActivity extends AppCompatActivity {
 
         projectRepository = new ProjectRepositoryImpl(this);
 
-        for (int i = 0; i < 3; i++){
+       /* for (int i = 0; i < 3; i++){
             ArrayList<String> ir = new ArrayList<>();
             ir.add("images/all/-N1TEqCF_sJVqEq9E7F4");
             Follow f = new Follow("fgdfgdfgdfg0", "ilyakornoukhov@gmail.com", "dfgdfgdfgdfgdfgdf", ir);
             follows.add(f);
         }
+
+        */
+
+        Log.e("saefse", getIntent().getStringExtra("projectId"));
+        getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
+            @Override
+            public void onGetData(Project data) {
+                follows.clear();
+                if(data.getFollows() != null)
+                    follows.addAll(data.getFollows());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onVoidData() {
+                follows.clear();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed() {
+
+            }
+
+            @Override
+            public void onCanceled() {
+
+            }
+        });
+        getProjectByIdUseCase.execute();
+
 
 
 

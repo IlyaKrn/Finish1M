@@ -16,7 +16,9 @@ import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Follow;
+import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
+import com.example.finish1m.Domain.UseCases.GetUserByEmailUseCase;
 import com.example.finish1m.R;
 
 import java.util.ArrayList;
@@ -57,33 +59,59 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
             tvEmail.setText(item.getUserEmail());
             tvMessage.setText(item.getMessage());
 
+            glImages.removeAllViews();
+
             if (item.getImageRefs() != null){
-                for (String ref : item.getImageRefs()){
-                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, ref, new OnGetDataListener<Bitmap>() {
-                        @Override
-                        public void onGetData(Bitmap data) {
-                            ImageView iv = new ImageView(context);
-                            iv.setImageBitmap(data);
-                            glImages.addView(iv);
+                GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
+                    @Override
+                    public void onGetData(User data) {
+                        if(item.getUserEmail().equals(data.getEmail())) {
+                            for (String ref : item.getImageRefs()) {
+                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, ref, new OnGetDataListener<Bitmap>() {
+                                    @Override
+                                    public void onGetData(Bitmap data) {
+                                        ImageView iv = new ImageView(context);
+                                        iv.setImageBitmap(data);
+                                        glImages.addView(iv);
+                                    }
+
+                                    @Override
+                                    public void onVoidData() {
+
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+
+                                    }
+                                });
+                                getImageByRefUseCase.execute();
+                            }
                         }
+                    }
 
-                        @Override
-                        public void onVoidData() {
+                    @Override
+                    public void onVoidData() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onFailed() {
+                    @Override
+                    public void onFailed() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onCanceled() {
+                    @Override
+                    public void onCanceled() {
 
-                        }
-                    });
-                    getImageByRefUseCase.execute();
-                }
+                    }
+                });
+                getUserByEmailUseCase.execute();
+
             }
         }
     }

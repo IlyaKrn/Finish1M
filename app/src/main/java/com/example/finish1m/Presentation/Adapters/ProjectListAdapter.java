@@ -133,7 +133,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 @Override
                 public void onClick(View view){
                     Intent intent = new Intent(activity, FollowsListActivity.class);
-                    intent.putExtra("follows", item.getFollows());
+                    intent.putExtra("projectId", item.getId());
                     activity.startActivity(intent);
                 }
             });
