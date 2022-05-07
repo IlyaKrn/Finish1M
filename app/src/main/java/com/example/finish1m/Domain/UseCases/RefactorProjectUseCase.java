@@ -52,11 +52,14 @@ public class RefactorProjectUseCase {
 
                     @Override
                     public void onFailed() {
+                        count[0]++;
                         listener.onFailed();
+
                     }
 
                     @Override
                     public void onCanceled() {
+                        count[0]++;
                         listener.onCanceled();
                     }
                 });

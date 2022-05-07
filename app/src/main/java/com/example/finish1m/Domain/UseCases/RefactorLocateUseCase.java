@@ -44,6 +44,7 @@ public class RefactorLocateUseCase {
                 imageRepository.setImage(b, new OnSetImageListener() {
                     @Override
                     public void onSetData(String ref) {
+                        count[0]++;
                         locate.getImageRefs().add(ref);
                         if (count[0] == images.size()) {
                             repository.setLocate(locate.getId(), locate, listener);
@@ -52,11 +53,13 @@ public class RefactorLocateUseCase {
 
                     @Override
                     public void onFailed() {
+                        count[0]++;
                         listener.onFailed();
                     }
 
                     @Override
                     public void onCanceled() {
+                        count[0]++;
                         listener.onCanceled();
                     }
                 });

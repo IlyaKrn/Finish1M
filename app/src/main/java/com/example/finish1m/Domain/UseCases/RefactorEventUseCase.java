@@ -41,6 +41,7 @@ public class RefactorEventUseCase {
                 imageRepository.setImage(b, new OnSetImageListener() {
                     @Override
                     public void onSetData(String ref) {
+                        count[0]++;
                         event.getImageRefs().add(ref);
                         if(count[0] == images.size()){
                             repository.setEvent(event.getId(), event, listener);
@@ -49,11 +50,13 @@ public class RefactorEventUseCase {
 
                     @Override
                     public void onFailed() {
+                        count[0]++;
                         listener.onFailed();
                     }
 
                     @Override
                     public void onCanceled() {
+                        count[0]++;
                         listener.onCanceled();
                     }
                 });
