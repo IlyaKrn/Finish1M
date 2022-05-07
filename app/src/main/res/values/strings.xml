@@ -66,4 +66,7 @@
     <string name="menu_my_home">Мои мероприятия</string>
     <string name="my_message_name">Вы</string>
     <string name="create_new_follow">Новая заявка</string>
+    <string name="user_settings">Пользователь</string>
+    <string name="refactor_image">Изменить изображение</string>
+    <string name="refactor_user">Изменение профиля</string>
 </resources>
