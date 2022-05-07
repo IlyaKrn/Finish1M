@@ -25,6 +25,7 @@ public class UserListActivity extends AppCompatActivity {
 
     private UserListAdapter adapter;
     private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<String> userEmails = new ArrayList<>();
     private UserRepositoryImpl userRepository;
 
     @Override
@@ -35,9 +36,10 @@ public class UserListActivity extends AppCompatActivity {
 
         userRepository = new UserRepositoryImpl(this);
 
-        String[] us = {"ilyakornoukhov@gmail.com", "nkornouhova47@gmail.com"};
-
-        for(String s : us){
+        for (int i = 0; i < getIntent().getIntExtra("user_size", 0); i++) {
+            userEmails.add(getIntent().getStringExtra("user" + i));
+        }
+        for(String s : userEmails){
             GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, s, new OnGetDataListener<User>() {
                 @Override
                 public void onGetData(User data) {
