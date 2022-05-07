@@ -43,6 +43,7 @@ public class RefactorProjectUseCase {
                 imageRepository.setImage(b, new OnSetImageListener() {
                     @Override
                     public void onSetData(String ref) {
+                        count[0]++;
                         project.getImageRefs().add(ref);
                         if(count[0] == images.size()){
                             repository.setProject(project.getId(), project, listener);
