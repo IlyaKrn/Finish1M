@@ -59,14 +59,12 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
         private final TextView notMy_tvMessage;
         private final TextView notMy_tvName;
         private final IconView notMy_ivIcon;
-        private final TextView notMy_tvDate;
         private final View notMy_itemBody;
 
         private final TableMessageImages my_tlImages;
         private final View my_itemBody;
         private final TextView my_tvMessage;
         private final TextView my_tvName;
-        private final TextView my_tvDate;
 
         private final View system_itemBody;
         private final TextView system_tvMessage;
@@ -79,7 +77,6 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             notMy_tvMessage = this.itemView.findViewById(R.id.not_my_tv_message);
             notMy_tvName = this.itemView.findViewById(R.id.not_my_tv_user_name);
             notMy_ivIcon = this.itemView.findViewById(R.id.not_my_user_icon);
-            notMy_tvDate = this.itemView.findViewById(R.id.not_my_tv_date);
             notMy_itemBody = this.itemView.findViewById(R.id.not_my_item_body);
             notMy_progressImage = this.itemView.findViewById(R.id.not_my_progress);
             notMy_tlImages = itemView.findViewById(R.id.not_my_lv_images);
@@ -87,7 +84,6 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             my_itemBody = this.itemView.findViewById(R.id.my_item_body);
             my_tvMessage = this.itemView.findViewById(R.id.my_tv_message);
             my_tvName = this.itemView.findViewById(R.id.my_tv_user_name);
-            my_tvDate = this.itemView.findViewById(R.id.my_tv_date);
             my_tlImages = itemView.findViewById(R.id.my_lv_images);
 
             system_itemBody = this.itemView.findViewById(R.id.system_item_body);

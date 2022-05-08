@@ -3,11 +3,13 @@ package com.example.finish1m.Presentation.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import com.example.finish1m.Domain.Models.Follow;
 import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetUserByEmailUseCase;
+import com.example.finish1m.Presentation.Views.TableMessageImages;
 import com.example.finish1m.R;
 
 import java.util.ArrayList;
@@ -42,15 +45,25 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
 
 
         private TextView tvEmail;
+        private TextView tvName;
         private TextView tvMessage;
-        private GridLayout glImages;
+        private TableMessageImages glImages;
+
+        private ImageView ivImage;
+        private ProgressBar progressImage;
+
+        private User u;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvEmail = itemView.findViewById(R.id.tv_email);
+            tvName = itemView.findViewById(R.id.tv_user_name);
+            tvEmail = itemView.findViewById(R.id.tv_user_email);
             tvMessage = itemView.findViewById(R.id.tv_message);
             glImages = itemView.findViewById(R.id.gl_images);
+            ivImage = itemView.findViewById(R.id.icon);
+            progressImage = itemView.findViewById(R.id.progress);
+
         }
 
         @Override
@@ -59,7 +72,7 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
             tvEmail.setText(item.getUserEmail());
             tvMessage.setText(item.getMessage());
 
-            glImages.removeAllViews();
+            glImages.removeBitmaps();
 
             if (item.getImageRefs() != null){
                 GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
@@ -70,9 +83,7 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
                                 GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, ref, new OnGetDataListener<Bitmap>() {
                                     @Override
                                     public void onGetData(Bitmap data) {
-                                        ImageView iv = new ImageView(context);
-                                        iv.setImageBitmap(data);
-                                        glImages.addView(iv);
+                                        glImages.addImage(data);
                                     }
 
                                     @Override
@@ -113,6 +124,63 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
                 getUserByEmailUseCase.execute();
 
             }
+
+            ivImage.setVisibility(View.GONE);
+            progressImage.setVisibility(View.VISIBLE);
+            tvMessage.setText(item.getMessage());
+            GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
+                @Override
+                public void onGetData(User data) {
+                    u = data;
+                    if (u.getEmail().equals(item.getUserEmail())) {
+                        tvName.setText(data.getFirstName());
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
+                            @Override
+                            public void onGetData(Bitmap data) {
+                                if (u.getEmail().equals(item.getUserEmail())) {
+                                    ivImage.setImageBitmap(data);
+                                    ivImage.setVisibility(View.VISIBLE);
+                                    progressImage.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onVoidData() {
+
+                            }
+
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onCanceled() {
+
+                            }
+                        });
+                        getImageByRefUseCase.execute();
+                    }
+                }
+
+                @Override
+                public void onVoidData() {
+
+                }
+
+                @Override
+                public void onFailed() {
+
+                }
+
+                @Override
+                public void onCanceled() {
+
+                }
+            });
+            getUserByEmailUseCase.execute();
+
+
         }
     }
 }
