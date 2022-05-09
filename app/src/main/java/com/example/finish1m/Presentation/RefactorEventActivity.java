@@ -135,7 +135,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                         refactorEventUseCase = new RefactorEventUseCase(eventRepository, imageRepository, event, images, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(RefactorEventActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RefactorEventActivity.this, R.string.event_refactor_success, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 

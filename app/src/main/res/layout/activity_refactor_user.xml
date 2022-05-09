@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/button.default"
-                    android:text="@string/event_create"/>
+                    android:text="@string/user_refactor"/>
 
             </LinearLayout>
 

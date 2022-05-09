@@ -69,4 +69,12 @@
     <string name="user_settings">Пользователь</string>
     <string name="refactor_image">Изменить изображение</string>
     <string name="refactor_user">Изменение профиля</string>
+    <string name="event_refactor">Изменить</string>
+    <string name="locate_refactor">Изменить</string>
+    <string name="project_refactor">Изменить</string>
+    <string name="user_refactor">Изменить</string>
+    <string name="event_refactor_success">Мероприятие изменено</string>
+    <string name="project_refactor_success">Проект измененг</string>
+    <string name="locate_refactor_success">Метка изменена</string>
+    <string name="user_refactor_success">Профиль изменен</string>
 </resources>

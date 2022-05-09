@@ -124,7 +124,7 @@ public class RefactorUserActivity extends AppCompatActivity {
                         refactorUserUseCase = new RefactorUserUseCase(userRepository, imageRepository, user, image, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(RefactorUserActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RefactorUserActivity.this, R.string.user_refactor_success, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 

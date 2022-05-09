@@ -126,7 +126,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                         refactorProjectUseCase = new RefactorProjectUseCase(projectRepository, imageRepository, project, images, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(RefactorProjectActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RefactorProjectActivity.this, R.string.project_refactor_success, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
