@@ -55,12 +55,14 @@ public class MyEventsFragment extends Fragment {
                     }
                 }
                 adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.GONE);
             }
 
             @Override
             public void onVoidData() {
                 events.clear();
                 adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.VISIBLE);
             }
 
             @Override

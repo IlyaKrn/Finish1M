@@ -167,7 +167,8 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 @Override
                 public void onClick(View view){
                     Intent intent = new Intent(activity, UserListActivity.class);
-
+                    if (item.getMembers() == null)
+                        item.setMembers(new ArrayList<>());
                     intent.putExtra("user_size", item.getMembers().size());
                     for (int i = 0; i < item.getMembers().size(); i++) {
                         intent.putExtra("user" + i, item.getMembers().get(i));

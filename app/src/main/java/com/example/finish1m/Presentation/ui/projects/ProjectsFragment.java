@@ -44,12 +44,14 @@ public class ProjectsFragment extends Fragment {
                 projects.clear();
                 projects.addAll(data);
                 adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.GONE);
             }
 
             @Override
             public void onVoidData() {
                 projects.clear();
                 adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.VISIBLE);
             }
 
             @Override

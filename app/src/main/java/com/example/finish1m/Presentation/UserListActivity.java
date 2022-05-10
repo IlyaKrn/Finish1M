@@ -39,12 +39,16 @@ public class UserListActivity extends AppCompatActivity {
         for (int i = 0; i < getIntent().getIntExtra("user_size", 0); i++) {
             userEmails.add(getIntent().getStringExtra("user" + i));
         }
+        if (userEmails.size() == 0)
+            binding.noElements.setVisibility(View.VISIBLE);
+
         for(String s : userEmails){
             GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, s, new OnGetDataListener<User>() {
                 @Override
                 public void onGetData(User data) {
                     users.add(data);
                     adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
                 }
 
                 @Override

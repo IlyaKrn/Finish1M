@@ -84,4 +84,8 @@
     <string name="tv_lastname">Фамилия</string>
     <string name="tv_firstname_1">Имя: </string>
     <string name="tv_email_1">Почта: </string>
+    <string name="no_users">Нет пользователей</string>
+    <string name="no_follows">Нет заявок</string>
+    <string name="no_projects">Нет проектов</string>
+    <string name="no_events">Нет мероприятий</string>
 </resources>

@@ -52,8 +52,11 @@ public class FollowsListActivity extends AppCompatActivity {
             @Override
             public void onGetData(Project data) {
                 follows.clear();
-                if(data.getFollows() != null)
+                binding.noElements.setVisibility(View.VISIBLE);
+                if(data.getFollows() != null) {
                     follows.addAll(data.getFollows());
+                    binding.noElements.setVisibility(View.GONE);
+                }
                 adapter.notifyDataSetChanged();
             }
 
@@ -61,6 +64,7 @@ public class FollowsListActivity extends AppCompatActivity {
             public void onVoidData() {
                 follows.clear();
                 adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.VISIBLE);
             }
 
             @Override

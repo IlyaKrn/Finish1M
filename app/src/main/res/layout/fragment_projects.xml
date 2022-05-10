@@ -43,6 +43,13 @@
                 android:elevation="0dp"
                 android:background="?recyclerView_default_background"/>
 
+            <TextView
+                android:id="@+id/no_elements"
+                style="@style/text.span.main"
+                android:text="@string/no_projects"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_projects"
                 android:layout_width="match_parent"
