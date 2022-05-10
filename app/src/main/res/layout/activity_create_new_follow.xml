@@ -91,6 +91,6 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bt_add_image"
         style="@style/fab.default"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/ic_add_image" />
 
 </FrameLayout>

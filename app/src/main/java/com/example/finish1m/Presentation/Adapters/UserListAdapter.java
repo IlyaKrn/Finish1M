@@ -19,7 +19,6 @@ import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
-import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetUserByEmailUseCase;
@@ -29,8 +28,6 @@ import com.example.finish1m.Presentation.Views.IconView;
 import com.example.finish1m.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
@@ -46,7 +43,7 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
     // создание холдера
     @Override
     protected ViewHolder onCreateHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_list, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_user, parent, false));
     }
 
     // холдер
