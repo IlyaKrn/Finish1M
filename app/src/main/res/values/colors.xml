@@ -48,6 +48,46 @@
     <color name="invisible">#00FFFFFF</color>
 
 
+
+
+    <color name="design_black_light">#767874</color>
+    <color name="design_black_main">#4a4c49</color>
+    <color name="design_black_dark">#222422</color>
+
+    <color name="design_default_light">#b1f3ce</color>
+    <color name="design_default_main">#80c09d</color>
+    <color name="design_default_dark">#518f6f</color>
+
+    <color name="design_red_light">#ffffff</color>
+    <color name="design_red_main">#fcf4df</color>
+    <color name="design_red_dark">#c9c1ad</color>
+
+    <color name="design_gray_light">#ffffff</color>
+    <color name="design_gray_main">#dfdff7</color>
+    <color name="design_gray_dark">#adadc4</color>
+
+
+
+
+    <color name="design_dark_black_light">#62727b</color>
+    <color name="design_dark_black_main">#37474f</color>
+    <color name="design_dark_black_dark">#102027</color>
+
+    <color name="design_dark_default_light">#b2fab4</color>
+    <color name="design_dark_default_main">#81c784</color>
+    <color name="design_dark_default_dark">#519657</color>
+
+    <color name="design_dark_red_light">#ffffa8</color>
+    <color name="design_dark_red_main">#fff176</color>
+    <color name="design_dark_red_dark">#cabf45</color>
+
+    <color name="design_dark_gray_light">#e6ceff</color>
+    <color name="design_dark_gray_main">#b39ddb</color>
+    <color name="design_dark_gray_dark">#836fa9</color>
+
+
+    <!--
+
     <color name="design_black_light">#484745</color>
     <color name="design_black_main">#21201E</color>
     <color name="design_black_dark">#000000</color>
@@ -83,6 +123,6 @@
     <color name="design_dark_gray_main">#9a886c</color>
     <color name="design_dark_gray_dark">#6b5b41</color>
 
-
+    -->
 
 </resources>
