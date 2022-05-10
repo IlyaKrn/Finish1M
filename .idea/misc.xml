@@ -7,6 +7,7 @@
         <entry key="..\:/Users/1/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_register.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/1/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_start.xml" value="0.176" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/drawable-v24/corner_button_default.xml" value="0.1" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/drawable/ic_close.xml" value="0.3525" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/drawable/ic_home.xml" value="0.3675" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3585" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3585" />
@@ -23,19 +24,22 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_hub_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_profile.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_refactor_event.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_refactor_event.xml" value="0.5" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_refactor_locate.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_refactor_project.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_refactor_user.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_start.xml" value="0.22" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/activity_user_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/app_bar_hub_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/content_hub_activity.xml" value="0.33" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/dialog_confirm.xml" value="0.33" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_events.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_gallery.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_map.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_my_events.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_projects.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/fragment_slideshow.xml" value="0.2713068181818182" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/ic_menu_spots.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Finish1M/app/src/main/res/layout/item_list_event.xml" value="0.33" />

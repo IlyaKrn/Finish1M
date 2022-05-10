@@ -61,6 +61,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    style="@style/text.span.main"
+                    android:text="@string/tv_firstname"/>
+
                 <EditText
                     android:id="@+id/et_firstname"
                     android:layout_width="match_parent"
@@ -73,6 +79,11 @@
                     style="@style/text.warning.main"
                     android:id="@+id/tv_title_err"
                     android:visibility="gone" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    style="@style/text.span.main"
+                    android:text="@string/tv_lastname"/>
                 <EditText
                     android:id="@+id/et_lastname"
                     android:layout_width="match_parent"

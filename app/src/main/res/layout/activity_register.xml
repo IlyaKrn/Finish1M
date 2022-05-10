@@ -96,19 +96,22 @@
                 android:checked="true"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:padding="4dp">
             <Button
                 android:id="@+id/bt_register"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/button.default"
                 android:text="@string/register_button"/>
             <Button
                 android:id="@+id/bt_resend_verification_email"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 style="@style/button.default"

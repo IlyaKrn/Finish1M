@@ -56,18 +56,34 @@
                 android:padding="8dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    style="@style/text.span.main"
+                    android:text="@string/tv_title"/>
+
                 <EditText
                     android:id="@+id/et_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/editText.span.main"
                     android:hint="@string/event_title"/>
+
+
+
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     style="@style/text.warning.main"
                     android:id="@+id/tv_title_err"
                     android:visibility="gone" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    style="@style/text.span.main"
+                    android:text="@string/tv_message"/>
+
                 <EditText
                     android:id="@+id/et_message"
                     android:layout_width="match_parent"

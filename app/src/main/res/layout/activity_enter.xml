@@ -57,7 +57,7 @@
                 android:checked="true"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_gravity="center"
@@ -66,14 +66,14 @@
             android:padding="4dp">
             <Button
                 android:id="@+id/bt_enter"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/enter_button"
                 style="@style/button.default"
                 android:layout_gravity="center"/>
             <Button
                 android:id="@+id/bt_reset_password"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 style="@style/button.default"

@@ -61,7 +61,7 @@
     <string name="event_delete_success">Мероприятие удалено</string>
     <string name="locate_delete_success">Метка удалена</string>
     <string name="refactor_event">Изменение мероприятия</string>
-    <string name="refactor_locate">зменение метки</string>
+    <string name="refactor_locate">Изменение метки</string>
     <string name="refactor_project">Изменение проекта</string>
     <string name="menu_my_home">Мои мероприятия</string>
     <string name="my_message_name">Вы</string>
@@ -77,4 +77,9 @@
     <string name="project_refactor_success">Проект измененг</string>
     <string name="locate_refactor_success">Метка изменена</string>
     <string name="user_refactor_success">Профиль изменен</string>
+    <string name="tv_title">Название</string>
+    <string name="tv_message">Описание</string>
+    <string name="tv_name">Имя</string>
+    <string name="tv_firstname">Имя</string>
+    <string name="tv_lastname">Фамилия</string>
 </resources>
