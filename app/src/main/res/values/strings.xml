@@ -82,4 +82,6 @@
     <string name="tv_name">Имя</string>
     <string name="tv_firstname">Имя</string>
     <string name="tv_lastname">Фамилия</string>
+    <string name="tv_firstname_1">Имя: </string>
+    <string name="tv_email_1">Почта: </string>
 </resources>
