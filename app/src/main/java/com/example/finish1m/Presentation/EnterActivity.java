@@ -94,7 +94,7 @@ public class EnterActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onCanceled() {
-                                        Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EnterActivity.this, R.string.you_not_verified, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -112,7 +112,7 @@ public class EnterActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onCanceled() {
-                                        Toast.makeText(EnterActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EnterActivity.this, R.string.you_not_verified, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
