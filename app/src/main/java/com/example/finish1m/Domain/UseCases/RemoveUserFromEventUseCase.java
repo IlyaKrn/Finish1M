@@ -6,14 +6,14 @@ import com.example.finish1m.Domain.Models.Event;
 
 import java.util.ArrayList;
 
-public class AddUserToEventByEmailUseCase {
+public class RemoveUserFromEventUseCase {
 
-    private EventRepository repository;
+    private EventRepository repository;;
     private Event event;
     private String userEmail;
     OnSetDataListener listener;
 
-    public AddUserToEventByEmailUseCase(EventRepository repository, Event event, String userEmail, OnSetDataListener listener) {
+    public RemoveUserFromEventUseCase(EventRepository repository, Event event, String userEmail, OnSetDataListener listener) {
         this.repository = repository;
         this.event = event;
         this.userEmail = userEmail;
@@ -24,7 +24,7 @@ public class AddUserToEventByEmailUseCase {
         if (event.getMembers() == null) {
             event.setMembers(new ArrayList<>());
         }
-        event.getMembers().add(userEmail);
+        event.getMembers().remove(userEmail);
         repository.setEvent(event.getId(), event, listener);
     }
 

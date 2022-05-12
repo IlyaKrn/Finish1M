@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +29,7 @@ import com.example.finish1m.Domain.UseCases.AddUserToEventByEmailUseCase;
 import com.example.finish1m.Domain.UseCases.DeleteEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
-import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
+import com.example.finish1m.Domain.UseCases.RemoveUserFromEventUseCase;
 import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
@@ -41,7 +40,6 @@ import com.example.finish1m.R;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
 
@@ -148,6 +146,35 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                     }
                                 });
                                 addUserToEventByEmailUseCase.execute();
+                            }
+
+                        });
+                        dialog.create(R.id.fragmentContainerView);
+                    }
+                    else {
+                        DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Отказ от участия", "Да", "Вы действительно хотите отказаться от участия в мероприятии?", new OnConfirmListener() {
+                            @Override
+                            public void onConfirm(DialogConfirm d) {
+                                d.freeze();
+                                RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, PresentationConfig.user.getEmail(), new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+                                        d.destroy();
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+                                });
+                                removeUserFromEventUseCase.execute();
                             }
 
                         });
