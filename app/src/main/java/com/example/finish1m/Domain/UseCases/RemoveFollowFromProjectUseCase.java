@@ -29,6 +29,7 @@ public class RemoveFollowFromProjectUseCase {
                         if(f.getId().equals(followId)){
                             data.getFollows().remove(f);
                             projectRepository.setProject(data.getId(), data, listener);
+                            break;
                         }
                     }
                 }

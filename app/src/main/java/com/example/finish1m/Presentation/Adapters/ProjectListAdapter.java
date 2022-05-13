@@ -104,7 +104,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btUsers.setVisibility(View.GONE);
             btReg.setText("Записаться");
 
-            if (!PresentationConfig.user.isAdmin()){
+            if (PresentationConfig.user != null && !PresentationConfig.user.isAdmin()){
                 btMenu.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
             }

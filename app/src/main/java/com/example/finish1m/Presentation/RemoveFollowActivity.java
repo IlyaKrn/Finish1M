@@ -16,6 +16,8 @@ import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RemoveFollowFromProjectUseCase;
 import com.example.finish1m.Presentation.Adapters.Adapter;
 import com.example.finish1m.Presentation.Adapters.FollowListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
+import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRemoveFollowBinding;
 
@@ -46,8 +48,11 @@ public class RemoveFollowActivity extends AppCompatActivity {
                 follows.clear();
                 binding.noElements.setVisibility(View.VISIBLE);
                 if(data.getFollows() != null) {
-                    follows.addAll(data.getFollows());
                     binding.noElements.setVisibility(View.GONE);
+                    for(Follow f : data.getFollows()){
+                        if(f.getUserEmail().equals(PresentationConfig.user.getEmail()))
+                            follows.add(f);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -86,23 +91,34 @@ public class RemoveFollowActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(Follow item) {
-                removeFollowFromProjectUseCase = new RemoveFollowFromProjectUseCase(projectRepository, getIntent().getStringExtra("projectId"), item.getId(), new OnSetDataListener() {
+                DialogConfirm dialog = new DialogConfirm(RemoveFollowActivity.this, "Отмена заявки", "отменить заявку", "Вы действителькно хотит отменить заявку?", new OnConfirmListener() {
                     @Override
-                    public void onSetData() {
-                        Toast.makeText(RemoveFollowActivity.this, R.string.follow_delete_success, Toast.LENGTH_SHORT).show();
-                    }
+                    public void onConfirm(DialogConfirm d) {
+                        d.freeze();
+                        removeFollowFromProjectUseCase = new RemoveFollowFromProjectUseCase(projectRepository, getIntent().getStringExtra("projectId"), item.getId(), new OnSetDataListener() {
+                            @Override
+                            public void onSetData() {
+                                Toast.makeText(RemoveFollowActivity.this, R.string.follow_delete_success, Toast.LENGTH_SHORT).show();
+                                d.destroy();
+                            }
 
-                    @Override
-                    public void onFailed() {
-                        Toast.makeText(RemoveFollowActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                    }
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(RemoveFollowActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                d.destroy();
+                            }
 
-                    @Override
-                    public void onCanceled() {
-                        Toast.makeText(RemoveFollowActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(RemoveFollowActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                d.destroy();
+                            }
+                        });
+                        removeFollowFromProjectUseCase.execute();
                     }
                 });
-                removeFollowFromProjectUseCase.execute();
+                dialog.create(R.id.fragmentContainerView);
+
             }
         });
         binding.rvFollows.setAdapter(adapter);
