@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -130,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                                                 @Override
                                                                                 public void onFailed() {
-                                                                                    Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                                                                    Toast.makeText(RegisterActivity.this, R.string.you_not_verified, Toast.LENGTH_SHORT).show();
                                                                                 }
 
                                                                                 @Override
@@ -138,11 +140,12 @@ public class RegisterActivity extends AppCompatActivity {
                                                                                     Toast.makeText(RegisterActivity.this, R.string.you_not_verified, Toast.LENGTH_SHORT).show();
                                                                                 }
                                                                             });
+                                                                            enterWithEmailAndPasswordUseCase.execute();
                                                                         }
 
                                                                         @Override
                                                                         public void onFailed() {
-                                                                            Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(RegisterActivity.this, R.string.you_not_verified, Toast.LENGTH_SHORT).show();
                                                                         }
 
                                                                         @Override
@@ -194,7 +197,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailed() {
-                                Toast.makeText(RegisterActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, R.string.you_not_verified, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -234,5 +237,31 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                binding.tvEmailErr.setVisibility(View.GONE);
+                binding.tvPasswordErr.setVisibility(View.GONE);
+                binding.tvSecondPasswordErr.setVisibility(View.GONE);
+                binding.tvNameErr.setVisibility(View.GONE);
+                binding.tvFamilyErr.setVisibility(View.GONE);
+            }
+        };
+
+        binding.tvEmailErr.addTextChangedListener(textWatcher);
+        binding.tvPasswordErr.addTextChangedListener(textWatcher);
+        binding.tvSecondPasswordErr.addTextChangedListener(textWatcher);
+        binding.tvNameErr.addTextChangedListener(textWatcher);
+        binding.tvFamilyErr.addTextChangedListener(textWatcher);
     }
 }
