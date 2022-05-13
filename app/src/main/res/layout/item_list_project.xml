@@ -61,6 +61,14 @@
             android:text="Записаться"
             style="@style/button.default" />
 
+        <Button
+            android:id="@+id/bt_remove_reg"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Записаться"
+            style="@style/button.default" />
+
 
         <Button
             android:id="@+id/bt_chat"

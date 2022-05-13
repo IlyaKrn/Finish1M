@@ -13,7 +13,12 @@ public class RemoveFollowFromProjectUseCase {
     private String followId;
     private OnSetDataListener listener;
 
-
+    public RemoveFollowFromProjectUseCase(ProjectRepository projectRepository, String projectId, String followId, OnSetDataListener listener) {
+        this.projectRepository = projectRepository;
+        this.projectId = projectId;
+        this.followId = followId;
+        this.listener = listener;
+    }
 
     public void execute(){
         projectRepository.getProjectById(projectId, new OnGetDataListener<Project>() {

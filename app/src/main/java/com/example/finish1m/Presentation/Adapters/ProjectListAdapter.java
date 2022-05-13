@@ -27,6 +27,7 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.ProjectRepository;
 import com.example.finish1m.Domain.Models.Event;
+import com.example.finish1m.Domain.Models.Follow;
 import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.UseCases.DeleteEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.DeleteProjectByIdUseCase;
@@ -42,6 +43,7 @@ import com.example.finish1m.Presentation.FollowsListActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.Presentation.RefactorEventActivity;
 import com.example.finish1m.Presentation.RefactorProjectActivity;
+import com.example.finish1m.Presentation.RemoveFollowActivity;
 import com.example.finish1m.Presentation.UserListActivity;
 import com.example.finish1m.R;
 
@@ -73,6 +75,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
         private Button btUsers;
         private ImageButton btMenu;
         private Button btChat;
+        private Button btRemoveReg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +86,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             progressBar = itemView.findViewById(R.id.progress);
             btUsers = itemView.findViewById(R.id.bt_users);
             btChat = itemView.findViewById(R.id.bt_chat);
+            btRemoveReg = itemView.findViewById(R.id.bt_remove_reg);
             btMenu = itemView.findViewById(R.id.bt_menu);
         }
 
@@ -107,6 +111,29 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             else {
                 btChat.setVisibility(View.VISIBLE);
                 btUsers.setVisibility(View.VISIBLE);
+            }
+
+            boolean isRegistered = false;
+            if (item.getFollows() != null) {
+                for (Follow s : item.getFollows()) {
+                    if (s.getUserEmail().equals(PresentationConfig.user.getEmail())) {
+                        isRegistered = true;
+                        break;
+                    }
+                }
+            }
+
+            btRemoveReg.setVisibility(View.GONE);
+            btRemoveReg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(activity, RemoveFollowActivity.class);
+                    intent.putExtra("projectId", item.getId());
+                    activity.startActivity(intent);
+                }
+            });
+            if (isRegistered){
+                btRemoveReg.setVisibility(View.VISIBLE);
             }
 
 

@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finish1M.NoActionBar">
+        <activity
+            android:name=".Presentation.RemoveFollowActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -61,7 +64,7 @@
         <activity
             android:name=".Presentation.HubActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Presentation.EnterActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"

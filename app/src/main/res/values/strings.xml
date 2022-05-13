@@ -89,4 +89,5 @@
     <string name="no_projects">Нет проектов</string>
     <string name="no_events">Нет мероприятий</string>
     <string name="you_not_verified">Вы не верифицированы</string>
+    <string name="follow_delete_success">Заявка удалена</string>
 </resources>
