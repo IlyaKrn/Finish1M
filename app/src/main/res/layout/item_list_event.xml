@@ -76,7 +76,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Открыть список пользвователей"
+        android:text="@string/bt_user_list"
         style="@style/button.default"/>
 
 </LinearLayout>
