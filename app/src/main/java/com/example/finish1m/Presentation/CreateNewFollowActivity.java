@@ -71,7 +71,7 @@ public class CreateNewFollowActivity extends AppCompatActivity {
                     createNewFollowUseCase = new CreateNewFollowUseCase(projectRepository, imageRepository, getIntent().getStringExtra("projectId"), f, images, new OnSetDataListener() {
                         @Override
                         public void onSetData() {
-                            Toast.makeText(CreateNewFollowActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateNewFollowActivity.this, R.string.follow_create_success, Toast.LENGTH_SHORT).show();
                             finish();
                         }
 

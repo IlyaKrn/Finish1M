@@ -91,4 +91,6 @@
     <string name="you_not_verified">Вы не верифицированы</string>
     <string name="follow_delete_success">Заявка удалена</string>
     <string name="bt_user_list">Открыть список пользователей</string>
+    <string name="remove_follow">Отменить заявку</string>
+    <string name="follow_create_success">Заявка создана</string>
 </resources>
