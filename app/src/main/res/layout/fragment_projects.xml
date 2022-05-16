@@ -9,6 +9,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bt_add_project"
         android:src="@android:drawable/ic_input_add"
+        android:layout_marginBottom="112dp"
         style="@style/fab.default"/>
 
     <androidx.fragment.app.FragmentContainerView
