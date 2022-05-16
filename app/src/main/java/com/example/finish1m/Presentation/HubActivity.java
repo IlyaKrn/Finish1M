@@ -38,13 +38,23 @@ public class HubActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityHubBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         sqLiteRepository = new SQLiteRepositoryImpl(this);
-
         setSupportActionBar(binding.appBarHubActivity.toolbar);
+
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_hub_activity);
+
+        BottomNavigationView navView = findViewById(R.id.nav_view_bottom);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_events, R.id.nav_my_events, R.id.nav_projects, R.id.nav_map)
+                .build();
+        //   NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -54,10 +64,8 @@ public class HubActivity extends AppCompatActivity {
                 R.id.nav_events, R.id.nav_my_events, R.id.nav_projects, R.id.nav_map)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_hub_activity);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
         navigationView.getHeaderView(0).findViewById(R.id.tv_vk_ref).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,16 +73,6 @@ public class HubActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
-
-        BottomNavigationView navView = findViewById(R.id.nav_view_bottom);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_events, R.id.nav_my_events, R.id.nav_projects, R.id.nav_map)
-                .build();
-     //   NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
     }
 
