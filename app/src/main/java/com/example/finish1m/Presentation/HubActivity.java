@@ -22,6 +22,7 @@ import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityHubBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -64,6 +65,17 @@ public class HubActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+
+        BottomNavigationView navView = findViewById(R.id.nav_view_bottom);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_events, R.id.nav_my_events, R.id.nav_projects, R.id.nav_map)
+                .build();
+     //   NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
+
     }
 
     @Override
