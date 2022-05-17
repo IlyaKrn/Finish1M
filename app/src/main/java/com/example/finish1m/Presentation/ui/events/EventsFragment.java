@@ -33,13 +33,14 @@ public class EventsFragment extends Fragment {
     private GetEventReverseListUseCase getEventListUseCase;
 
     private EventListAdapter adapter;
-    private ArrayList<Event> events = new ArrayList<>();
+    private ArrayList<Event> events = new ArrayList<>(); // список событий
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentEventsBinding.inflate(inflater, container, false);
 
         eventRepository = new EventRepositoryImpl(getContext());
 
+        // получение и установка данных
         getEventListUseCase = new GetEventReverseListUseCase(eventRepository, new OnGetDataListener<ArrayList<Event>>() {
             @Override
             public void onGetData(ArrayList<Event> data) {
@@ -68,9 +69,12 @@ public class EventsFragment extends Fragment {
         });
         getEventListUseCase.execute();
 
+        // установка адаптера
         adapter = new EventListAdapter(getActivity(), getContext(), events);
         binding.rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvEvents.setAdapter(adapter);
+
+        // кнопка добавления события
         binding.btAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

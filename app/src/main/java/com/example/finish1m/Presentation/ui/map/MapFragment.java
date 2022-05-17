@@ -49,7 +49,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private MapInfoWindowAdapter adapter;
     private GetLocateListUseCase getLocateListUseCase;
 
-    private ArrayList<Locate> locates = new ArrayList<>();
+    private ArrayList<Locate> locates = new ArrayList<>(); // список меток
     private boolean isAdd = false;
 
 
@@ -61,10 +61,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locateRepository = new LocateRepositoryImpl(getContext());
         imageRepository = new ImageRepositoryImpl(getContext());
 
+        // получение и установка данных
         getLocateListUseCase = new GetLocateListUseCase(locateRepository, new OnGetDataListener<ArrayList<Locate>>() {
             @Override
             public void onGetData(ArrayList<Locate> data) {
-                Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>();
+                Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>(); // картинки для загрузки в адаптер
                 locates.clear();
                 locates.addAll(data);
                 for (Locate l : locates){
@@ -138,6 +139,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
         getLocateListUseCase.execute();
 
+        // кнопка добавления события
         View.OnClickListener onAddListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,7 +176,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap gMap) {
         googleMap = gMap;
         googleMap.setInfoWindowAdapter(adapter);
+        // установка камеры на координаты
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.400135, 43.828324), 11));
+        // добавление метки
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
@@ -190,6 +194,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
+        // нажатие на окно метки
         googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
             @Override
             public void onInfoWindowLongClick(@NonNull Marker marker) {

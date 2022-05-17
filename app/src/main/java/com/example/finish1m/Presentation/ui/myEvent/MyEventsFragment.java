@@ -33,13 +33,14 @@ public class MyEventsFragment extends Fragment {
     private GetEventReverseListUseCase getEventListUseCase;
 
     private EventListAdapter adapter;
-    private ArrayList<Event> events = new ArrayList<>();
+    private ArrayList<Event> events = new ArrayList<>(); // список мероприятий
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyEventsBinding.inflate(inflater, container, false);
 
         eventRepository = new EventRepositoryImpl(getContext());
 
+        // получение списка моих мероприятий
         getEventListUseCase = new GetEventReverseListUseCase(eventRepository, new OnGetDataListener<ArrayList<Event>>() {
             @Override
             public void onGetData(ArrayList<Event> data) {
@@ -77,6 +78,7 @@ public class MyEventsFragment extends Fragment {
         });
         getEventListUseCase.execute();
 
+        // установка адаптера
         adapter = new EventListAdapter(getActivity(), getContext(), events);
         binding.rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvEvents.setAdapter(adapter);

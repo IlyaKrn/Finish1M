@@ -32,11 +32,12 @@ public class ProjectsFragment extends Fragment {
     private GetProjectReverseListUseCase getProjectListUseCase;
 
     private ProjectListAdapter adapter;
-    private ArrayList<Project> projects = new ArrayList<>();
+    private ArrayList<Project> projects = new ArrayList<>(); // список проектов
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProjectsBinding.inflate(inflater, container, false);
 
+        // получение и установка данных
         projectRepository = new ProjectRepositoryImpl(getContext());
         getProjectListUseCase = new GetProjectReverseListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
             @Override
@@ -66,6 +67,7 @@ public class ProjectsFragment extends Fragment {
         });
         getProjectListUseCase.execute();
 
+        // установка адаптера
         adapter = new ProjectListAdapter(getActivity(), getContext(), projects);
         binding.rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvProjects.setAdapter(adapter);
