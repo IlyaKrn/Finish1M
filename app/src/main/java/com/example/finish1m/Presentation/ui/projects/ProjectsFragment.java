@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Project;
-import com.example.finish1m.Domain.UseCases.GetProjectListUseCase;
+import com.example.finish1m.Domain.UseCases.GetProjectReverseListUseCase;
 import com.example.finish1m.Presentation.Adapters.ProjectListAdapter;
 import com.example.finish1m.Presentation.CreateNewProjectActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
@@ -29,7 +29,7 @@ public class ProjectsFragment extends Fragment {
     private FragmentProjectsBinding binding;
 
     private ProjectRepositoryImpl projectRepository;
-    private GetProjectListUseCase getProjectListUseCase;
+    private GetProjectReverseListUseCase getProjectListUseCase;
 
     private ProjectListAdapter adapter;
     private ArrayList<Project> projects = new ArrayList<>();
@@ -38,7 +38,7 @@ public class ProjectsFragment extends Fragment {
         binding = FragmentProjectsBinding.inflate(inflater, container, false);
 
         projectRepository = new ProjectRepositoryImpl(getContext());
-        getProjectListUseCase = new GetProjectListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
+        getProjectListUseCase = new GetProjectReverseListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
             @Override
             public void onGetData(ArrayList<Project> data) {
                 projects.clear();

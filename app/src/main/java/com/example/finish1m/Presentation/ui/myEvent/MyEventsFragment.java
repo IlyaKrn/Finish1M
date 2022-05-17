@@ -14,12 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Event;
-import com.example.finish1m.Domain.UseCases.GetEventListUseCase;
+import com.example.finish1m.Domain.UseCases.GetEventReverseListUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.FragmentEventsBinding;
 import com.example.finish1m.databinding.FragmentMyEventsBinding;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class MyEventsFragment extends Fragment {
 
     private EventRepositoryImpl eventRepository;
 
-    private GetEventListUseCase getEventListUseCase;
+    private GetEventReverseListUseCase getEventListUseCase;
 
     private EventListAdapter adapter;
     private ArrayList<Event> events = new ArrayList<>();
@@ -41,7 +40,7 @@ public class MyEventsFragment extends Fragment {
 
         eventRepository = new EventRepositoryImpl(getContext());
 
-        getEventListUseCase = new GetEventListUseCase(eventRepository, new OnGetDataListener<ArrayList<Event>>() {
+        getEventListUseCase = new GetEventReverseListUseCase(eventRepository, new OnGetDataListener<ArrayList<Event>>() {
             @Override
             public void onGetData(ArrayList<Event> data) {
                 events.clear();
