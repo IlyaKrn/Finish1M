@@ -114,6 +114,12 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 btUsers.setVisibility(View.VISIBLE);
             }
 
+            if (item.getType() == Event.NEWS){
+                btChat.setVisibility(View.GONE);
+                btUsers.setVisibility(View.GONE);
+                btReg.setVisibility(View.GONE);
+            }
+
 
             tvTitle.setText(item.getTitle());
             tvMessage.setText(item.getMessage());
@@ -219,7 +225,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                     break;
                                 case R.id.delete:
                                     if (item.getType() == Event.EVENT) {
-                                        DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить событие?", new OnConfirmListener() {
+                                        DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить публикацию?", new OnConfirmListener() {
                                             @Override
                                             public void onConfirm(DialogConfirm d) {
                                                 DeleteEventByIdUseCase deleteEventByIdUseCase = new DeleteEventByIdUseCase(eventRepository, item.getId(), new OnSetDataListener() {

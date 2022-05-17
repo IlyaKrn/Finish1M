@@ -8,7 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Мероприятия</string>
+    <string name="menu_home">Главная</string>
     <string name="menu_gallery">Проекты</string>
     <string name="menu_slideshow">Карта</string>
     <string name="enter_button">Войти</string>
@@ -95,4 +95,5 @@
     <string name="follow_create_success">Заявка создана</string>
     <string name="event">Мероприятие</string>
     <string name="news">Новость</string>
+    <string name="news_create_success">Новость создана</string>
 </resources>

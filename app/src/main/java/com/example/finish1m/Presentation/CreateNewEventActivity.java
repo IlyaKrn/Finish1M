@@ -81,10 +81,14 @@ public class CreateNewEventActivity extends AppCompatActivity {
                         mms.add(PresentationConfig.user.getEmail());
                         Chat c = new Chat(chatRepository.getNewId(), ms, mms);
                         Event e = new Event(eventRepository.getNewId(), type, title, message, c.getId(), null, null);
+                        int finalType = type;
                         createNewEventUseCase = new CreateNewEventUseCase(eventRepository, chatRepository, imageRepository, e, c, images, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(CreateNewEventActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                if(finalType == Event.EVENT)
+                                    Toast.makeText(CreateNewEventActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(CreateNewEventActivity.this, R.string.news_create_success, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
