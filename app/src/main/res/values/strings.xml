@@ -39,7 +39,7 @@
     <string name="cancel">Отмена</string>
     <string name="add_locate_mod_disabled">Режим добавления метки выключен</string>
     <string name="add_locate_mod_enabled">Режим добавления метки включен</string>
-    <string name="create_new_event">Новое мероприятие</string>
+    <string name="create_new_event">Новая публикация</string>
     <string name="event_title">Название</string>
     <string name="event_message">Описание</string>
     <string name="create_new_locate">Новая метка</string>
@@ -93,5 +93,6 @@
     <string name="bt_user_list">Открыть список пользователей</string>
     <string name="remove_follow">Отменить заявку</string>
     <string name="follow_create_success">Заявка создана</string>
-    <string name="create_new_news_event">Новая новость</string>
+    <string name="event">Мероприятие</string>
+    <string name="news">Новость</string>
 </resources>

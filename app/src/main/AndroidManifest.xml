@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finish1M.NoActionBar">
         <activity
-            android:name=".Presentation.CreateNewNewsEventActivity"
-            android:exported="false" />
-        <activity
             android:name=".Presentation.RemoveFollowActivity"
             android:exported="false" />
 

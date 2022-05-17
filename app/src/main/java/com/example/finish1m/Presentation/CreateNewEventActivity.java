@@ -65,13 +65,22 @@ public class CreateNewEventActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
+                        int type = Event.NEWS;
+                        switch(binding.rgType.getCheckedRadioButtonId()){
+                            case R.id.rbt_news:
+                                type = Event.NEWS;
+                                break;
+                            case R.id.rbt_event:
+                                type = Event.EVENT;
+                                break;
+                        }
                         ArrayList<Message> ms = new ArrayList<>();
                         Message msg = new Message(getString(R.string.message_start_chat), null, null);
                         ms.add(msg);
                         ArrayList<String> mms = new ArrayList<>();
                         mms.add(PresentationConfig.user.getEmail());
                         Chat c = new Chat(chatRepository.getNewId(), ms, mms);
-                        Event e = new Event(eventRepository.getNewId(), Event.EVENT, title, message, c.getId(), null, null);
+                        Event e = new Event(eventRepository.getNewId(), type, title, message, c.getId(), null, null);
                         createNewEventUseCase = new CreateNewEventUseCase(eventRepository, chatRepository, imageRepository, e, c, images, new OnSetDataListener() {
                             @Override
                             public void onSetData() {

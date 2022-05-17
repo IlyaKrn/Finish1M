@@ -56,6 +56,28 @@
                 android:padding="8dp"
                 android:orientation="vertical">
 
+                <RadioGroup
+                    android:id="@+id/rg_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rbt_news"
+                        style="@style/text.span.main"
+                        android:text="@string/news"
+                        android:checked="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:id="@+id/rbt_event"
+                        style="@style/text.span.main"
+                        android:text="@string/event"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RadioGroup>
+
                 <EditText
                     android:id="@+id/et_title"
                     android:layout_width="match_parent"
