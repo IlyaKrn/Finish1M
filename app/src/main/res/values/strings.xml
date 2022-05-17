@@ -93,4 +93,5 @@
     <string name="bt_user_list">Открыть список пользователей</string>
     <string name="remove_follow">Отменить заявку</string>
     <string name="follow_create_success">Заявка создана</string>
+    <string name="create_new_news_event">Новая новость</string>
 </resources>
