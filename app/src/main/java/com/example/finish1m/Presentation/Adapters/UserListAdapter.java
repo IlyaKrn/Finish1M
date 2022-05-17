@@ -29,6 +29,8 @@ import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
+// адаптер списка пользователей
+
 public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
     private UserRepositoryImpl userRepository;
@@ -75,6 +77,8 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
             tvName.setText(item.getFirstName());
             tvEmail.setText(item.getEmail());
 
+
+            // получение и установка картинок
             GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getEmail(), new OnGetDataListener<User>() {
                 @Override
                 public void onGetData(User data) {
@@ -126,6 +130,7 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
             });
             getUserByEmailUseCase.execute();
 
+            // кнопка меню
             if(PresentationConfig.user.isAdmin()){
                 if (!PresentationConfig.user.getEmail().equals(item.getEmail())) {
                     btMenu.setOnClickListener(new View.OnClickListener() {

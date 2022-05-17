@@ -49,6 +49,8 @@ import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
+// адаптер списка проектов
+
 public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.ViewHolder>{
 
     private ImageRepositoryImpl imageRepository;
@@ -100,6 +102,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btMenu.setVisibility(View.VISIBLE);
 
 
+            // открытие/скрытие кнопок и установка данных
             btChat.setVisibility(View.GONE);
             btUsers.setVisibility(View.GONE);
             btReg.setText("Записаться");
@@ -113,6 +116,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 btUsers.setVisibility(View.VISIBLE);
             }
 
+            // проверка наличия заявки от пользователя
             boolean isRegistered = false;
             if (item.getFollows() != null) {
                 for (Follow s : item.getFollows()) {
@@ -140,6 +144,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             tvTitle.setText(item.getTitle());
             tvMessage.setText(item.getMessage());
 
+            // создание заявки
             btReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -148,6 +153,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                     activity.startActivity(intent);
                 }
             });
+            // открытие чата
             btChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -156,6 +162,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                     activity.startActivity(intent);
                 }
             });
+            // открытие списка пользователей
             btUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
@@ -164,6 +171,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                     activity.startActivity(intent);
                 }
             });
+            // открытие меню с изменением и удалением
             btMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -216,6 +224,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             });
 
 
+            // получение и установка данных
             GetProjectByIdUseCase getProjectListUseCase = new GetProjectByIdUseCase(projectRepository, item.getId(), new OnGetDataListener<Project>() {
                 @Override
                 public void onGetData(Project data) {

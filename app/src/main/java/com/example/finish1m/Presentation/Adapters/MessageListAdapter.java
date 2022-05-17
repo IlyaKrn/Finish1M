@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// адаптер списка сообщений
+
 public class MessageListAdapter extends Adapter<Message, MessageListAdapter.ViewHolder>{
 
     private ImageRepositoryImpl imageRepository;
@@ -95,6 +97,10 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
         @Override
         public void bind(int position) {
             item = getItem(position);
+
+            // если отправитель - текущий полльзователь, то используется my_ часть разметки
+            // если отправитель - не текущий полльзователь, то используется not_my_ часть разметки
+            // если отправитель - null, то используется system_ часть разметки
 
             // установка данных
             system_tlImages.removeBitmaps();

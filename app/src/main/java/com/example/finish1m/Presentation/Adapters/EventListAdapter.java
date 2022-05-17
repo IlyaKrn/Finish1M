@@ -41,6 +41,8 @@ import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
+// адаптер списка событий
+
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
 
     private ImageRepositoryImpl imageRepository;
@@ -91,6 +93,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             btMenu.setVisibility(View.VISIBLE);
             btReg.setText("Вы записаны");
 
+            // проверка наличия заявки от пользователя
             boolean isRegistered = false;
             if (item.getMembers() != null) {
                 for (String s : item.getMembers()) {
@@ -101,6 +104,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 }
             }
 
+            // открытие/скрытие кнопок и установка данных
             if(!isRegistered){
                 btChat.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
@@ -124,6 +128,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             tvTitle.setText(item.getTitle());
             tvMessage.setText(item.getMessage());
 
+            // создание заявки
             boolean finalIsRegistered = isRegistered;
             btReg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,6 +193,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                     }
                 }
             });
+            // открытие чата
             btChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -196,6 +202,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                     activity.startActivity(intent);
                 }
             });
+            // открытие списка пользователей
             btUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
@@ -209,6 +216,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                     activity.startActivity(intent);
                 }
             });
+            // открытие меню с изменением и удалением
             btMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -273,6 +281,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             });
 
 
+            // получение и установка данных
             GetEventByIdUseCase getEventListUseCase = new GetEventByIdUseCase(eventRepository, item.getId(), new OnGetDataListener<Event>() {
                 @Override
                 public void onGetData(Event data) {

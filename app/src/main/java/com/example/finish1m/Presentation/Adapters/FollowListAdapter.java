@@ -26,6 +26,8 @@ import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
+// адаптер списка заявок
+
 public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHolder> {
 
     private ImageRepositoryImpl imageRepository;
@@ -73,6 +75,8 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
             tvMessage.setText(item.getMessage());
 
             glImages.removeBitmaps();
+
+            // получение и установка данных
 
             if (item.getImageRefs() != null){
                 GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {

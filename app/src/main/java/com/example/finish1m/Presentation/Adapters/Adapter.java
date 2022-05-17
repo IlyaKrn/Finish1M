@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+// абстрактный адаптер для списка
+
 public abstract class Adapter<T, VH extends Adapter.Holder> extends RecyclerView.Adapter<VH> {
 
     protected Activity activity;
@@ -71,6 +73,7 @@ public abstract class Adapter<T, VH extends Adapter.Holder> extends RecyclerView
         return items.get(position);
     }
 
+    // абстрактный холдер для элемента списка
     public abstract static class Holder<T> extends RecyclerView.ViewHolder {
 
         protected T item;
@@ -82,6 +85,7 @@ public abstract class Adapter<T, VH extends Adapter.Holder> extends RecyclerView
         public abstract void bind(int position);
     }
 
+    // слушатель нажатия на элемент списка
     public interface OnStateClickListener<T> {
         void onClick(T item);
         void onLongClick(T item);

@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// адаптер для окна метки на карте
+
 public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private final View rootView;
@@ -62,6 +64,8 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         glImages = rootView.findViewById(R.id.gl_images);
 
         glImages.removeAllViews();
+
+        // установка картинок из кэша и данных из списка
 
         for(Locate l : locates){
             if (marker.getPosition().equals(new LatLng(l.getLatitude(), l.getLongitude()))){

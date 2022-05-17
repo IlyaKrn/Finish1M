@@ -15,6 +15,8 @@ import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
+// адаптер списка изображений
+
 public class ImageListAdapter extends Adapter<Bitmap, ImageListAdapter.ViewHolder>{
 
     private OnItemRemoveListener onItemRemoveListener;
@@ -53,7 +55,6 @@ public class ImageListAdapter extends Adapter<Bitmap, ImageListAdapter.ViewHolde
         @Override
         public void bind(int position) {
             item = getItem(position);
-
             imageView.setImageBitmap(item);
             btRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,7 +64,6 @@ public class ImageListAdapter extends Adapter<Bitmap, ImageListAdapter.ViewHolde
             });
         }
     }
-
     public interface OnItemRemoveListener{
         void onRemove(int position);
     }
