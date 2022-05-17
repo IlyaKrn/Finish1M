@@ -41,11 +41,12 @@ public class LocateRepositoryImpl implements LocateRepository {
                             assert l != null;
                             temp.add(l);
                         }
+                        if(temp.size() > 0)
+                            listener.onGetData(temp);
+                        else
+                            listener.onVoidData();
                     }
-                    if(temp.size() > 0)
-                        listener.onGetData(temp);
-                    else
-                        listener.onVoidData();
+
                 }
 
                 @Override
