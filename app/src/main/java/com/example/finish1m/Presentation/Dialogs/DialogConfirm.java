@@ -14,14 +14,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.finish1m.R;
 
+// диалог
+
 public class DialogConfirm extends Dialog {
 
     private Button confirm, cancel;
     private OnConfirmListener onConfirmListener;
     private TextView tvTitle, tvData;
-    String title;
-    String confirmText;
-    String data;
+    String title; // заголовок
+    String confirmText; // текст кнопки для согласия
+    String data; // описание
 
     public DialogConfirm(AppCompatActivity activity, String title, String confirm, String data, OnConfirmListener onConfirmListener) {
         super(activity);
@@ -51,6 +53,7 @@ public class DialogConfirm extends Dialog {
         tvTitle.setText(title);
         tvData.setText(data);
 
+        // кнопка "принять"
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

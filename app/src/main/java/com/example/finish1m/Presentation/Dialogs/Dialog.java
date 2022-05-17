@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
+// абстрактный диалог
+
 public abstract class Dialog extends Fragment {
 
     public static final String LOG_TAG = "FragmentTag";
@@ -23,7 +25,7 @@ public abstract class Dialog extends Fragment {
     protected FragmentManager fragmentManager;
     protected Context context;
 
-    private static ArrayList<Dialog> currentDialogs = new ArrayList<>();
+    private static ArrayList<Dialog> currentDialogs = new ArrayList<>(); // текущие диалоги
 
     private OnDestroyListener onDestroyListener;
 
@@ -42,7 +44,9 @@ public abstract class Dialog extends Fragment {
         return rootView;
 
     }
+    // создание и уничтожение диалога
     public void create(int containerId){
+        // уничтожение всех предыдущих диалогов
         for (Dialog d : currentDialogs) {
             d.destroy();
         }
@@ -63,10 +67,10 @@ public abstract class Dialog extends Fragment {
     public void setOnDestroyListener(OnDestroyListener onDestroyListener) {
         this.onDestroyListener = onDestroyListener;
     }
+    // установка clickable на все элементы диалога
     public void freeze(){
         setClickable((ViewGroup) rootView, false);
     }
-
     protected void defreeze(){
         setClickable((ViewGroup) rootView, true);
     }

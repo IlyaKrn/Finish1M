@@ -13,8 +13,11 @@ import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
+// таблица изображений
+
 public class TableMessageImages extends GridLayout {
 
+    // тип сообщения (наверное нигде не используется)
     public static final int SYSTEM_MESSAGE = 1;
     public static final int MY_MESSAGE = 2;
     public static final int NOT_MY_MESSAGE = 3;
@@ -45,11 +48,9 @@ public class TableMessageImages extends GridLayout {
 
     public void setBitmaps(ArrayList<Bitmap> bitmaps) {
         this.bitmaps = bitmaps;
-
-
-
     }
 
+    // добавление изображения
     public void addImage(Bitmap b){
         this.bitmaps.add(b);
         getLayoutParams().width = 100;// width;
@@ -60,6 +61,7 @@ public class TableMessageImages extends GridLayout {
         addView(imageView);
     }
 
+    // очистка
     public void removeBitmaps(){
         getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         removeAllViews();

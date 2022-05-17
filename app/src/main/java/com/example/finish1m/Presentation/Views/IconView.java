@@ -13,6 +13,8 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+// View для круглого изображения
+
 public class IconView extends androidx.appcompat.widget.AppCompatImageView {
     public IconView(@NonNull Context context) {
         super(context);
@@ -32,6 +34,7 @@ public class IconView extends androidx.appcompat.widget.AppCompatImageView {
         super.setImageBitmap(bm);
     }
 
+    // обрезка изображения
     private Bitmap getRoundBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
                 .getHeight(), Bitmap.Config.ARGB_8888);
