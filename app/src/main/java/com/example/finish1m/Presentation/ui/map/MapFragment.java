@@ -3,6 +3,7 @@ package com.example.finish1m.Presentation.ui.map;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.example.finish1m.Presentation.CreateNewLocateActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.PresentationConfig;
+import com.example.finish1m.Presentation.RefactorLocateActivity;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -78,15 +80,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                 public void onGetData(Bitmap data) {
                                     count[0]++;
                                     cache.get(l).add(data);
-                                    if (locates.size() == count[0])
-                                        adapter.loadCache(cache);
+                                    adapter.loadCache(cache);
                                 }
 
                                 @Override
                                 public void onVoidData() {
                                     count[0]++;
-                                    if (locates.size() == count[0])
-                                        adapter.loadCache(cache);
+                                    adapter.loadCache(cache);
                                 }
 
                                 @Override

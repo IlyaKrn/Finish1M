@@ -3,6 +3,7 @@ package com.example.finish1m.Presentation.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     }
 
 
+    // загрузка картинок в адаптер
     public void loadCache(Map<Locate, ArrayList<Bitmap>> c){
         this.cache = c;
     }
