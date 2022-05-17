@@ -9,6 +9,8 @@ import com.example.finish1m.Domain.Models.Event;
 
 import java.util.ArrayList;
 
+// отправка уведомлений о новах событиях
+
 public class StartListeningEventsUseCase {
 
     private EventRepository eventRepository;

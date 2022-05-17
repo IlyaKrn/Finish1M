@@ -10,6 +10,8 @@ import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.Locate;
 import com.example.finish1m.Domain.Models.User;
 
+// изменение пользователя
+
 public class RefactorUserUseCase {
 
     private UserRepository repository;

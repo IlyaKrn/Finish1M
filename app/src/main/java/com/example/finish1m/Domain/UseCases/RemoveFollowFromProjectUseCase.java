@@ -6,6 +6,8 @@ import com.example.finish1m.Domain.Interfaces.ProjectRepository;
 import com.example.finish1m.Domain.Models.Follow;
 import com.example.finish1m.Domain.Models.Project;
 
+// удаление заявки из проекта
+
 public class RemoveFollowFromProjectUseCase {
 
     private ProjectRepository projectRepository;

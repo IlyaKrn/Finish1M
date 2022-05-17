@@ -12,6 +12,8 @@ import com.example.finish1m.Domain.Models.Project;
 
 import java.util.ArrayList;
 
+// создание заявки для проекта
+
 public class CreateNewFollowUseCase {
 
     private ProjectRepository projectRepository;
@@ -35,6 +37,7 @@ public class CreateNewFollowUseCase {
         projectRepository.getProjectById(projectId, new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
+                // загрузка картинок
                 if(isAdd[0]) {
                     isAdd[0] = false;
                     final int[] count = {0};

@@ -6,6 +6,7 @@ import com.example.finish1m.Domain.Models.Event;
 
 import java.util.ArrayList;
 
+// добавление заявки на мероприятие
 public class AddUserToEventByEmailUseCase {
 
     private EventRepository repository;
@@ -21,10 +22,12 @@ public class AddUserToEventByEmailUseCase {
     }
 
     public void execute(){
+        // добамление пользователя в список
         if (event.getMembers() == null) {
             event.setMembers(new ArrayList<>());
         }
         event.getMembers().add(userEmail);
+        // запись
         repository.setEvent(event.getId(), event, listener);
     }
 

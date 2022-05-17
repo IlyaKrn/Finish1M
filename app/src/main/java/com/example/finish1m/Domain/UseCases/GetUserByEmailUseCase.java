@@ -6,6 +6,8 @@ import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.Models.User;
 
+// получение пользователя
+
 public class GetUserByEmailUseCase {
 
     private UserRepository repository;

@@ -12,6 +12,8 @@ import com.example.finish1m.Domain.Models.Locate;
 
 import java.util.ArrayList;
 
+// изменение метки
+
 public class RefactorLocateUseCase {
 
 

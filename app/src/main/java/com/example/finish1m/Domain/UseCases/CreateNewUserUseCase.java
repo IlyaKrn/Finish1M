@@ -4,6 +4,8 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.User;
 
+// создание нового пользователя
+
 public class CreateNewUserUseCase {
 
     private UserRepository userRepository;

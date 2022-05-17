@@ -14,6 +14,8 @@ import com.example.finish1m.Domain.Models.Locate;
 
 import java.util.ArrayList;
 
+// создание метки
+
 public class CreateNewLocateUseCase {
 
     private LocateRepository locateRepository;
@@ -35,9 +37,11 @@ public class CreateNewLocateUseCase {
     }
 
     public void execute(){
+        // создание чата
         chatRepository.setChat(chat.getId(), chat, new OnSetDataListener() {
             @Override
             public void onSetData() {
+                // загрузка картинок
                 final int[] count = {0};
                 ArrayList<String> imageRefs = new ArrayList<>();
                 if (images.size() > 0) {
@@ -49,6 +53,7 @@ public class CreateNewLocateUseCase {
                                 imageRefs.add(ref);
                                 if (count[0] == images.size()) {
                                     locate.setImageRefs(imageRefs);
+                                    // запись
                                     locateRepository.setLocate(locate.getId(), locate, listener);
                                 }
                             }
@@ -68,6 +73,7 @@ public class CreateNewLocateUseCase {
                 }
                 else{
                     locate.setImageRefs(imageRefs);
+                    // запись
                     locateRepository.setLocate(locate.getId(), locate, listener);
                 }
             }

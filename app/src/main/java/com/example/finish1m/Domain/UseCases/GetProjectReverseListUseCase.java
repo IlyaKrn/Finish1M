@@ -9,6 +9,8 @@ import com.example.finish1m.Domain.Models.Project;
 
 import java.util.ArrayList;
 
+// получение перевернутого списка проектов
+
 public class GetProjectReverseListUseCase {
 
     private ProjectRepository repository;

@@ -4,6 +4,9 @@ import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.ProjectRepository;
 
+// удаление пректа
+
+
 public class DeleteProjectByIdUseCase {
 
     private ProjectRepository repository;

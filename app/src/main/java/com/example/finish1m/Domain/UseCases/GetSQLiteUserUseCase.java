@@ -4,6 +4,8 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.SQLiteRepository;
 import com.example.finish1m.Domain.Models.SQLiteUser;
 
+// получение сохраненного пользователя из внутренней бд
+
 public class GetSQLiteUserUseCase {
 
     private SQLiteRepository repository;

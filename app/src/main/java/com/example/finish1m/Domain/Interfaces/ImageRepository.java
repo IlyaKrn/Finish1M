@@ -8,6 +8,6 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnSetImageListener;
 
 public interface ImageRepository {
 
-    void getImageByRef(String ref, OnGetDataListener<Bitmap> listener);
-    void setImage(Bitmap bitmap, OnSetImageListener listener);
+    void getImageByRef(String ref, OnGetDataListener<Bitmap> listener);    // получение изображения по ссылке
+    void setImage(Bitmap bitmap, OnSetImageListener listener);    // загрузка изображения
 }

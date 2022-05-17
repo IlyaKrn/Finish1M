@@ -2,12 +2,14 @@ package com.example.finish1m.Domain.Models;
 
 import java.util.ArrayList;
 
+// заявка на участие в проекте
+
 public class Follow {
 
     private String id;
-    private String userEmail;
-    private String message;
-    private ArrayList<String> imageRefs;
+    private String userEmail; // пользователь
+    private String message; // сообщение  от пользователя
+    private ArrayList<String> imageRefs; // ссалки на изображения от пользователя
 
 
     public Follow(String id, String userEmail, String message, ArrayList<String> imageRefs) {

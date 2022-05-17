@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Chat {
 
     private String id;
-    private ArrayList<Message> messages;
+    private ArrayList<Message> messages; // список сообщений в чате
 
     public Chat(String id, ArrayList<Message> messages, ArrayList<String> members) {
         this.id = id;

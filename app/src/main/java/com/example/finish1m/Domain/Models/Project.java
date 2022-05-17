@@ -3,15 +3,17 @@ package com.example.finish1m.Domain.Models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+// проект
+
 public class Project {
 
     private String id;
 
-    private String title;
-    private String message;
-    private String chatId;
-    private ArrayList<String> imageRefs;
-    private ArrayList<Follow> follows;
+    private String title; // заголовок
+    private String message; // описание
+    private String chatId; // ссылка на чат
+    private ArrayList<String> imageRefs; // ссылки на изображения
+    private ArrayList<Follow> follows; // заявки от пользователей
 
     public Project(String id, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<Follow> follows) {
         this.id = id;

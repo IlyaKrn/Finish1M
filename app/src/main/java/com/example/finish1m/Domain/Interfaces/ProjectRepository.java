@@ -7,8 +7,8 @@ import com.example.finish1m.Domain.Models.Project;
 import java.util.ArrayList;
 
 public interface ProjectRepository {
-    void getProjectList(OnGetDataListener<ArrayList<Project>> listener);
-    void getProjectById(String eventId, OnGetDataListener<Project> listener);
-    void setProject(String id, Project project, OnSetDataListener listener);
-    String getNewId();
+    void getProjectList(OnGetDataListener<ArrayList<Project>> listener);    // получение списка проектов
+    void getProjectById(String eventId, OnGetDataListener<Project> listener);    // получение проекта по id
+    void setProject(String id, Project project, OnSetDataListener listener);    // запись данных в проект по id
+    String getNewId();    // получение нового id
 }

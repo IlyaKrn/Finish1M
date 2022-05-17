@@ -17,6 +17,8 @@ import com.example.finish1m.Domain.Models.Project;
 
 import java.util.ArrayList;
 
+// создание проекта
+
 public class CreateNewProjectUseCase {
 
     private ProjectRepository projectRepository;
@@ -39,9 +41,11 @@ public class CreateNewProjectUseCase {
 
 
     public void execute(){
+        // создание чата
         chatRepository.setChat(chat.getId(), chat, new OnSetDataListener() {
             @Override
             public void onSetData() {
+                // загрузка картинок
                 final int[] count = {0};
                 ArrayList<String> imageRefs = new ArrayList<>();
                 if (images.size() > 0) {
@@ -53,6 +57,7 @@ public class CreateNewProjectUseCase {
                                 imageRefs.add(ref);
                                 if (count[0] == images.size()) {
                                     project.setImageRefs(imageRefs);
+                                    // запись
                                     projectRepository.setProject(project.getId(), project, listener);
                                 }
                             }
@@ -72,6 +77,7 @@ public class CreateNewProjectUseCase {
                 }
                 else{
                     project.setImageRefs(imageRefs);
+                    // запись
                     projectRepository.setProject(project.getId(), project, listener);
                 }
             }

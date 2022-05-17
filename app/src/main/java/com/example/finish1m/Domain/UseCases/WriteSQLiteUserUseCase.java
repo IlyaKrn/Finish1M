@@ -5,6 +5,8 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.SQLiteRepository;
 import com.example.finish1m.Domain.Models.SQLiteUser;
 
+// запись пользователя во внутреннюю бд
+
 public class WriteSQLiteUserUseCase {
 
     private SQLiteRepository repository;

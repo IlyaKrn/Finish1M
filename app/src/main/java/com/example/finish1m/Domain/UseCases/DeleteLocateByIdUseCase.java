@@ -4,6 +4,9 @@ import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.LocateRepository;
 
+// удаление метки
+
+
 public class DeleteLocateByIdUseCase {
 
     private LocateRepository repository;

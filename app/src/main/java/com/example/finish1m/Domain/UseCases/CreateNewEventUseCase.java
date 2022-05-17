@@ -12,6 +12,8 @@ import com.example.finish1m.Domain.Models.Event;
 
 import java.util.ArrayList;
 
+// создание мероприятия
+
 public class CreateNewEventUseCase {
 
     private EventRepository eventRepository;
@@ -33,9 +35,11 @@ public class CreateNewEventUseCase {
     }
 
     public void execute(){
+        // создание чата
         chatRepository.setChat(chat.getId(), chat, new OnSetDataListener() {
             @Override
             public void onSetData() {
+                // загрузка картинок
                 final int[] count = {0};
                 ArrayList<String> imageRefs = new ArrayList<>();
                 if (images.size() > 0) {
@@ -47,6 +51,7 @@ public class CreateNewEventUseCase {
                                 imageRefs.add(ref);
                                 if (count[0] == images.size()) {
                                     event.setImageRefs(imageRefs);
+                                    // запись
                                     eventRepository.setEvent(event.getId(), event, listener);
                                 }
                             }
@@ -66,6 +71,7 @@ public class CreateNewEventUseCase {
                 }
                 else{
                     event.setImageRefs(imageRefs);
+                    // запись
                     eventRepository.setEvent(event.getId(), event, listener);
                 }
             }

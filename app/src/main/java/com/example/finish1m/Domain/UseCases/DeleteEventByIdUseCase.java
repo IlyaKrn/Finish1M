@@ -3,6 +3,8 @@ package com.example.finish1m.Domain.UseCases;
 import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 
+// удаление события
+
 public class DeleteEventByIdUseCase {
 
     private EventRepository repository;

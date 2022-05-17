@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public interface LocateRepository {
 
-    void getLocateList(OnGetDataListener<ArrayList<Locate>> listener);
-    void getLocateById(String eventId, OnGetDataListener<Locate> listener);
-    void setLocate(String id, Locate locate, OnSetDataListener listener);
-    String getNewId();
+    void getLocateList(OnGetDataListener<ArrayList<Locate>> listener);    // получение списка меток
+    void getLocateById(String eventId, OnGetDataListener<Locate> listener);    // получение метки по id
+    void setLocate(String id, Locate locate, OnSetDataListener listener);    // запись данных в метку по id
+    String getNewId();    // получение нового id
 }

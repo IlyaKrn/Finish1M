@@ -1,15 +1,17 @@
 package com.example.finish1m.Domain.Models;
 
+// пользователь
+
 public class User {
 
-    private String firstName;
-    private String lastName;
+    private String firstName; // имя
+    private String lastName; // фамилия
 
-    private String email;
+    private String email; // почта
 
-    private boolean isBanned;
-    private boolean isAdmin;
-    private String iconRef;
+    private boolean isBanned; // заблокирован
+    private boolean isAdmin; // администратор
+    private String iconRef; // ссылка на изображение
 
     public User(String firstName, String lastName, String email, boolean isBanned, boolean isAdmin, String iconRef) {
         this.firstName = firstName;

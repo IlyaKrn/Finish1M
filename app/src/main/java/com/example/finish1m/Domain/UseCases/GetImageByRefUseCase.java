@@ -7,6 +7,8 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 
 import java.util.HashMap;
 
+// получение изображения
+
 public class GetImageByRefUseCase {
 
     private ImageRepository repository;

@@ -5,6 +5,8 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.User;
 
+// регистрация через почту и пароль
+
 public class RegisterWithEmailAndPasswordUseCase {
 
     private AuthRepository authRepository;

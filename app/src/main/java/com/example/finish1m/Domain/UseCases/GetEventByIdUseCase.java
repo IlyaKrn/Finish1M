@@ -4,6 +4,8 @@ import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Event;
 
+// получение события
+
 public class GetEventByIdUseCase {
 
     private EventRepository repository;

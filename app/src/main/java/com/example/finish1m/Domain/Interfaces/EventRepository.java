@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public interface EventRepository {
 
-    void getEventList(OnGetDataListener<ArrayList<Event>> listener);
-    void getEventById(String eventId, OnGetDataListener<Event> listener);
-    void setEvent(String id, Event event, OnSetDataListener listener);
-    String getNewId();
+    void getEventList(OnGetDataListener<ArrayList<Event>> listener);    // получение списка событий
+    void getEventById(String eventId, OnGetDataListener<Event> listener);    // получение события по id
+    void setEvent(String id, Event event, OnSetDataListener listener);    // запись данных в событие по id
+    String getNewId();    // получение нового id
 }

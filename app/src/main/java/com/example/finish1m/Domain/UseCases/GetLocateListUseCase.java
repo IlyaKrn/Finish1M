@@ -6,6 +6,8 @@ import com.example.finish1m.Domain.Models.Locate;
 
 import java.util.ArrayList;
 
+// получение метки
+
 public class GetLocateListUseCase {
 
     private LocateRepository repository;

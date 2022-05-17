@@ -3,6 +3,8 @@ package com.example.finish1m.Domain.UseCases;
 import com.example.finish1m.Domain.Interfaces.AuthRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 
+// отправка письма для верификации
+
 public class SendVerificationEmailUseCase {
 
     private AuthRepository repository;

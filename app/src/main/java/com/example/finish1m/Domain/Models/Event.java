@@ -2,19 +2,21 @@ package com.example.finish1m.Domain.Models;
 
 import java.util.ArrayList;
 
+// событие (новость/мероприятие)
+
 public class Event {
 
-    public static final int NEWS = 1;
-    public static final int EVENT = 2;
+    public static final int NEWS = 1; // новость
+    public static final int EVENT = 2; // мероприятие
 
     private String id;
-    private int type;
+    private int type; // тип
 
-    private String title;
-    private String message;
-    private String chatId;
-    private ArrayList<String> imageRefs;
-    private ArrayList<String> members;
+    private String title; // заголовок
+    private String message; // описание
+    private String chatId; // id чата для события
+    private ArrayList<String> imageRefs; // ссылки на изображения
+    private ArrayList<String> members; // заявки на участие
 
     public Event(String id, int type, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<String> members) {
         this.id = id;

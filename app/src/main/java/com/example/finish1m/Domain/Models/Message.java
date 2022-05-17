@@ -2,12 +2,14 @@ package com.example.finish1m.Domain.Models;
 
 import java.util.ArrayList;
 
+// сообщение в чате
+
 public class Message {
 
-    private String message;
-    private String userEmail;
+    private String message; // текст сообщения
+    private String userEmail; // отправитель
 
-    private ArrayList<String> imageRefs;
+    private ArrayList<String> imageRefs; // ссылки на изображения
 
     public Message(String message, String userEmail, ArrayList<String> imageRefs) {
         this.message = message;

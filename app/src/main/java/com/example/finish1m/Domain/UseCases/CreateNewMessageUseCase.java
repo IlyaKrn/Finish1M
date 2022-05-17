@@ -13,6 +13,8 @@ import com.example.finish1m.Domain.Models.Message;
 
 import java.util.ArrayList;
 
+// добавление сообщения в чат
+
 public class CreateNewMessageUseCase {
 
     private ChatRepository chatRepository;
@@ -34,12 +36,16 @@ public class CreateNewMessageUseCase {
     }
 
     public void execute(){
+        // isAdd нужен чтобы при записи данных в чат код при обновлении данных не выполнялся заново
+        // можно предавать не ссылку на чат, а объект чата, чтобы збежать использования isAdd
         isAdd = true;
+        // получение чата
         chatRepository.getChatById(id, new OnGetDataListener<Chat>() {
             @Override
             public void onGetData(Chat data) {
                 if(isAdd) {
                     isAdd = false;
+                    // загрузка картинок
                     if (images.size() > 0) {
                         final int[] count = {0};
                         message.setImageRefs(new ArrayList<>());
@@ -51,6 +57,7 @@ public class CreateNewMessageUseCase {
                                     message.getImageRefs().add(ref);
                                     if (count[0] == images.size()) {
                                         data.getMessages().add(message);
+                                        // запись
                                         chatRepository.setChat(id, data, listener);
                                     }
                                 }
@@ -70,6 +77,7 @@ public class CreateNewMessageUseCase {
                     else {
                         message.setImageRefs(new ArrayList<>());
                         data.getMessages().add(message);
+                        // запись
                         chatRepository.setChat(id, data, listener);
                     }
                 }

@@ -6,6 +6,8 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.User;
 
+// вход через почту и пароль и получение пользователя из бд
+
 public class EnterWithEmailAndPasswordUseCase {
 
     private UserRepository userRepository;

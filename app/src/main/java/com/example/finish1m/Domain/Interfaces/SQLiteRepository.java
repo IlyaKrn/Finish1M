@@ -6,6 +6,6 @@ import com.example.finish1m.Domain.Models.SQLiteUser;
 
 public interface SQLiteRepository {
 
-    void getSQLiteUser(OnGetDataListener<SQLiteUser> listener);
-    void setSQLiteUser(SQLiteUser user, OnSetDataListener listener);
+    void getSQLiteUser(OnGetDataListener<SQLiteUser> listener);    // получение пользователя, сохраненного в бд
+    void setSQLiteUser(SQLiteUser user, OnSetDataListener listener);    // запись пользователя в бд
 }

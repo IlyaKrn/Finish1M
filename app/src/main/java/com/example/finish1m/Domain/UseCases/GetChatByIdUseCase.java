@@ -4,6 +4,8 @@ import com.example.finish1m.Domain.Interfaces.ChatRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Chat;
 
+// получение чата
+
 public class GetChatByIdUseCase {
 
     private ChatRepository repository;

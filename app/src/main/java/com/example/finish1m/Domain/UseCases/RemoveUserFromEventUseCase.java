@@ -6,6 +6,8 @@ import com.example.finish1m.Domain.Models.Event;
 
 import java.util.ArrayList;
 
+// удаление заявки из мероприятия
+
 public class RemoveUserFromEventUseCase {
 
     private EventRepository repository;;

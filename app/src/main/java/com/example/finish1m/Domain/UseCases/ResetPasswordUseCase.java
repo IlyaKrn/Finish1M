@@ -4,6 +4,8 @@ import com.example.finish1m.Data.Firebase.AuthRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.AuthRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 
+// сброс пароля
+
 public class ResetPasswordUseCase {
 
     private AuthRepositoryImpl repository;

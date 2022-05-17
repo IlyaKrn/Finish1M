@@ -2,17 +2,20 @@ package com.example.finish1m.Domain.Models;
 
 import java.util.ArrayList;
 
+// метка
+
 public class Locate {
 
     private String id;
 
+    // координаты
     private double longitude;
     private double latitude;
-    private String title;
-    private String message;
-    private String chatId;
+    private String title; // заголовок
+    private String message; // описание
+    private String chatId; // ссылка на чат
 
-    private ArrayList<String> imageRefs;
+    private ArrayList<String> imageRefs; // ссылки на изображеия
 
     public Locate(String id, double longitude, double latitude, String title, String message, String chatId, ArrayList<String> imageRefs) {
         this.id = id;

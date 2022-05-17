@@ -4,6 +4,8 @@ import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 
+// удаление пользователя
+
 public class DeleteUserByEmailUseCase {
 
     private UserRepository repository;
