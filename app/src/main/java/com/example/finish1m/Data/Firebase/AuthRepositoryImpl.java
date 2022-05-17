@@ -18,6 +18,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         this.context = context;
     }
 
+    // вход с почтой и паролем
     @Override
     public void EnterWithEmailAndPassword(String email, String password, OnSetDataListener listener) {
         try {
@@ -37,6 +38,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
     }
 
+    // регистрация с почтой и паролем
     @Override
     public void RegisterWithEmailAndPassword(String email, String password, OnSetDataListener listener) {
         try {
@@ -56,6 +58,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
     }
 
+    // отправка письма для верификации
     @Override
     public void sendVerificationEmail(String email, OnSetDataListener listener) {
         try {
@@ -75,6 +78,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
     }
 
+    // отправка письма для сброса пароля
     @Override
     public void ResetPassword(String email, OnSetDataListener listener) {
         try {
@@ -94,6 +98,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
     }
 
+    // проверка верификации текущего пользователя
     @Override
     public boolean isCurrentUserVerified() {
         try {

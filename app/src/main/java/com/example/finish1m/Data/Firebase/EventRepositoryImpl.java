@@ -27,6 +27,7 @@ public class EventRepositoryImpl implements EventRepository {
         this.context = context;
     }
 
+    // получение списка событий
     @Override
     public void getEventList(OnGetDataListener<ArrayList<Event>> listener) {
         try {
@@ -60,6 +61,7 @@ public class EventRepositoryImpl implements EventRepository {
         }
     }
 
+    // получение события по id
     @Override
     public void getEventById(String eventId, OnGetDataListener<Event> listener) {
         try {
@@ -89,6 +91,7 @@ public class EventRepositoryImpl implements EventRepository {
         }
     }
 
+    // запись данных в событие по id
     @Override
     public void setEvent(String id, Event event, OnSetDataListener listener) {
         try {
@@ -108,6 +111,7 @@ public class EventRepositoryImpl implements EventRepository {
         }
     }
 
+    // получение нового id
     @Override
     public String getNewId() {
         return FirebaseDatabase.getInstance().getReference(DATABASE_EVENT).push().getKey();

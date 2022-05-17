@@ -23,6 +23,7 @@ public class SQLiteDbManager {
         myDbHelper = new SQLiteDbHelper(context);
     }
 
+    // запись пользователя
     public void setUser(SQLiteUser sqlUser){
         clear();
         if (sqlUser != null) {

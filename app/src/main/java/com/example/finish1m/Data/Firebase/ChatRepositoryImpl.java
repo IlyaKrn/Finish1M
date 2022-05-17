@@ -25,6 +25,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         this.context = context;
     }
 
+    // получение чата по id
     @Override
     public void getChatById(String chatId, OnGetDataListener<Chat> listener) {
         try {
@@ -55,6 +56,7 @@ public class ChatRepositoryImpl implements ChatRepository {
 
     }
 
+    // запись данных в чат по id
     @Override
     public void setChat(String id, Chat chat, OnSetDataListener listener) {
         try {
@@ -76,6 +78,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         }
     }
 
+    // получение нового id
     @Override
     public String getNewId() {
         return FirebaseDatabase.getInstance().getReference(DATABASE_CHAT).push().getKey();

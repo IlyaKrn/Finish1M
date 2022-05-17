@@ -28,6 +28,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         this.context = context;
     }
 
+    // получение списка проектов
     @Override
     public void getProjectList(OnGetDataListener<ArrayList<Project>> listener) {
         try {
@@ -61,6 +62,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
     }
 
+    // получение проекта по id
     @Override
     public void getProjectById(String eventId, OnGetDataListener<Project> listener) {
         try {
@@ -90,6 +92,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
     }
 
+    // запись данных в проект по id
     @Override
     public void setProject(String id, Project project, OnSetDataListener listener) {
         try {
@@ -109,6 +112,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
     }
 
+    // получение нового id
     @Override
     public String getNewId() {
         return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_PROJECT).push().getKey();

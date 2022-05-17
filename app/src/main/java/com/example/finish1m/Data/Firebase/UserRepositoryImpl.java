@@ -23,6 +23,44 @@ import java.util.ArrayList;
 
 public class UserRepositoryImpl implements UserRepository {
 
+    // путем к данным пользователя является адрес почты
+    /**
+     * {
+     *     e{
+     *         m{
+     *             a{
+     *                 i{
+     *                     l{
+     *                          \@{
+     *                              g{
+     *                                  m{
+     *                                      a{
+     *                                          i{
+     *                                              l{
+     *                                                  point{
+     *                                                      c{
+     *                                                          o{
+     *                                                              m{
+     *                                                                  user data
+     *                                                              }
+     *                                                          }
+     *                                                      }
+     *                                                  }
+     *                                              }
+     *                                          }
+     *                                      }
+     *                                  }
+     *                              }
+     *                          }
+     *                     }
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     *
+     * */
+
     private static final String PATH_POINT = "point";
     private Context context;
 
@@ -30,6 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
         this.context = context;
     }
 
+    // получение списка пользователей
     @Override
     public void getUserList(OnGetDataListener<ArrayList<User>> listener) {
         try {
@@ -53,6 +92,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    // получение пользователя по id
     @Override
     public void getUserByEmail(String email, OnGetDataListener<User> listener) {
         try {
@@ -86,6 +126,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    // запись данных в пользователя по id
     @Override
     public void setUser(String email, User user, OnSetDataListener listener) {
         try {
@@ -114,6 +155,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
+    // получение нового id
     @Override
     public String getNewId() {
         return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_USER).push().getKey();

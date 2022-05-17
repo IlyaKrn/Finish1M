@@ -28,6 +28,7 @@ public class LocateRepositoryImpl implements LocateRepository {
         this.context = context;
     }
 
+    // получение списка меток
     @Override
     public void getLocateList(OnGetDataListener<ArrayList<Locate>> listener) {
         try {
@@ -61,6 +62,7 @@ public class LocateRepositoryImpl implements LocateRepository {
         }
     }
 
+    // получение метки по id
     @Override
     public void getLocateById(String locateId, OnGetDataListener<Locate> listener) {
         try {
@@ -90,6 +92,7 @@ public class LocateRepositoryImpl implements LocateRepository {
         }
     }
 
+    // запись данных в метку по id
     @Override
     public void setLocate(String id, Locate locate, OnSetDataListener listener) {
         try {
@@ -109,6 +112,7 @@ public class LocateRepositoryImpl implements LocateRepository {
         }
     }
 
+    // получение нового id
     @Override
     public String getNewId() {
         return FirebaseDatabase.getInstance().getReference(FirebaseConfig.DATABASE_LOCATE).push().getKey();

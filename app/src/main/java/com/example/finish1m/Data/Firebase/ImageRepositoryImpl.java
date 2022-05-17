@@ -26,6 +26,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         this.context = context;
     }
 
+    // получение изображения по ссылке
     @Override
     public void getImageByRef(String ref, OnGetDataListener<Bitmap> listener) {
         try {
@@ -49,6 +50,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         }
     }
 
+    // загрузка изображения
     @Override
     public void setImage(Bitmap bitmap, OnSetImageListener listener) {
         try {
@@ -69,6 +71,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         }
     }
 
+    // получуние стандартного изображения
     private void getDefaultImage(OnGetDataListener<Bitmap> listener){
         try {
             FirebaseStorage.getInstance().getReference().child(FirebaseConfig.STORAGE_DEFAULT_ICON).getBytes(1024 * 1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
@@ -91,6 +94,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         }
     }
 
+    // преобразование изображения в массив
     private byte[] getBytes(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);

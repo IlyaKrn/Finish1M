@@ -18,6 +18,7 @@ public class NotificationRepositoryImpl implements NotificationRepository {
         this.context = context;
     }
 
+    // отправка уведомления
     @Override
     public void sendNotification(String title, String message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -16,6 +16,7 @@ public class SQLiteRepositoryImpl implements SQLiteRepository {
         this.context = context;
     }
 
+    // получение пользователя, сохраненного в бд
     @Override
     public void getSQLiteUser(OnGetDataListener<SQLiteUser> listener) {
         try{
@@ -29,6 +30,7 @@ public class SQLiteRepositoryImpl implements SQLiteRepository {
         }
     }
 
+    // запись пользователя в бд
     @Override
     public void setSQLiteUser(SQLiteUser user, OnSetDataListener listener) {
         try{
