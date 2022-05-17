@@ -43,7 +43,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
     private GetProjectByIdUseCase getProjectByIdUseCase;
     private RefactorProjectUseCase refactorProjectUseCase;
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Bitmap> images = new ArrayList<>();// картинки для проекта
     private ImageListAdapter adapter;
 
     private Project project;
@@ -57,6 +57,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
         projectRepository = new ProjectRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
+        // получение и установка данных
         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
@@ -113,6 +114,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
 
 
+        // изменение проекта
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +158,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
             }
         });
 
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,8 +166,15 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+        // закрытие активности
+        binding.btClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
-
+        // адаптер картинок
         adapter = new ImageListAdapter(this, this, images);
         adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
             @Override

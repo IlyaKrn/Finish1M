@@ -51,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         authRepository = new AuthRepositoryImpl(this);
         sqLiteRepository = new SQLiteRepositoryImpl(this);
 
+        // регистрация
         binding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = binding.etPassword.getText().toString();
                 if(!TextUtils.isEmpty(email)) {
                     if (!TextUtils.isEmpty(email)){
+                        // записть пользователя в FirebaseAuth
                         registerWithEmailAndPasswordUseCase = new RegisterWithEmailAndPasswordUseCase(authRepository, userRepository, email, password, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
@@ -79,10 +81,12 @@ public class RegisterActivity extends AppCompatActivity {
                                                                     createNewUserUseCase = new CreateNewUserUseCase(userRepository, new User(firstName, lastName, email, false, false, null), new OnSetDataListener(){
                                                                         @Override
                                                                         public void onSetData() {
+                                                                            // запись пользователя в бд
                                                                             enterWithEmailAndPasswordUseCase = new EnterWithEmailAndPasswordUseCase(userRepository, authRepository, email, password, new OnGetDataListener<User>() {
                                                                                 @Override
                                                                                 public void onGetData(User data) {
-                                                                                    PresentationConfig.user = data;
+                                                                                    PresentationConfig.user = data; // установка текущего пользователя
+                                                                                    // запис в SQLite (если необходимо)
                                                                                     if (binding.cbAlwaysUse.isChecked()) {
                                                                                         writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, new SQLiteUser(email, password), new OnSetDataListener() {
                                                                                             @Override
@@ -211,6 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // отправка письма для верификации
         binding.btResendVerificationEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,6 +242,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // скрытие собщенией об ошибках при изменении данных в полях ввода
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

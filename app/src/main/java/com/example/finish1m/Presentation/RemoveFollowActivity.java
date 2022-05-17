@@ -28,7 +28,7 @@ public class RemoveFollowActivity extends AppCompatActivity {
     private ActivityRemoveFollowBinding binding;
 
     private FollowListAdapter adapter;
-    private ArrayList<Follow> follows = new ArrayList<>();
+    private ArrayList<Follow> follows = new ArrayList<>(); // заявки
     private ProjectRepositoryImpl projectRepository;
 
     private GetProjectByIdUseCase getProjectByIdUseCase;
@@ -41,6 +41,7 @@ public class RemoveFollowActivity extends AppCompatActivity {
         binding = ActivityRemoveFollowBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // получение и установка данных
         projectRepository = new ProjectRepositoryImpl(this);
         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
@@ -81,7 +82,7 @@ public class RemoveFollowActivity extends AppCompatActivity {
 
 
 
-
+        // адаптер
         adapter = new FollowListAdapter(this, this, follows);
         adapter.setOnItemClickListener(new Adapter.OnStateClickListener<Follow>() {
             @Override
@@ -91,6 +92,7 @@ public class RemoveFollowActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(Follow item) {
+                // удаление заявки
                 DialogConfirm dialog = new DialogConfirm(RemoveFollowActivity.this, "Отмена заявки", "отменить заявку", "Вы действителькно хотит отменить заявку?", new OnConfirmListener() {
                     @Override
                     public void onConfirm(DialogConfirm d) {

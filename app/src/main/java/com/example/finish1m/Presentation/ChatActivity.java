@@ -43,8 +43,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private MessageListAdapter adapter;
 
-    private ArrayList<Message> messages = new ArrayList<>();
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Message> messages = new ArrayList<>(); // сообщения
+    private ArrayList<Bitmap> images = new ArrayList<>(); // картинки для сообщения
 
 
     @Override
@@ -56,6 +56,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRepository = new ChatRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
+        // получение и установка данных
         getChatByIdUseCase = new GetChatByIdUseCase(chatRepository, getIntent().getStringExtra("chatId"), new OnGetDataListener<Chat>() {
             @Override
             public void onGetData(Chat data) {
@@ -82,10 +83,12 @@ public class ChatActivity extends AppCompatActivity {
         });
         getChatByIdUseCase.execute();
 
+        // установка адаптера
         adapter = new MessageListAdapter(this, this, messages);
         binding.rvMessages.setLayoutManager(new LinearLayoutManager(this));
         binding.rvMessages.setAdapter(adapter);
 
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +96,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +105,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        // новое сообщение
         binding.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

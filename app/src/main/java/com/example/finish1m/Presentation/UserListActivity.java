@@ -24,8 +24,8 @@ public class UserListActivity extends AppCompatActivity {
     private ActivityUserListBinding binding;
 
     private UserListAdapter adapter;
-    private ArrayList<User> users = new ArrayList<>();
-    private ArrayList<String> userEmails = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>(); // пользователи
+    private ArrayList<String> userEmails = new ArrayList<>(); // ссылки на пользователей
     private UserRepositoryImpl userRepository;
 
     @Override
@@ -34,6 +34,7 @@ public class UserListActivity extends AppCompatActivity {
         binding = ActivityUserListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // получение данных из предыдущей активности
         userRepository = new UserRepositoryImpl(this);
 
         for (int i = 0; i < getIntent().getIntExtra("user_size", 0); i++) {
@@ -42,6 +43,7 @@ public class UserListActivity extends AppCompatActivity {
         if (userEmails.size() == 0)
             binding.noElements.setVisibility(View.VISIBLE);
 
+        // получение и установка данных
         for(String s : userEmails){
             GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, s, new OnGetDataListener<User>() {
                 @Override
@@ -69,10 +71,12 @@ public class UserListActivity extends AppCompatActivity {
             getUserByEmailUseCase.execute();
         }
 
+        // адаптер
         adapter = new UserListAdapter(this, this, users);
         binding.rvUsers.setAdapter(adapter);
         binding.rvUsers.setLayoutManager(new LinearLayoutManager(this));
 
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

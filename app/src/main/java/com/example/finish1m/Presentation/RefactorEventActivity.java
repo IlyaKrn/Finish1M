@@ -43,7 +43,7 @@ public class RefactorEventActivity extends AppCompatActivity {
 
     private GetEventByIdUseCase getEventByIdUseCase;
     private RefactorEventUseCase refactorEventUseCase;
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Bitmap> images = new ArrayList<>();// картинки для сообщения
     private ImageListAdapter adapter;
 
     private Event event;
@@ -58,6 +58,7 @@ public class RefactorEventActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
 
+        // получение и установка данных
         getEventByIdUseCase = new GetEventByIdUseCase(eventRepository, getIntent().getStringExtra("eventId"), new OnGetDataListener<Event>() {
             @Override
             public void onGetData(Event data) {
@@ -113,7 +114,7 @@ public class RefactorEventActivity extends AppCompatActivity {
         getEventByIdUseCase.execute();
 
 
-
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +123,7 @@ public class RefactorEventActivity extends AppCompatActivity {
         });
 
 
+        // изменение события
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,6 +167,7 @@ public class RefactorEventActivity extends AppCompatActivity {
             }
         });
 
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,6 +177,7 @@ public class RefactorEventActivity extends AppCompatActivity {
         });
 
 
+        // адаптер картинок
         adapter = new ImageListAdapter(this, this, images);
         adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
             @Override

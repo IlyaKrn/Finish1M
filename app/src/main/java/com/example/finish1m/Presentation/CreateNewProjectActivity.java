@@ -41,7 +41,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
     private ChatRepositoryImpl chatRepository;
     private ImageRepositoryImpl imageRepository;
     private CreateNewProjectUseCase createNewProjectUseCase;
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Bitmap> images = new ArrayList<>();// картинки для проекта
     private ImageListAdapter adapter;
 
     @Override
@@ -54,7 +54,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
         chatRepository = new ChatRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
-
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +62,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
             }
         });
 
+        // создание нового проекта
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +109,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
                 }
             }
         });
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +118,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
             }
         });
 
+        // адаптер картинок
         adapter = new ImageListAdapter(this, this, images);
         adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
             @Override

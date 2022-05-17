@@ -40,7 +40,7 @@ public class CreateNewFollowActivity extends AppCompatActivity {
 
     private ProjectRepositoryImpl projectRepository;
     private ImageRepositoryImpl imageRepository;
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Bitmap> images = new ArrayList<>();// картинки для сообщения
     private ImageListAdapter adapter;
 
     private CreateNewFollowUseCase createNewFollowUseCase;
@@ -55,12 +55,14 @@ public class CreateNewFollowActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
 
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        // создание новой заявки
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +98,7 @@ public class CreateNewFollowActivity extends AppCompatActivity {
             }
         });
 
-
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +107,7 @@ public class CreateNewFollowActivity extends AppCompatActivity {
             }
         });
 
+        // адаптер картинок
         adapter = new ImageListAdapter(this, this, images);
         adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
             @Override

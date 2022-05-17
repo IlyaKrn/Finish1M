@@ -37,7 +37,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
     private ChatRepositoryImpl chatRepository;
     private ImageRepositoryImpl imageRepository;
     private CreateNewEventUseCase createNewEventUseCase;
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Bitmap> images = new ArrayList<>(); // картинки для сообщения
     private ImageListAdapter adapter;
 
 
@@ -52,12 +52,14 @@ public class CreateNewEventActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
 
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        // создание нового события
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +120,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
             }
         });
 
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +129,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
             }
         });
 
+        // адаптер картинок
         adapter = new ImageListAdapter(this, this, images);
         adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
             @Override

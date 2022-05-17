@@ -28,6 +28,7 @@ public class StartActivity extends AppCompatActivity {
         binding = ActivityStartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // вход
         binding.btEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,6 +37,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        // регистрация
         binding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +46,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        // уведомления о событиях
         notificationRepository = new NotificationRepositoryImpl(this);
         eventRepository = new EventRepositoryImpl(this);
         startListeningEventsUseCase = new StartListeningEventsUseCase(eventRepository, notificationRepository);

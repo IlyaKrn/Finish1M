@@ -43,6 +43,7 @@ public class HubActivity extends AppCompatActivity {
         sqLiteRepository = new SQLiteRepositoryImpl(this);
         setSupportActionBar(binding.appBarHubActivity.toolbar);
 
+        // навигации
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_hub_activity);
 

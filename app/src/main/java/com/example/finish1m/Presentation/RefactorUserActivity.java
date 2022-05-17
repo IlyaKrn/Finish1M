@@ -43,7 +43,7 @@ public class RefactorUserActivity extends AppCompatActivity {
     private GetUserByEmailUseCase getUserByEmailUseCase;
     private RefactorUserUseCase refactorUserUseCase;
 
-    private Bitmap image;
+    private Bitmap image; // картинка пользователя
     private User user;
 
     @Override
@@ -55,6 +55,7 @@ public class RefactorUserActivity extends AppCompatActivity {
         userRepository = new UserRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
+        // получение и установка данных
         getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.user.getEmail(), new OnGetDataListener<User>() {
             @Override
             public void onGetData(User data) {
@@ -104,6 +105,7 @@ public class RefactorUserActivity extends AppCompatActivity {
         getUserByEmailUseCase.execute();
 
 
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +113,7 @@ public class RefactorUserActivity extends AppCompatActivity {
             }
         });
 
+        // изменение пользователя
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,6 +157,7 @@ public class RefactorUserActivity extends AppCompatActivity {
             }
         });
 
+        // добавление картинки
         binding.ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

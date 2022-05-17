@@ -24,7 +24,7 @@ public class FollowsListActivity extends AppCompatActivity {
     ActivityFollowsListBinding binding;
 
     private FollowListAdapter adapter;
-    private ArrayList<Follow> follows = new ArrayList<>();
+    private ArrayList<Follow> follows = new ArrayList<>(); // список заявок
     private ProjectRepositoryImpl projectRepository;
 
     private GetProjectByIdUseCase getProjectByIdUseCase;
@@ -47,6 +47,7 @@ public class FollowsListActivity extends AppCompatActivity {
 
         */
 
+        // получение и установка данных
          getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
@@ -84,6 +85,7 @@ public class FollowsListActivity extends AppCompatActivity {
 
 
 
+        // адаптер
         adapter = new FollowListAdapter(this, this, follows);
         binding.rvFollows.setAdapter(adapter);
         binding.rvFollows.setLayoutManager(new LinearLayoutManager(this));

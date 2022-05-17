@@ -29,6 +29,7 @@ import com.example.finish1m.Domain.UseCases.CreateNewLocateUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewLocateBinding;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -46,10 +47,10 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
     private ChatRepositoryImpl chatRepository;
     private ImageRepositoryImpl imageRepository;
     private CreateNewLocateUseCase createNewEventUseCase;
-    private ArrayList<Bitmap> images = new ArrayList<>();
+    private ArrayList<Bitmap> images = new ArrayList<>();// картинки для метки
     private ImageListAdapter adapter;
 
-    private LatLng coordinate;
+    private LatLng coordinate; // координата метки
     private GoogleMap googleMap;
 
 
@@ -65,7 +66,7 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
         chatRepository = new ChatRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
 
-
+        // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +74,7 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
             }
         });
 
+        // создание новой метки
         binding.btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +123,7 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
         });
 
 
+        // добавление картинки
         binding.btAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +132,7 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
             }
         });
 
+        // адаптер картинок
         adapter = new ImageListAdapter(this, this, images);
         adapter.setOnItemRemoveListener(new ImageListAdapter.OnItemRemoveListener() {
             @Override
@@ -164,6 +168,10 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
     @Override
     public void onMapReady(@NonNull GoogleMap gMap) {
         googleMap = gMap;
+        // установка маркера на карту
         googleMap.addMarker(new MarkerOptions().position(coordinate));
+        // установка камеры на координаты
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 11));
+
     }
 }

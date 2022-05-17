@@ -45,6 +45,7 @@ public class EnterActivity extends AppCompatActivity {
         authRepository = new AuthRepositoryImpl(this);
         sqLiteRepository = new SQLiteRepositoryImpl(this);
 
+        // установка сохраненных данных о пользователе в поля ввода
         getSQLiteUserUseCase = new GetSQLiteUserUseCase(sqLiteRepository, new OnGetDataListener<SQLiteUser>() {
             @Override
             public void onGetData(SQLiteUser data) {
@@ -68,7 +69,7 @@ public class EnterActivity extends AppCompatActivity {
             }
         });
         getSQLiteUserUseCase.execute();
-
+        // вход
         binding.btEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +80,8 @@ public class EnterActivity extends AppCompatActivity {
                         enterWithEmailAndPasswordUseCase = new EnterWithEmailAndPasswordUseCase(userRepository, authRepository, email, password, new OnGetDataListener<User>() {
                         @Override
                         public void onGetData(User data) {
-                            PresentationConfig.user = data;
+                            PresentationConfig.user = data;// установка текущего пользователя
+                            // запис в SQLite (если необходимо)
                             if (binding.cbAlwaysUse.isChecked()) {
                                 writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, new SQLiteUser(email, password), new OnSetDataListener() {
                                     @Override
@@ -156,6 +158,7 @@ public class EnterActivity extends AppCompatActivity {
                 }
             }
         });
+        // сброс пароля
         binding.btResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
