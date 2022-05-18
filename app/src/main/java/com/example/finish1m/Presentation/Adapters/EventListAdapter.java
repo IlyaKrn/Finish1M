@@ -232,44 +232,32 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                     activity.startActivity(intent);
                                     break;
                                 case R.id.delete:
-                                    if (item.getType() == Event.EVENT) {
-                                        DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить публикацию?", new OnConfirmListener() {
-                                            @Override
-                                            public void onConfirm(DialogConfirm d) {
-                                                DeleteEventByIdUseCase deleteEventByIdUseCase = new DeleteEventByIdUseCase(eventRepository, item.getId(), new OnSetDataListener() {
-                                                    @Override
-                                                    public void onSetData() {
-                                                        Toast.makeText(context, R.string.event_delete_success, Toast.LENGTH_SHORT).show();
-                                                        d.destroy();
-                                                    }
+                                    DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить публикацию?", new OnConfirmListener() {
+                                        @Override
+                                        public void onConfirm(DialogConfirm d) {
+                                            DeleteEventByIdUseCase deleteEventByIdUseCase = new DeleteEventByIdUseCase(eventRepository, item.getId(), new OnSetDataListener() {
+                                                @Override
+                                                public void onSetData() {
+                                                    Toast.makeText(context, R.string.event_delete_success, Toast.LENGTH_SHORT).show();
+                                                    d.destroy();
+                                                }
 
-                                                    @Override
-                                                    public void onFailed() {
-                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                                        d.destroy();
-                                                    }
+                                                @Override
+                                                public void onFailed() {
+                                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                                    d.destroy();
+                                                }
 
-                                                    @Override
-                                                    public void onCanceled() {
-                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                                        d.destroy();
-                                                    }
-                                                });
-                                                deleteEventByIdUseCase.execute();
-                                            }
-                                        });
-                                        dialogConfirm.create(R.id.fragmentContainerView);
-
-                                    }
-                                    else {
-                                        DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление невозможно", "Ок", "Вы можете удалить новость в ВКонтакте", new OnConfirmListener() {
-                                            @Override
-                                            public void onConfirm(DialogConfirm d) {
-                                                d.destroy();
-                                            }
-                                        });
-                                        dialogConfirm.create(R.id.fragmentContainerView);
-                                    }
+                                                @Override
+                                                public void onCanceled() {
+                                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                    d.destroy();
+                                                }
+                                            });
+                                            deleteEventByIdUseCase.execute();
+                                        }
+                                    });
+                                    dialogConfirm.create(R.id.fragmentContainerView);
                                     break;
                             }
 
