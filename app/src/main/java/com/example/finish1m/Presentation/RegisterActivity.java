@@ -70,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     final String email = binding.etEmail.getText().toString();
                                     final String password = binding.etPassword.getText().toString();
                                     final String passwordSec = binding.etSecondPassword.getText().toString();
+                                    Toast.makeText(RegisterActivity.this, R.string.email_verification_email_sended, Toast.LENGTH_SHORT).show();
                                     binding.btRegister.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
