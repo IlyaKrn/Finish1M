@@ -39,6 +39,7 @@ public class RefactorProjectUseCase {
     }
 
     public void execute(){
+        project.setImageRefs(new ArrayList<>());
         if(images != null && images.size() > 0){
             final int[] count = {0};
             for(Bitmap b : images){

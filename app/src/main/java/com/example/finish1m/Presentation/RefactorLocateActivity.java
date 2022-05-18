@@ -74,27 +74,47 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                 binding.etTitle.setText(data.getTitle());
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
+                    binding.btCreate.setClickable(false);
+                    Toast.makeText(RefactorLocateActivity.this, R.string.wait_images_load, Toast.LENGTH_SHORT).show();
                     for (String s : data.getImageRefs()){
                         GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
-                            public void onGetData(Bitmap data) {
-                                images.add(data);
+                            public void onGetData(Bitmap data1) {
+                                count[0]++;
+                                images.add(data1);
                                 adapter.notifyDataSetChanged();
+                                if (count[0] == data.getImageRefs().size())
+                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onVoidData() {
+                                count[0]++;
                                 Toast.makeText(RefactorLocateActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onFailed() {
+                                count[0]++;
                                 Toast.makeText(RefactorLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onCanceled() {
+                                count[0]++;
                                 Toast.makeText(RefactorLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         getImageByRefUseCase.execute();
@@ -145,7 +165,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                         refactorLocateUseCase = new RefactorLocateUseCase(locateRepository, imageRepository, locate, images, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(RefactorLocateActivity.this, R.string.locate_create_success, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RefactorLocateActivity.this, R.string.locate_refactor_success, Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 

@@ -37,6 +37,7 @@ public class RefactorEventUseCase {
     }
 
     public void execute(){
+        event.setImageRefs(new ArrayList<>());
         if(images != null && images.size() > 0){
             final int[] count = {0};
             for(Bitmap b : images){

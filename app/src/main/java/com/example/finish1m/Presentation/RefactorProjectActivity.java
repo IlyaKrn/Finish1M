@@ -58,6 +58,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
         // получение и установка данных
+        binding.btCreate.setClickable(false);
         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
@@ -66,27 +67,49 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 binding.etTitle.setText(data.getTitle());
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
+                    binding.btCreate.setClickable(false);
+                    Toast.makeText(RefactorProjectActivity.this, R.string.wait_images_load, Toast.LENGTH_SHORT).show();
                     for (String s : data.getImageRefs()){
                         GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
-                            public void onGetData(Bitmap data) {
-                                images.add(data);
+                            public void onGetData(Bitmap data1) {
+                                count[0]++;
+                                images.add(data1);
                                 adapter.notifyDataSetChanged();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onVoidData() {
+                                count[0]++;
                                 Toast.makeText(RefactorProjectActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onFailed() {
+                                count[0]++;
                                 Toast.makeText(RefactorProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onCanceled() {
+                                count[0]++;
                                 Toast.makeText(RefactorProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                if (count[0] == data.getImageRefs().size()) {
+                                    binding.btCreate.setClickable(true);
+                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         getImageByRefUseCase.execute();

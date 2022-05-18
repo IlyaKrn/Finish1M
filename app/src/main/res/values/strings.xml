@@ -98,4 +98,6 @@
     <string name="news_create_success">Новость создана</string>
     <string name="locate_delete">Удалить</string>
     <string name="no_connection">Проверьте подключение к интернету</string>
+    <string name="load_images_success">Загрузка картинок равершена</string>
+    <string name="wait_images_load">Дождитесь загрузки картинок</string>
 </resources>

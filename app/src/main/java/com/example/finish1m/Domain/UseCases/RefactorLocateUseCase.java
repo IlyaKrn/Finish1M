@@ -40,6 +40,7 @@ public class RefactorLocateUseCase {
     }
 
     public void execute(){
+        locate.setImageRefs(new ArrayList<>());
         if(images != null && images.size() > 0) {
             final int[] count = {0};
             for (Bitmap b : images) {
