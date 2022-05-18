@@ -198,37 +198,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
             @Override
             public void onInfoWindowLongClick(@NonNull Marker marker) {
-                if(!PresentationConfig.user.isAdmin()) {
-                    DialogConfirm dialog = new DialogConfirm((AppCompatActivity) getActivity(), "Удаление метки", "Удалить", "Вы действительно хотите удалить метку?", new OnConfirmListener() {
-                        @Override
-                        public void onConfirm(DialogConfirm d) {
-                            for (Locate l : locates) {
-                                if (new LatLng(l.getLatitude(), l.getLongitude()).equals(marker.getPosition())) {
-                                    DeleteLocateByIdUseCase deleteEventByIdUseCase = new DeleteLocateByIdUseCase(locateRepository, l.getId(), new OnSetDataListener() {
-                                        @Override
-                                        public void onSetData() {
-                                            Toast.makeText(getContext(), R.string.locate_delete_success, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
-
-                                        @Override
-                                        public void onFailed() {
-                                            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
-
-                                        @Override
-                                        public void onCanceled() {
-                                            Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
-                                    });
-                                    deleteEventByIdUseCase.execute();
-                                }
-                            }
+                if(PresentationConfig.user.isAdmin()) {
+                    for (Locate l : locates) {
+                        if (new LatLng(l.getLatitude(), l.getLongitude()).equals(marker.getPosition())) {
+                            Intent intent = new Intent(getActivity(), RefactorLocateActivity.class);
+                            intent.putExtra("locateId", l.getId());
+                            getActivity().startActivity(intent);
                         }
-                    });
-                    dialog.create(R.id.fragmentContainerView);
+                    }
+
+
+
+
+
+                    /*
+
+                    */
                 }
             }
         });

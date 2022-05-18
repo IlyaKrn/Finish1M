@@ -96,4 +96,5 @@
     <string name="event">Мероприятие</string>
     <string name="news">Новость</string>
     <string name="news_create_success">Новость создана</string>
+    <string name="locate_delete">Удалить</string>
 </resources>

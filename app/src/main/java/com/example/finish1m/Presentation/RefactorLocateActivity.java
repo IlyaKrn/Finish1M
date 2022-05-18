@@ -25,10 +25,13 @@ import com.example.finish1m.Domain.Models.Chat;
 import com.example.finish1m.Domain.Models.Locate;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewLocateUseCase;
+import com.example.finish1m.Domain.UseCases.DeleteLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorLocateUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
+import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRefactorLocateBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,7 +45,7 @@ import java.util.ArrayList;
 
 public class RefactorLocateActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    ActivityRefactorLocateBinding binding;
+    private ActivityRefactorLocateBinding binding;
 
     private LocateRepositoryImpl locateRepository;
     private ChatRepositoryImpl chatRepository;
@@ -60,6 +63,8 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
         super.onCreate(savedInstanceState);
         binding = ActivityRefactorLocateBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        locateRepository = new LocateRepositoryImpl(this);
 
         getLocateByIdUseCase = new GetLocateByIdUseCase(locateRepository, getIntent().getStringExtra("locateId"), new OnGetDataListener<Locate>() {
             @Override
@@ -167,6 +172,42 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                     binding.tvTitleErr.setVisibility(View.VISIBLE);
                     binding.tvTitleErr.setText(R.string.empty_edit_text_error);
                 }
+            }
+        });
+
+        // удаление метки
+        binding.btDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogConfirm dialog = new DialogConfirm((AppCompatActivity) RefactorLocateActivity.this, "Удаление метки", "Удалить", "Вы действительно хотите удалить метку?", new OnConfirmListener() {
+                    @Override
+                    public void onConfirm(DialogConfirm d) {
+                        DeleteLocateByIdUseCase deleteEventByIdUseCase = new DeleteLocateByIdUseCase(locateRepository, locate.getId(), new OnSetDataListener() {
+                            @Override
+                            public void onSetData() {
+                                Toast.makeText(RefactorLocateActivity.this, R.string.locate_delete_success, Toast.LENGTH_SHORT).show();
+                                d.destroy();
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(RefactorLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                d.destroy();
+                                finish();
+                            }
+
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(RefactorLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                d.destroy();
+                                finish();
+                            }
+                        });
+                        deleteEventByIdUseCase.execute();
+                    }
+                });
+                dialog.create(R.id.fragmentContainerView);
             }
         });
 
