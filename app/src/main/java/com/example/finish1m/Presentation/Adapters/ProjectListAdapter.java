@@ -144,6 +144,26 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             tvTitle.setText(item.getTitle());
             tvMessage.setText(item.getMessage());
 
+
+            if (item.getMessage().length() > 200)
+                tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
+            final boolean[] isHide = {true};
+            tvMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isHide[0]){
+                        isHide[0] = false;
+                        if (item.getMessage().length() > 200)
+                            tvMessage.setText(item.getMessage() + " \nСкрыть");
+                    }
+                    else {
+                        isHide[0] = true;
+                        if (item.getMessage().length() > 200)
+                            tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
+                    }
+                }
+            });
+
             // создание заявки
             btReg.setOnClickListener(new View.OnClickListener() {
                 @Override

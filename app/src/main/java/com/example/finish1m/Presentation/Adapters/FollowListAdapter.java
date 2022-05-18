@@ -132,6 +132,27 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
             ivImage.setVisibility(View.GONE);
             progressImage.setVisibility(View.VISIBLE);
             tvMessage.setText(item.getMessage());
+
+
+            if (item.getMessage().length() > 200)
+                tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
+            final boolean[] isHide = {true};
+            tvMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isHide[0]){
+                        isHide[0] = false;
+                        if (item.getMessage().length() > 200)
+                            tvMessage.setText(item.getMessage() + " \nСкрыть");
+                    }
+                    else {
+                        isHide[0] = true;
+                        if (item.getMessage().length() > 200)
+                            tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
+                    }
+                }
+            });
+
             GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
                 @Override
                 public void onGetData(User data) {
