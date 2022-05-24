@@ -110,33 +110,38 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!TextUtils.isEmpty(binding.etSend.getText()) || images.size() > 0) {
-                    Message message = new Message(Objects.requireNonNull(binding.etSend.getText().toString()), PresentationConfig.user.getEmail(), null);
-                    createNewMessageUseCase = new CreateNewMessageUseCase(chatRepository, imageRepository, getIntent().getStringExtra("chatId"), message, images, new OnSetDataListener() {
-                        @Override
-                        public void onSetData() {
-                            images.clear();
-                            binding.glImages.removeAllViews();
-                            binding.etSend.setText("");
-                        }
+                    if (PresentationConfig.user != null) {
+                        Message message = new Message(Objects.requireNonNull(binding.etSend.getText().toString()), PresentationConfig.user.getEmail(), null);
+                        createNewMessageUseCase = new CreateNewMessageUseCase(chatRepository, imageRepository, getIntent().getStringExtra("chatId"), message, images, new OnSetDataListener() {
+                            @Override
+                            public void onSetData() {
+                                images.clear();
+                                binding.glImages.removeAllViews();
+                                binding.etSend.setText("");
+                            }
 
-                        @Override
-                        public void onFailed() {
-                            Toast.makeText(ChatActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                            images.clear();
-                            binding.glImages.removeAllViews();
-                            binding.etSend.setText("");
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(ChatActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                images.clear();
+                                binding.glImages.removeAllViews();
+                                binding.etSend.setText("");
 
-                        }
+                            }
 
-                        @Override
-                        public void onCanceled() {
-                            Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                            images.clear();
-                            binding.glImages.removeAllViews();
-                            binding.etSend.setText("");
-                        }
-                    });
-                    createNewMessageUseCase.execute();
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                images.clear();
+                                binding.glImages.removeAllViews();
+                                binding.etSend.setText("");
+                            }
+                        });
+                        createNewMessageUseCase.execute();
+                    }
+                    else{
+                        Toast.makeText(ChatActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
