@@ -25,12 +25,12 @@ public abstract class Adapter<T, VH extends Adapter.Holder> extends RecyclerView
         this.items = items;
         this.onItemClickListener = new OnStateClickListener<T>() {
             @Override
-            public void onClick(T item) {
+            public void onClick(T item, int position) {
 
             }
 
             @Override
-            public void onLongClick(T item) {
+            public void onLongClick(T item, int position) {
 
             }
         };
@@ -52,13 +52,13 @@ public abstract class Adapter<T, VH extends Adapter.Holder> extends RecyclerView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClick(items.get(holder.getAdapterPosition()));
+                onItemClickListener.onClick(items.get(holder.getAdapterPosition()), holder.getAdapterPosition());
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                onItemClickListener.onLongClick(items.get(holder.getAdapterPosition()));
+                onItemClickListener.onLongClick(items.get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 return false;
             }
         });
@@ -87,8 +87,8 @@ public abstract class Adapter<T, VH extends Adapter.Holder> extends RecyclerView
 
     // слушатель нажатия на элемент списка
     public interface OnStateClickListener<T> {
-        void onClick(T item);
-        void onLongClick(T item);
+        void onClick(T item, int position);
+        void onLongClick(T item, int position);
     }
 
 }

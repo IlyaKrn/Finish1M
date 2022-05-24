@@ -24,7 +24,11 @@ import com.example.finish1m.Domain.Models.Chat;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewMessageUseCase;
 import com.example.finish1m.Domain.UseCases.GetChatByIdUseCase;
+import com.example.finish1m.Domain.UseCases.RemoveMessageUseCase;
+import com.example.finish1m.Presentation.Adapters.Adapter;
 import com.example.finish1m.Presentation.Adapters.MessageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
+import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityChatBinding;
 
@@ -40,6 +44,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private GetChatByIdUseCase getChatByIdUseCase;
     private CreateNewMessageUseCase createNewMessageUseCase;
+    private RemoveMessageUseCase removeMessageUseCase;
 
     private MessageListAdapter adapter;
 
@@ -87,6 +92,50 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageListAdapter(this, this, messages);
         binding.rvMessages.setLayoutManager(new LinearLayoutManager(this));
         binding.rvMessages.setAdapter(adapter);
+        adapter.setOnItemClickListener(new Adapter.OnStateClickListener<Message>() {
+            @Override
+            public void onClick(Message item, int position) {
+
+            }
+
+            @Override
+            public void onLongClick(Message item, int position) {
+                if (PresentationConfig.user != null){
+                    if(PresentationConfig.user.isAdmin()){
+                        DialogConfirm dialog = new DialogConfirm(ChatActivity.this, "Удалнение сообщения", "Удалить", "Вы действительно хотите удалить сообщение?", new OnConfirmListener() {
+                            @Override
+                            public void onConfirm(DialogConfirm d) {
+                                d.freeze();
+                                removeMessageUseCase = new RemoveMessageUseCase(chatRepository, getIntent().getStringExtra("chatId"), position, new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+                                        Toast.makeText(ChatActivity.this, R.string.message_delete_success, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(ChatActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+                                });
+                                removeMessageUseCase.execute();
+                            }
+                        });
+                        dialog.create(R.id.fragmentContainerView);
+                    }
+                }
+                else{
+                    Toast.makeText(ChatActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {

@@ -86,12 +86,12 @@ public class RemoveFollowActivity extends AppCompatActivity {
         adapter = new FollowListAdapter(this, this, follows);
         adapter.setOnItemClickListener(new Adapter.OnStateClickListener<Follow>() {
             @Override
-            public void onClick(Follow item) {
+            public void onClick(Follow item, int position) {
 
             }
 
             @Override
-            public void onLongClick(Follow item) {
+            public void onLongClick(Follow item, int position) {
                 // удаление заявки
                 DialogConfirm dialog = new DialogConfirm(RemoveFollowActivity.this, "Отмена заявки", "отменить заявку", "Вы действителькно хотит отменить заявку?", new OnConfirmListener() {
                     @Override

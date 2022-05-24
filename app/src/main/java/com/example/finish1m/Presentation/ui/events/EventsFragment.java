@@ -83,7 +83,7 @@ public class EventsFragment extends Fragment {
             }
         });
 
-        if(!PresentationConfig.user.isAdmin())
+        if(PresentationConfig.user != null && !PresentationConfig.user.isAdmin())
             binding.btAddEvent.setVisibility(View.GONE);
         return binding.getRoot();
     }
