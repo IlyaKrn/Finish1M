@@ -6,4 +6,17 @@ public class PresentationConfig {
 
     public static final String REF_VK_MAIN = "https://vk.com/club197453413";
     public static User user; // текущий пользователь
+
+    private static final Object lock = new Object();
+
+    public static User getUser() {
+        synchronized (lock) {
+            return user;
+        }
+    }
+    public static void setUser(User u) {
+        synchronized (lock) {
+            user = u;
+        }
+    }
 }

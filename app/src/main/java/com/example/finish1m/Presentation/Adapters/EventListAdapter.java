@@ -97,7 +97,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             boolean isRegistered = false;
             if (item.getMembers() != null) {
                 for (String s : item.getMembers()) {
-                    if (s.equals(PresentationConfig.user.getEmail())) {
+                    if (s.equals(PresentationConfig.getUser().getEmail())) {
                         isRegistered = true;
                         break;
                     }
@@ -110,7 +110,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 btUsers.setVisibility(View.GONE);
                 btReg.setText("Записаться");
             }
-            if (!PresentationConfig.user.isAdmin()){
+            if (!PresentationConfig.getUser().isAdmin()){
                 btMenu.setVisibility(View.GONE);
             }
             else {
@@ -157,7 +157,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.user.getEmail(), new OnSetDataListener() {
+                                AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
                                         d.destroy();
@@ -186,7 +186,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, PresentationConfig.user.getEmail(), new OnSetDataListener() {
+                                RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
                                     @Override
                                     public void onSetData() {
                                         d.destroy();

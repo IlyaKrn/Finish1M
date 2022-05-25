@@ -51,7 +51,7 @@ public class RemoveFollowActivity extends AppCompatActivity {
                 if(data.getFollows() != null) {
                     binding.noElements.setVisibility(View.GONE);
                     for(Follow f : data.getFollows()){
-                        if(f.getUserEmail().equals(PresentationConfig.user.getEmail()))
+                        if(f.getUserEmail().equals(PresentationConfig.getUser().getEmail()))
                             follows.add(f);
                     }
                 }

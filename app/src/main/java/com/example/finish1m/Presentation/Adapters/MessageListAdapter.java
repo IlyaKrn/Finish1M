@@ -113,7 +113,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                         @Override
                         public void onGetData(Bitmap data) {
                             if (item.getUserEmail() != null) {
-                                if (item.getUserEmail().equals(PresentationConfig.user.getEmail())) {
+                                if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
                                     my_tlImages.addImage(data);
                                     Log.e("lkjgkjg", "khgljkh");
                                 } else {
@@ -151,7 +151,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
 
 
             if (item.getUserEmail() != null) {
-                if (item.getUserEmail().equals(PresentationConfig.user.getEmail())) {
+                if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
                     showMyMessage();
                     my_tvMessage.setText(item.getMessage());
                     my_tvName.setText(R.string.my_message_name);

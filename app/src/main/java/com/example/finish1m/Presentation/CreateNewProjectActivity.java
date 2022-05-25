@@ -70,38 +70,33 @@ public class CreateNewProjectActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
-                        if (PresentationConfig.user != null) {
-                            ArrayList<Message> ms = new ArrayList<>();
-                            Message msg = new Message(getString(R.string.message_start_chat), null, null);
-                            ms.add(msg);
-                            ArrayList<String> mms = new ArrayList<>();
-                            mms.add(PresentationConfig.user.getEmail());
-                            Chat c = new Chat(chatRepository.getNewId(), ms, mms);
-                            Project p = new Project(projectRepository.getNewId(), title, message, c.getId(), null, null);
-                            createNewProjectUseCase = new CreateNewProjectUseCase(projectRepository, chatRepository, imageRepository, p, c, images, new OnSetDataListener() {
-                                @Override
-                                public void onSetData() {
-                                    Toast.makeText(CreateNewProjectActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                        ArrayList<Message> ms = new ArrayList<>();
+                        Message msg = new Message(getString(R.string.message_start_chat), null, null);
+                        ms.add(msg);
+                        ArrayList<String> mms = new ArrayList<>();
+                        mms.add(PresentationConfig.getUser().getEmail());
+                        Chat c = new Chat(chatRepository.getNewId(), ms, mms);
+                        Project p = new Project(projectRepository.getNewId(), title, message, c.getId(), null, null);
+                        createNewProjectUseCase = new CreateNewProjectUseCase(projectRepository, chatRepository, imageRepository, p, c, images, new OnSetDataListener() {
+                            @Override
+                            public void onSetData() {
+                                Toast.makeText(CreateNewProjectActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
 
-                                @Override
-                                public void onFailed() {
-                                    Toast.makeText(CreateNewProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(CreateNewProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
 
-                                @Override
-                                public void onCanceled() {
-                                    Toast.makeText(CreateNewProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
-                            createNewProjectUseCase.execute();
-                        }
-                        else{
-                            Toast.makeText(CreateNewProjectActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
-                        }
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(CreateNewProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                        createNewProjectUseCase.execute();
                     }
                     else {
                         binding.etTitle.setVisibility(View.VISIBLE);

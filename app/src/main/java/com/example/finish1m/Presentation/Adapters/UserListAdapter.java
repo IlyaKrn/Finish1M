@@ -131,8 +131,8 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
             getUserByEmailUseCase.execute();
 
             // кнопка меню
-            if(PresentationConfig.user.isAdmin()){
-                if (!PresentationConfig.user.getEmail().equals(item.getEmail())) {
+            if(PresentationConfig.getUser().isAdmin()){
+                if (!PresentationConfig.getUser().getEmail().equals(item.getEmail())) {
                     btMenu.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

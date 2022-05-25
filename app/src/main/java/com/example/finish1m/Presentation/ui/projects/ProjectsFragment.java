@@ -80,7 +80,7 @@ public class ProjectsFragment extends Fragment {
             }
         });
 
-        if(PresentationConfig.user != null && !PresentationConfig.user.isAdmin())
+        if(!PresentationConfig.getUser().isAdmin())
             binding.btAddProject.setVisibility(View.GONE);
 
         return binding.getRoot();

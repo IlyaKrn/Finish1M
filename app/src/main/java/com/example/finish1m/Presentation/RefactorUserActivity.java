@@ -56,7 +56,7 @@ public class RefactorUserActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
         // получение и установка данных
-        getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.user.getEmail(), new OnGetDataListener<User>() {
+        getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<User>() {
             @Override
             public void onGetData(User data) {
                 user = data;

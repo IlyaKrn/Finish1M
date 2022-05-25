@@ -198,7 +198,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
             @Override
             public void onInfoWindowLongClick(@NonNull Marker marker) {
-                if(PresentationConfig.user.isAdmin()) {
+                if(PresentationConfig.getUser().isAdmin()) {
                     for (Locate l : locates) {
                         if (new LatLng(l.getLatitude(), l.getLongitude()).equals(marker.getPosition())) {
                             Intent intent = new Intent(getActivity(), RefactorLocateActivity.class);

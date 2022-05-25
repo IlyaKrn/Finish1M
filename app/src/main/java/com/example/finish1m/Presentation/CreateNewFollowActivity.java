@@ -68,33 +68,28 @@ public class CreateNewFollowActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(message)){
-                    if (PresentationConfig.user != null) {
-                        Follow f = new Follow(projectRepository.getNewId(), PresentationConfig.user.getEmail(), message, null);
+                    Follow f = new Follow(projectRepository.getNewId(), PresentationConfig.getUser().getEmail(), message, null);
 
-                        createNewFollowUseCase = new CreateNewFollowUseCase(projectRepository, imageRepository, getIntent().getStringExtra("projectId"), f, images, new OnSetDataListener() {
-                            @Override
-                            public void onSetData() {
-                                Toast.makeText(CreateNewFollowActivity.this, R.string.follow_create_success, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
+                    createNewFollowUseCase = new CreateNewFollowUseCase(projectRepository, imageRepository, getIntent().getStringExtra("projectId"), f, images, new OnSetDataListener() {
+                        @Override
+                        public void onSetData() {
+                            Toast.makeText(CreateNewFollowActivity.this, R.string.follow_create_success, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
 
-                            @Override
-                            public void onFailed() {
-                                Toast.makeText(CreateNewFollowActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
+                        @Override
+                        public void onFailed() {
+                            Toast.makeText(CreateNewFollowActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
 
-                            @Override
-                            public void onCanceled() {
-                                Toast.makeText(CreateNewFollowActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
-                        createNewFollowUseCase.execute();
-                    }
-                    else{
-                        Toast.makeText(CreateNewFollowActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onCanceled() {
+                            Toast.makeText(CreateNewFollowActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                    createNewFollowUseCase.execute();
                 }
                 else {
                     binding.tvMessageErr.setVisibility(View.VISIBLE);

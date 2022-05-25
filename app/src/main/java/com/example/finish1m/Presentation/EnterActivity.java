@@ -83,7 +83,7 @@ public class EnterActivity extends AppCompatActivity {
                             enterWithEmailAndPasswordUseCase = new EnterWithEmailAndPasswordUseCase(userRepository, authRepository, email, password, new OnGetDataListener<User>() {
                                 @Override
                                 public void onGetData(User data) {
-                                    PresentationConfig.user = data;// установка текущего пользователя
+                                    PresentationConfig.setUser(data);// установка текущего пользователя
                                     // запис в SQLite (если необходимо)
                                     if (binding.cbAlwaysUse.isChecked()) {
                                         writeSQLiteUserUseCase = new WriteSQLiteUserUseCase(sqLiteRepository, new SQLiteUser(email, password), new OnSetDataListener() {

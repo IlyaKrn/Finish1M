@@ -48,7 +48,7 @@ public class MyEventsFragment extends Fragment {
                 for(Event e : data){
                     if(e.getMembers() != null) {
                         for (String s : e.getMembers()) {
-                            if (s.equals(PresentationConfig.user.getEmail())) {
+                            if (s.equals(PresentationConfig.getUser().getEmail())) {
                                 events.add(e);
                                 break;
                             }
@@ -90,7 +90,7 @@ public class MyEventsFragment extends Fragment {
             }
         });
 
-        if(!PresentationConfig.user.isAdmin())
+        if(!PresentationConfig.getUser().isAdmin())
             binding.btAddEvent.setVisibility(View.GONE);
         return binding.getRoot();
     }
