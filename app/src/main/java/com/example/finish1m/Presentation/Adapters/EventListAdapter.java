@@ -69,6 +69,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
         private Button btUsers;
         private ImageButton btMenu;
         private Button btChat;
+        private TextView tvReadMore;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -81,6 +82,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             btUsers = itemView.findViewById(R.id.bt_users);
             btChat = itemView.findViewById(R.id.bt_chat);
             btMenu = itemView.findViewById(R.id.bt_menu);
+            tvReadMore = itemView.findViewById(R.id.tv_read_more);
         }
 
         @Override
@@ -128,24 +130,33 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             tvTitle.setText(item.getTitle());
             tvMessage.setText(item.getMessage());
 
-            if (item.getMessage().length() > 200)
-                tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
-            final boolean[] isHide = {true};
-            tvMessage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (isHide[0]){
-                        isHide[0] = false;
-                        if (item.getMessage().length() > 200)
-                            tvMessage.setText(item.getMessage() + " \nСкрыть");
+            if (item.getMessage().length() > PresentationConfig.SMALL_MESSAGE_SIZE) {
+                tvMessage.setText(item.getMessage().substring(0, PresentationConfig.SMALL_MESSAGE_SIZE));
+                tvReadMore.setVisibility(View.VISIBLE);
+                tvReadMore.setText(R.string.read_more);
+                final boolean[] isHide = {true};
+                tvReadMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (isHide[0]){
+                            isHide[0] = false;
+                            tvMessage.setText(item.getMessage());
+                            tvReadMore.setVisibility(View.VISIBLE);
+                            tvReadMore.setText(R.string.hide);
+                        }
+                        else {
+                            isHide[0] = true;
+                            tvMessage.setText(item.getMessage().substring(0, PresentationConfig.SMALL_MESSAGE_SIZE));
+                            tvReadMore.setVisibility(View.VISIBLE);
+                            tvReadMore.setText(R.string.read_more);
+                        }
                     }
-                    else {
-                        isHide[0] = true;
-                        if (item.getMessage().length() > 200)
-                            tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
-                    }
-                }
-            });
+                });
+            }
+            else {
+                tvReadMore.setVisibility(View.GONE);
+            }
+
 
             // создание заявки
             boolean finalIsRegistered = isRegistered;

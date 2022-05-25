@@ -28,7 +28,10 @@
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
         style="@style/text.span.main"/>
-
+    <TextView
+        android:id="@+id/tv_read_more"
+        android:layout_width="match_parent"
+        style="@style/text.span.main"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

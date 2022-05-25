@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">За чистоту Арзамасского края!</string>
-    <string name="nav_header_subtitle"><a href="https://vk.com/club197453413">Мы в Вконтакте</a></string>
+    <string name="nav_header_subtitle"><a href="">Мы в Вконтакте</a></string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -102,4 +102,6 @@
     <string name="wait_images_load">Дождитесь загрузки картинок</string>
     <string name="try_again">Попробуйте снова</string>
     <string name="message_delete_success">Сообщение удалено</string>
+    <string name="read_more"><a href="">Читать дальше</a></string>
+    <string name="hide"><a href="">Скрыть</a></string>
 </resources>

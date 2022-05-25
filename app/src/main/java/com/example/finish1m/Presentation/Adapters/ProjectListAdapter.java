@@ -78,6 +78,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
         private ImageButton btMenu;
         private Button btChat;
         private Button btRemoveReg;
+        private TextView tvReadMore;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +91,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btChat = itemView.findViewById(R.id.bt_chat);
             btRemoveReg = itemView.findViewById(R.id.bt_remove_reg);
             btMenu = itemView.findViewById(R.id.bt_menu);
+            tvReadMore = itemView.findViewById(R.id.tv_read_more);
         }
 
         @Override
@@ -144,25 +146,33 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             tvTitle.setText(item.getTitle());
             tvMessage.setText(item.getMessage());
 
+            if (item.getMessage().length() > PresentationConfig.SMALL_MESSAGE_SIZE) {
+                tvMessage.setText(item.getMessage().substring(0, PresentationConfig.SMALL_MESSAGE_SIZE));
+                tvReadMore.setVisibility(View.VISIBLE);
+                tvReadMore.setText(R.string.read_more);
+                final boolean[] isHide = {true};
+                tvReadMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (isHide[0]){
+                            isHide[0] = false;
+                            tvMessage.setText(item.getMessage());
+                            tvReadMore.setVisibility(View.VISIBLE);
+                            tvReadMore.setText(R.string.hide);
+                        }
+                        else {
+                            isHide[0] = true;
+                            tvMessage.setText(item.getMessage().substring(0, PresentationConfig.SMALL_MESSAGE_SIZE));
+                            tvReadMore.setVisibility(View.VISIBLE);
+                            tvReadMore.setText(R.string.read_more);
+                        }
+                    }
+                });
+            }
+            else {
+                tvReadMore.setVisibility(View.GONE);
+            }
 
-            if (item.getMessage().length() > 200)
-                tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
-            final boolean[] isHide = {true};
-            tvMessage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (isHide[0]){
-                        isHide[0] = false;
-                        if (item.getMessage().length() > 200)
-                            tvMessage.setText(item.getMessage() + " \nСкрыть");
-                    }
-                    else {
-                        isHide[0] = true;
-                        if (item.getMessage().length() > 200)
-                            tvMessage.setText(item.getMessage().substring(0, 200) + " \nЧитать дальше");
-                    }
-                }
-            });
 
             // создание заявки
             btReg.setOnClickListener(new View.OnClickListener() {
