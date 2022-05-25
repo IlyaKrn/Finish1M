@@ -60,6 +60,9 @@ public class RemoveMessageUseCase {
                 }
             });
         }
+        else {
+            listener.onCanceled();
+        }
 
     }
 
