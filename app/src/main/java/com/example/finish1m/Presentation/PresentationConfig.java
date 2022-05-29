@@ -12,6 +12,9 @@ public class PresentationConfig {
 
     public static User getUser() {
         synchronized (lock) {
+            if (user == null){
+                return new User("Ошибка", "Ошибка", "Ошибка", false, false, null);
+            }
             return user;
         }
     }
