@@ -82,38 +82,33 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
-                        try {
-                            ArrayList<Message> ms = new ArrayList<>();
-                            Message msg = new Message(getString(R.string.message_start_chat), null, null);
-                            ms.add(msg);
-                            ArrayList<String> mms = new ArrayList<>();
-                            mms.add(PresentationConfig.getUser().getEmail());
-                            Chat c = new Chat(chatRepository.getNewId(), ms, mms);
-                            Locate l = new Locate(locateRepository.getNewId(), coordinate.longitude, coordinate.latitude, title,  message, c.getId(), null);
-                            createNewEventUseCase = new CreateNewLocateUseCase(locateRepository, chatRepository, imageRepository, l, c, images, new OnSetDataListener() {
-                                @Override
-                                public void onSetData() {
-                                    Toast.makeText(CreateNewLocateActivity.this, R.string.locate_create_success, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                        ArrayList<Message> ms = new ArrayList<>();
+                        Message msg = new Message(getString(R.string.message_start_chat), null, null);
+                        ms.add(msg);
+                        ArrayList<String> mms = new ArrayList<>();
+                        mms.add(PresentationConfig.getUser().getEmail());
+                        Chat c = new Chat(chatRepository.getNewId(), ms, mms);
+                        Locate l = new Locate(locateRepository.getNewId(), coordinate.longitude, coordinate.latitude, title,  message, c.getId(), null);
+                        createNewEventUseCase = new CreateNewLocateUseCase(locateRepository, chatRepository, imageRepository, l, c, images, new OnSetDataListener() {
+                            @Override
+                            public void onSetData() {
+                                Toast.makeText(CreateNewLocateActivity.this, R.string.locate_create_success, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
 
-                                @Override
-                                public void onFailed() {
-                                    Toast.makeText(CreateNewLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(CreateNewLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
 
-                                @Override
-                                public void onCanceled() {
-                                    Toast.makeText(CreateNewLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
-                            createNewEventUseCase.execute();
-                        }catch (Exception e){
-                            Toast.makeText(ChatActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
-                        }
-
+                            @Override
+                            public void onCanceled() {
+                                Toast.makeText(CreateNewLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                        createNewEventUseCase.execute();
                     }
                     else {
                         binding.tvTitleErr.setVisibility(View.VISIBLE);
