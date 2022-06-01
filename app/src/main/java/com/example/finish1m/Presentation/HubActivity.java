@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,10 +120,13 @@ public class HubActivity extends AppCompatActivity {
                         dialog.create(R.id.fragmentContainerView);
                 break;
             case R.id.profile_refactor:
-
-                        Intent intent = new Intent(HubActivity.this, RefactorUserActivity.class);
-                        intent.putExtra("userEmail", PresentationConfig.getUser().getEmail());
-                        startActivity(intent);
+                try {
+                    Intent intent = new Intent(HubActivity.this, RefactorUserActivity.class);
+                    intent.putExtra("userEmail", PresentationConfig.getUser().getEmail());
+                    startActivity(intent);
+                }catch (Exception e){
+                    Toast.makeText(ChatActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                }
 
                 break;
         }

@@ -51,8 +51,14 @@ public class RemoveFollowActivity extends AppCompatActivity {
                 if(data.getFollows() != null) {
                     binding.noElements.setVisibility(View.GONE);
                     for(Follow f : data.getFollows()){
-                        if(f.getUserEmail().equals(PresentationConfig.getUser().getEmail()))
-                            follows.add(f);
+                        try {
+                            if(f.getUserEmail().equals(PresentationConfig.getUser().getEmail()))
+                                follows.add(f);
+                        }catch (Exception e){
+                            Toast.makeText(ChatActivity.this, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+                            follows.clear();
+                            break;
+                        }
                     }
                 }
                 adapter.notifyDataSetChanged();
