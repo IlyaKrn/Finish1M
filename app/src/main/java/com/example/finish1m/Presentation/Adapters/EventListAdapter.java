@@ -99,9 +99,13 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             boolean isRegistered = false;
             if (item.getMembers() != null) {
                 for (String s : item.getMembers()) {
-                    if (s.equals(PresentationConfig.getUser().getEmail())) {
-                        isRegistered = true;
-                        break;
+                    try {
+                        if (s.equals(PresentationConfig.getUser().getEmail())) {
+                            isRegistered = true;
+                            break;
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -112,13 +116,20 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 btUsers.setVisibility(View.GONE);
                 btReg.setText("Записаться");
             }
-            if (!PresentationConfig.getUser().isAdmin()){
-                btMenu.setVisibility(View.GONE);
-            }
-            else {
+            try {
+                if (!PresentationConfig.getUser().isAdmin()){
+                    btMenu.setVisibility(View.GONE);
+                }
+                else {
+                    btChat.setVisibility(View.VISIBLE);
+                    btUsers.setVisibility(View.VISIBLE);
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                 btChat.setVisibility(View.VISIBLE);
                 btUsers.setVisibility(View.VISIBLE);
             }
+
 
             if (item.getType() == Event.NEWS){
                 btChat.setVisibility(View.GONE);
@@ -168,25 +179,30 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
-                                    @Override
-                                    public void onSetData() {
-                                        d.destroy();
-                                    }
+                                try {
+                                    AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
+                                        @Override
+                                        public void onSetData() {
+                                            d.destroy();
+                                        }
 
-                                    @Override
-                                    public void onFailed() {
-                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                        d.destroy();
-                                    }
+                                        @Override
+                                        public void onFailed() {
+                                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
 
-                                    @Override
-                                    public void onCanceled() {
-                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                        d.destroy();
-                                    }
-                                });
-                                addUserToEventByEmailUseCase.execute();
+                                        @Override
+                                        public void onCanceled() {
+                                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
+                                    });
+                                    addUserToEventByEmailUseCase.execute();
+                                } catch (Exception e) {
+                                    Toast.makeText(context, R.string.try_again, Toast.LENGTH_SHORT).show();
+                                    d.destroy();
+                                }
                             }
 
                         });
@@ -197,25 +213,31 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
-                                    @Override
-                                    public void onSetData() {
-                                        d.destroy();
-                                    }
+                                try {
+                                    RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
+                                        @Override
+                                        public void onSetData() {
+                                            d.destroy();
+                                        }
 
-                                    @Override
-                                    public void onFailed() {
-                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                        d.destroy();
-                                    }
+                                        @Override
+                                        public void onFailed() {
+                                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
 
-                                    @Override
-                                    public void onCanceled() {
-                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                        d.destroy();
-                                    }
-                                });
-                                removeUserFromEventUseCase.execute();
+                                        @Override
+                                        public void onCanceled() {
+                                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                            d.destroy();
+                                        }
+                                    });
+                                    removeUserFromEventUseCase.execute();
+                                } catch (Exception e) {
+                                    Toast.makeText(context, R.string.try_again, Toast.LENGTH_SHORT).show();
+                                    d.destroy();
+                                }
+
                             }
 
                         });

@@ -67,46 +67,51 @@ public class CreateNewEventActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
-                        int type = Event.NEWS;
-                        switch(binding.rgType.getCheckedRadioButtonId()){
-                            case R.id.rbt_news:
-                                type = Event.NEWS;
-                                break;
-                            case R.id.rbt_event:
-                                type = Event.EVENT;
-                                break;
+                        try{
+                            int type = Event.NEWS;
+                            switch(binding.rgType.getCheckedRadioButtonId()){
+                                case R.id.rbt_news:
+                                    type = Event.NEWS;
+                                    break;
+                                case R.id.rbt_event:
+                                    type = Event.EVENT;
+                                    break;
+                            }
+                            ArrayList<Message> ms = new ArrayList<>();
+                            Message msg = new Message(getString(R.string.message_start_chat), null, null);
+                            ms.add(msg);
+                            ArrayList<String> mms = new ArrayList<>();
+                            mms.add(PresentationConfig.getUser().getEmail());
+                            Chat c = new Chat(chatRepository.getNewId(), ms, mms);
+                            Event e = new Event(eventRepository.getNewId(), type, title, message, c.getId(), null, null);
+                            int finalType = type;
+                            createNewEventUseCase = new CreateNewEventUseCase(eventRepository, chatRepository, imageRepository, e, c, images, new OnSetDataListener() {
+                                @Override
+                                public void onSetData() {
+                                    if(finalType == Event.EVENT)
+                                        Toast.makeText(CreateNewEventActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(CreateNewEventActivity.this, R.string.news_create_success, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailed() {
+                                    Toast.makeText(CreateNewEventActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onCanceled() {
+                                    Toast.makeText(CreateNewEventActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                            createNewEventUseCase.execute();
+                        }catch (Exception e){
+                            Toast.makeText(CreateNewEventActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
                         }
-                        ArrayList<Message> ms = new ArrayList<>();
-                        Message msg = new Message(getString(R.string.message_start_chat), null, null);
-                        ms.add(msg);
-                        ArrayList<String> mms = new ArrayList<>();
-                        mms.add(PresentationConfig.getUser().getEmail());
-                        Chat c = new Chat(chatRepository.getNewId(), ms, mms);
-                        Event e = new Event(eventRepository.getNewId(), type, title, message, c.getId(), null, null);
-                        int finalType = type;
-                        createNewEventUseCase = new CreateNewEventUseCase(eventRepository, chatRepository, imageRepository, e, c, images, new OnSetDataListener() {
-                            @Override
-                            public void onSetData() {
-                                if(finalType == Event.EVENT)
-                                    Toast.makeText(CreateNewEventActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
-                                else
-                                    Toast.makeText(CreateNewEventActivity.this, R.string.news_create_success, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
 
-                            @Override
-                            public void onFailed() {
-                                Toast.makeText(CreateNewEventActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
-                            @Override
-                            public void onCanceled() {
-                                Toast.makeText(CreateNewEventActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
-                        createNewEventUseCase.execute();
                     }
                     else {
                         binding.tvTitleErr.setVisibility(View.VISIBLE);

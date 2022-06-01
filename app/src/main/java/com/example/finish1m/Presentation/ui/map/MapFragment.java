@@ -22,6 +22,7 @@ import com.example.finish1m.Domain.UseCases.DeleteLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetLocateListUseCase;
 import com.example.finish1m.Presentation.Adapters.MapInfoWindowAdapter;
+import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewLocateActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
@@ -198,23 +199,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
             @Override
             public void onInfoWindowLongClick(@NonNull Marker marker) {
-                if(PresentationConfig.getUser().isAdmin()) {
-                    for (Locate l : locates) {
-                        if (new LatLng(l.getLatitude(), l.getLongitude()).equals(marker.getPosition())) {
-                            Intent intent = new Intent(getActivity(), RefactorLocateActivity.class);
-                            intent.putExtra("locateId", l.getId());
-                            getActivity().startActivity(intent);
+                try {
+                    if(PresentationConfig.getUser().isAdmin()) {
+                        for (Locate l : locates) {
+                            if (new LatLng(l.getLatitude(), l.getLongitude()).equals(marker.getPosition())) {
+                                Intent intent = new Intent(getActivity(), RefactorLocateActivity.class);
+                                intent.putExtra("locateId", l.getId());
+                                getActivity().startActivity(intent);
+                            }
                         }
                     }
-
-
-
-
-
-                    /*
-
-                    */
+                }catch (Exception e){
+                    Toast.makeText(getContext(), R.string.try_again, Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }

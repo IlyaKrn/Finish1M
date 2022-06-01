@@ -113,14 +113,17 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                         @Override
                         public void onGetData(Bitmap data) {
                             if (item.getUserEmail() != null) {
-                                if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
-                                    my_tlImages.addImage(data);
-                                    Log.e("lkjgkjg", "khgljkh");
-                                } else {
-                                    my_tlImages.addImage(data);
+                                try {
+                                    if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
+                                        my_tlImages.addImage(data);
+                                    } else {
+                                        notMy_tlImages.addImage(data);
+                                    }
+                                } catch (Exception e) {
+                                    Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                my_tlImages.addImage(data);
+                                system_tlImages.addImage(data);
                             }
                         }
 
@@ -151,71 +154,74 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
 
 
             if (item.getUserEmail() != null) {
-                if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
-                    showMyMessage();
-                    my_tvMessage.setText(item.getMessage());
-                    my_tvName.setText(R.string.my_message_name);
+                try {
+                    if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
+                        showMyMessage();
+                        my_tvMessage.setText(item.getMessage());
+                        my_tvName.setText(R.string.my_message_name);
 
-                }
-                else {
-                    showNotMyMessage();
-                    notMy_ivIcon.setVisibility(View.GONE);
-                    notMy_progressImage.setVisibility(View.VISIBLE);
-                    notMy_tvMessage.setText(item.getMessage());
+                    }
+                    else {
+                        showNotMyMessage();
+                        notMy_ivIcon.setVisibility(View.GONE);
+                        notMy_progressImage.setVisibility(View.VISIBLE);
+                        notMy_tvMessage.setText(item.getMessage());
 
-                    GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
-                        @Override
-                        public void onGetData(User data) {
-                            u = data;
-                            if (u.getEmail().equals(item.getUserEmail())) {
-                                notMy_tvName.setText(data.getFirstName());
-                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
-                                    @Override
-                                    public void onGetData(Bitmap data) {
-                                        if (u.getEmail().equals(item.getUserEmail())) {
-                                            notMy_ivIcon.setImageBitmap(data);
-                                            notMy_ivIcon.setVisibility(View.VISIBLE);
-                                            notMy_progressImage.setVisibility(View.GONE);
+                        GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
+                            @Override
+                            public void onGetData(User data) {
+                                u = data;
+                                if (u.getEmail().equals(item.getUserEmail())) {
+                                    notMy_tvName.setText(data.getFirstName());
+                                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
+                                        @Override
+                                        public void onGetData(Bitmap data) {
+                                            if (u.getEmail().equals(item.getUserEmail())) {
+                                                notMy_ivIcon.setImageBitmap(data);
+                                                notMy_ivIcon.setVisibility(View.VISIBLE);
+                                                notMy_progressImage.setVisibility(View.GONE);
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onVoidData() {
+                                        @Override
+                                        public void onVoidData() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onFailed() {
+                                        @Override
+                                        public void onFailed() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onCanceled() {
+                                        @Override
+                                        public void onCanceled() {
 
-                                    }
-                                });
-                                getImageByRefUseCase.execute();
+                                        }
+                                    });
+                                    getImageByRefUseCase.execute();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onVoidData() {
+                            @Override
+                            public void onVoidData() {
 
-                        }
+                            }
 
-                        @Override
-                        public void onFailed() {
+                            @Override
+                            public void onFailed() {
 
-                        }
+                            }
 
-                        @Override
-                        public void onCanceled() {
+                            @Override
+                            public void onCanceled() {
 
-                        }
-                    });
-                    getUserByEmailUseCase.execute();
+                            }
+                        });
+                        getUserByEmailUseCase.execute();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                 }
-
 
 
             }

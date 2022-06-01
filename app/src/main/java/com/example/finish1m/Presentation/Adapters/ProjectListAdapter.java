@@ -109,11 +109,17 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btUsers.setVisibility(View.GONE);
             btReg.setText("Записаться");
 
-            if (!PresentationConfig.getUser().isAdmin()){
-                btMenu.setVisibility(View.GONE);
-                btUsers.setVisibility(View.GONE);
-            }
-            else {
+            try {
+                if (!PresentationConfig.getUser().isAdmin()){
+                    btMenu.setVisibility(View.GONE);
+                    btUsers.setVisibility(View.GONE);
+                }
+                else {
+                    btChat.setVisibility(View.VISIBLE);
+                    btUsers.setVisibility(View.VISIBLE);
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                 btChat.setVisibility(View.VISIBLE);
                 btUsers.setVisibility(View.VISIBLE);
             }

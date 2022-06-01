@@ -56,53 +56,58 @@ public class RefactorUserActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
         // получение и установка данных
-        getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<User>() {
-            @Override
-            public void onGetData(User data) {
-                user = data;
-                binding.etFirstname.setText(data.getFirstName());
-                binding.etLastname.setText(data.getLastName());
-                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, user.getIconRef(), new OnGetDataListener<Bitmap>() {
-                    @Override
-                    public void onGetData(Bitmap data) {
-                        image = data;
-                        binding.ivImage.setImageBitmap(image);
-                    }
+        try {
+            getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<User>() {
+                @Override
+                public void onGetData(User data) {
+                    user = data;
+                    binding.etFirstname.setText(data.getFirstName());
+                    binding.etLastname.setText(data.getLastName());
+                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, user.getIconRef(), new OnGetDataListener<Bitmap>() {
+                        @Override
+                        public void onGetData(Bitmap data) {
+                            image = data;
+                            binding.ivImage.setImageBitmap(image);
+                        }
 
-                    @Override
-                    public void onVoidData() {
-                        Toast.makeText(RefactorUserActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onVoidData() {
+                            Toast.makeText(RefactorUserActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onFailed() {
-                        Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onFailed() {
+                            Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onCanceled() {
-                        Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                getImageByRefUseCase.execute();
-            }
+                        @Override
+                        public void onCanceled() {
+                            Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    getImageByRefUseCase.execute();
+                }
 
-            @Override
-            public void onVoidData() {
-                Toast.makeText(RefactorUserActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onVoidData() {
+                    Toast.makeText(RefactorUserActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onFailed() {
-                Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailed() {
+                    Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onCanceled() {
-                Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-            }
-        });
-        getUserByEmailUseCase.execute();
+                @Override
+                public void onCanceled() {
+                    Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                }
+            });
+            getUserByEmailUseCase.execute();
+        }catch (Exception e){
+            Toast.makeText(RefactorUserActivity.this, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
+
 
 
         // закрытие активности

@@ -16,6 +16,7 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.UseCases.GetEventReverseListUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
+import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
@@ -83,8 +84,15 @@ public class EventsFragment extends Fragment {
             }
         });
 
-        if(!PresentationConfig.getUser().isAdmin())
-            binding.btAddEvent.setVisibility(View.GONE);
+
+        try {
+            if(!PresentationConfig.getUser().isAdmin())
+                binding.btAddEvent.setVisibility(View.GONE);
+        }catch (Exception e){
+            Toast.makeText(getContext(), R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
+
+
         return binding.getRoot();
     }
 

@@ -1,6 +1,7 @@
 package com.example.finish1m.Presentation;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Other.NotificationRepositoryImpl;
@@ -22,7 +23,6 @@ public class App extends Application {
         eventRepository = new EventRepositoryImpl(this);
         startListeningEventsUseCase = new StartListeningEventsUseCase(eventRepository, notificationRepository);
         startListeningEventsUseCase.execute();
-
 
     }
 }

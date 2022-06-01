@@ -8,10 +8,10 @@ public class PresentationConfig {
     public static final int SMALL_MESSAGE_SIZE = 200;
     public static User user; // текущий пользователь
 
-    public static User getUser() {
+    public static User getUser() throws Exception {
         synchronized (PresentationConfig.class) {
             if (user == null){
-                return new User("Ошибка", "Ошибка", "Ошибка", false, false, null);
+                throw new NullPointerException("user is null (thread synchronize error in PresentationConfig.java)");
             }
             return user;
         }

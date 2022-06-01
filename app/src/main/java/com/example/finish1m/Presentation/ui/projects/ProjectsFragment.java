@@ -16,6 +16,7 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.UseCases.GetProjectReverseListUseCase;
 import com.example.finish1m.Presentation.Adapters.ProjectListAdapter;
+import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewProjectActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
@@ -80,8 +81,13 @@ public class ProjectsFragment extends Fragment {
             }
         });
 
-        if(!PresentationConfig.getUser().isAdmin())
-            binding.btAddProject.setVisibility(View.GONE);
+
+        try {
+            if(!PresentationConfig.getUser().isAdmin())
+                binding.btAddProject.setVisibility(View.GONE);
+        }catch (Exception e){
+            Toast.makeText(getContext(), R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
 
         return binding.getRoot();
     }
