@@ -16,12 +16,6 @@ public class StartActivity extends AppCompatActivity {
 
     private ActivityStartBinding binding;
 
-    private NotificationRepositoryImpl notificationRepository;
-    private EventRepositoryImpl eventRepository;
-
-    private StartListeningEventsUseCase startListeningEventsUseCase;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +39,5 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // уведомления о событиях
-        notificationRepository = new NotificationRepositoryImpl(this);
-        eventRepository = new EventRepositoryImpl(this);
-        startListeningEventsUseCase = new StartListeningEventsUseCase(eventRepository, notificationRepository);
-        startListeningEventsUseCase.execute();
     }
 }
