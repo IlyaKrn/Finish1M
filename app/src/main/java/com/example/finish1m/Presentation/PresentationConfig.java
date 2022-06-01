@@ -8,10 +8,8 @@ public class PresentationConfig {
     public static final int SMALL_MESSAGE_SIZE = 200;
     public static User user; // текущий пользователь
 
-    private static final Object lock = new Object();
-
     public static User getUser() {
-        synchronized (lock) {
+        synchronized (PresentationConfig.class) {
             if (user == null){
                 return new User("Ошибка", "Ошибка", "Ошибка", false, false, null);
             }
@@ -19,7 +17,7 @@ public class PresentationConfig {
         }
     }
     public static void setUser(User u) {
-        synchronized (lock) {
+        synchronized (PresentationConfig.class) {
             user = u;
         }
     }
