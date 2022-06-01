@@ -70,6 +70,9 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onGetData(Locate data) {
                 locate = data;
+                // установка маркера на карту
+                if (googleMap != null)
+                    googleMap.addMarker(new MarkerOptions().position(new LatLng(locate.getLatitude(), locate.getLongitude())));
                 binding.etMessage.setText(data.getMessage());
                 binding.etTitle.setText(data.getTitle());
                 final int[] count = {0};
@@ -278,7 +281,8 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
     public void onMapReady(@NonNull GoogleMap gMap) {
         googleMap = gMap;
         // установка маркера на карту
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(locate.getLatitude(), locate.getLongitude())));
+        if (locate != null)
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(locate.getLatitude(), locate.getLongitude())));
         // установка камеры на координаты
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(locate.getLatitude(), locate.getLongitude()), 11));
 
