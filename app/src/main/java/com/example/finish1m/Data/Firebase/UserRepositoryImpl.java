@@ -109,8 +109,12 @@ public class UserRepositoryImpl implements UserRepository {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (context != null) {
                         User c = snapshot.getValue(User.class);
-                        assert c != null;
-                        listener.onGetData(c);
+                        if(c != null) {
+                            listener.onGetData(c);
+                        }
+                        else{
+                            listener.onVoidData();
+                        }
                     }
                 }
 
