@@ -22,9 +22,12 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/text.span.main"/>
-
+        tv_address
         <TextView
             android:id="@+id/tv_snippet"
+            style="@style/text.span.main"/>
+        <TextView
+            android:id="@+id/tv_address"
             style="@style/text.span.main"/>
 
     </LinearLayout>

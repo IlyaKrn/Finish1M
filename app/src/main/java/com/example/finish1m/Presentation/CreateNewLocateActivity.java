@@ -21,10 +21,8 @@ import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.LocateRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Chat;
-import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.Locate;
 import com.example.finish1m.Domain.Models.Message;
-import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.CreateNewLocateUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.R;
@@ -36,7 +34,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CreateNewLocateActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -89,7 +86,7 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
                             ArrayList<String> mms = new ArrayList<>();
                             mms.add(PresentationConfig.getUser().getEmail());
                             Chat c = new Chat(chatRepository.getNewId(), ms, mms);
-                            Locate l = new Locate(locateRepository.getNewId(), coordinate.longitude, coordinate.latitude, title,  message, c.getId(), null);
+                            Locate l = new Locate(locateRepository.getNewId(), coordinate.longitude, coordinate.latitude, null, title,  message, c.getId(), null);
                             createNewEventUseCase = new CreateNewLocateUseCase(locateRepository, chatRepository, imageRepository, l, c, images, new OnSetDataListener() {
                                 @Override
                                 public void onSetData() {

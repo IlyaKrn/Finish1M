@@ -11,16 +11,18 @@ public class Locate {
     // координаты
     private double longitude;
     private double latitude;
+    private String address;
     private String title; // заголовок
     private String message; // описание
     private String chatId; // ссылка на чат
 
     private ArrayList<String> imageRefs; // ссылки на изображеия
 
-    public Locate(String id, double longitude, double latitude, String title, String message, String chatId, ArrayList<String> imageRefs) {
+    public Locate(String id, double longitude, double latitude, String address, String title, String message, String chatId, ArrayList<String> imageRefs) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.address = address;
         this.title = title;
         this.message = message;
         this.chatId = chatId;
@@ -86,6 +88,14 @@ public class Locate {
         this.imageRefs = imageRefs;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Locate{" +
@@ -98,4 +108,5 @@ public class Locate {
                 ", imageRefs=" + imageRefs +
                 '}';
     }
+
 }

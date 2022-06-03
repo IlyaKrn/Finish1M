@@ -43,6 +43,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private GridLayout glImages;
     private TextView title;
     private TextView snippet;
+    private TextView address;
     private Activity activity;
 
 
@@ -64,6 +65,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         title = rootView.findViewById(R.id.tv_title);
         snippet = rootView.findViewById(R.id.tv_snippet);
         glImages = rootView.findViewById(R.id.gl_images);
+        address = rootView.findViewById(R.id.tv_address);
 
         glImages.removeAllViews();
 
@@ -73,6 +75,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
             if (marker.getPosition().equals(new LatLng(l.getLatitude(), l.getLongitude()))){
                 title.setText(l.getTitle());
                 snippet.setText(l.getMessage());
+                address.setText(l.getAddress());
                 if (l.getImageRefs() != null) {
                     for (String s : l.getImageRefs()){
                         if (cache != null && cache.get(l) != null) {
