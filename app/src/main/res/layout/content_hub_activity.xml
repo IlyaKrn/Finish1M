@@ -23,7 +23,8 @@
         android:layout_gravity="bottom"
         app:itemIconTint="?iconColor"
         app:itemTextColor="?iconColor"
-        app:menu="@menu/activity_main_bottom" />
+        app:menu="@menu/activity_main_bottom"
+        android:layout_height="0dp"/>
 
 
 </FrameLayout>
