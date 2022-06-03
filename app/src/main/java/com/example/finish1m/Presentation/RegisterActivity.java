@@ -268,10 +268,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
-        binding.tvEmailErr.addTextChangedListener(textWatcher);
-        binding.tvPasswordErr.addTextChangedListener(textWatcher);
-        binding.tvSecondPasswordErr.addTextChangedListener(textWatcher);
-        binding.tvNameErr.addTextChangedListener(textWatcher);
-        binding.tvFamilyErr.addTextChangedListener(textWatcher);
+        binding.etEmail.addTextChangedListener(textWatcher);
+        binding.etPassword.addTextChangedListener(textWatcher);
+        binding.etSecondPassword.addTextChangedListener(textWatcher);
+        binding.etUserName.addTextChangedListener(textWatcher);
+        binding.etUserFamily.addTextChangedListener(textWatcher);
     }
 }
