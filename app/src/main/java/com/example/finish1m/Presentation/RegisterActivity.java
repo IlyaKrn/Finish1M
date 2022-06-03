@@ -26,6 +26,8 @@ import com.example.finish1m.Domain.UseCases.EnterWithEmailAndPasswordUseCase;
 import com.example.finish1m.Domain.UseCases.RegisterWithEmailAndPasswordUseCase;
 import com.example.finish1m.Domain.UseCases.SendVerificationEmailUseCase;
 import com.example.finish1m.Domain.UseCases.WriteSQLiteUserUseCase;
+import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
+import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRegisterBinding;
 
@@ -65,12 +67,21 @@ public class RegisterActivity extends AppCompatActivity {
                             registerWithEmailAndPasswordUseCase = new RegisterWithEmailAndPasswordUseCase(authRepository, userRepository, email, password, new OnSetDataListener() {
                                 @Override
                                 public void onSetData() {
+
+                                    DialogConfirm dialog = new DialogConfirm(RegisterActivity.this, "Верификация", "Ок", "Вам на почту было отправлено письмо для прохождения верификации", new OnConfirmListener() {
+                                        @Override
+                                        public void onConfirm(DialogConfirm d) {
+                                            d.destroy();
+                                        }
+                                    });
+                                    dialog.create(R.id.fragmentContainerView);
+
+
                                     final String firstName = binding.etUserName.getText().toString();
                                     final String lastName = binding.etUserFamily.getText().toString();
                                     final String email = binding.etEmail.getText().toString();
                                     final String password = binding.etPassword.getText().toString();
                                     final String passwordSec = binding.etSecondPassword.getText().toString();
-                                    Toast.makeText(RegisterActivity.this, R.string.email_verification_email_sended, Toast.LENGTH_SHORT).show();
                                     binding.btRegister.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
