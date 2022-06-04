@@ -57,6 +57,8 @@ public class RefactorUserActivity extends AppCompatActivity {
         imageRepository = new ImageRepositoryImpl(this);
 
         // получение и установка данных
+        DialogLoading dialog = new DialogLoading(RefactorUserActivity.this, getString(R.string.loading_data));
+        dialog.create(R.id.fragmentContainerView);
         try {
             getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<User>() {
                 @Override
@@ -69,21 +71,25 @@ public class RefactorUserActivity extends AppCompatActivity {
                         public void onGetData(Bitmap data) {
                             image = data;
                             binding.ivImage.setImageBitmap(image);
+                            dialog.destroy();
                         }
 
                         @Override
                         public void onVoidData() {
                             Toast.makeText(RefactorUserActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                            dialog.destroy();
                         }
 
                         @Override
                         public void onFailed() {
                             Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                            dialog.destroy();
                         }
 
                         @Override
                         public void onCanceled() {
                             Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                            dialog.destroy();
                         }
                     });
                     getImageByRefUseCase.execute();
@@ -92,21 +98,25 @@ public class RefactorUserActivity extends AppCompatActivity {
                 @Override
                 public void onVoidData() {
                     Toast.makeText(RefactorUserActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    dialog.destroy();
                 }
 
                 @Override
                 public void onFailed() {
                     Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                    dialog.destroy();
                 }
 
                 @Override
                 public void onCanceled() {
                     Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    dialog.destroy();
                 }
             });
             getUserByEmailUseCase.execute();
         }catch (Exception e){
             Toast.makeText(RefactorUserActivity.this, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            dialog.destroy();
         }
 
 

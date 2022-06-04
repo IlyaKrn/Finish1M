@@ -60,6 +60,8 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
         // получение и установка данных
         binding.btCreate.setClickable(false);
+        DialogLoading dialog = new DialogLoading(RefactorProjectActivity.this, getString(R.string.loading_data));
+        dialog.create(R.id.fragmentContainerView);
         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
@@ -69,7 +71,6 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
-                    Toast.makeText(RefactorProjectActivity.this, R.string.wait_images_load, Toast.LENGTH_SHORT).show();
                     for (String s : data.getImageRefs()){
                         GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
@@ -79,7 +80,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -89,7 +90,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                                 Toast.makeText(RefactorProjectActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -99,7 +100,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                                 Toast.makeText(RefactorProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -109,7 +110,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                                 Toast.makeText(RefactorProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorProjectActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
                         });
@@ -122,16 +123,19 @@ public class RefactorProjectActivity extends AppCompatActivity {
             @Override
             public void onVoidData() {
                 Toast.makeText(RefactorProjectActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
 
             @Override
             public void onFailed() {
                 Toast.makeText(RefactorProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
 
             @Override
             public void onCanceled() {
                 Toast.makeText(RefactorProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
         });
         getProjectByIdUseCase.execute();

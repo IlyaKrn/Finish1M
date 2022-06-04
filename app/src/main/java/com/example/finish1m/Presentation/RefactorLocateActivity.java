@@ -67,6 +67,8 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
 
         locateRepository = new LocateRepositoryImpl(this);
 
+        DialogLoading dialog = new DialogLoading(RefactorLocateActivity.this, getString(R.string.loading_data));
+        dialog.create(R.id.fragmentContainerView);
         getLocateByIdUseCase = new GetLocateByIdUseCase(locateRepository, getIntent().getStringExtra("locateId"), new OnGetDataListener<Locate>() {
             @Override
             public void onGetData(Locate data) {
@@ -79,7 +81,6 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
-                    Toast.makeText(RefactorLocateActivity.this, R.string.wait_images_load, Toast.LENGTH_SHORT).show();
                     for (String s : data.getImageRefs()){
                         GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
@@ -88,7 +89,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                                 images.add(data1);
                                 adapter.notifyDataSetChanged();
                                 if (count[0] == data.getImageRefs().size())
-                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                             }
 
                             @Override
@@ -97,7 +98,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                                 Toast.makeText(RefactorLocateActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -107,7 +108,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                                 Toast.makeText(RefactorLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -117,7 +118,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                                 Toast.makeText(RefactorLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorLocateActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
                         });
@@ -129,16 +130,19 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onVoidData() {
                 Toast.makeText(RefactorLocateActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
 
             @Override
             public void onFailed() {
                 Toast.makeText(RefactorLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
 
             @Override
             public void onCanceled() {
                 Toast.makeText(RefactorLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
         });
         getLocateByIdUseCase.execute();

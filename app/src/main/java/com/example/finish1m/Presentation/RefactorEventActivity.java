@@ -61,6 +61,8 @@ public class RefactorEventActivity extends AppCompatActivity {
 
         // получение и установка данных
         binding.btCreate.setClickable(false);
+        DialogLoading dialog = new DialogLoading(RefactorEventActivity.this, getString(R.string.loading_data));
+        dialog.create(R.id.fragmentContainerView);
         getEventByIdUseCase = new GetEventByIdUseCase(eventRepository, getIntent().getStringExtra("eventId"), new OnGetDataListener<Event>() {
             @Override
             public void onGetData(Event data) {
@@ -70,7 +72,6 @@ public class RefactorEventActivity extends AppCompatActivity {
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
-                    Toast.makeText(RefactorEventActivity.this, R.string.wait_images_load, Toast.LENGTH_SHORT).show();
                     for (String s : data.getImageRefs()){
                         GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
@@ -80,7 +81,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorEventActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -90,7 +91,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                                 Toast.makeText(RefactorEventActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorEventActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -100,7 +101,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                                 Toast.makeText(RefactorEventActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorEventActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
 
@@ -110,7 +111,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                                 Toast.makeText(RefactorEventActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                 if (count[0] == data.getImageRefs().size()) {
                                     binding.btCreate.setClickable(true);
-                                    Toast.makeText(RefactorEventActivity.this, R.string.load_images_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                 }
                             }
                         });
@@ -123,16 +124,19 @@ public class RefactorEventActivity extends AppCompatActivity {
             @Override
             public void onVoidData() {
                 Toast.makeText(RefactorEventActivity.this, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
 
             @Override
             public void onFailed() {
                 Toast.makeText(RefactorEventActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
 
             @Override
             public void onCanceled() {
                 Toast.makeText(RefactorEventActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                dialog.destroy();
             }
         });
         getEventByIdUseCase.execute();
