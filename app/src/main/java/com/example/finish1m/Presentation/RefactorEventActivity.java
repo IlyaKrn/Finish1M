@@ -154,6 +154,16 @@ public class RefactorEventActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
+                        int type = Event.NEWS;
+                        switch(binding.rgType.getCheckedRadioButtonId()){
+                            case R.id.rbt_news:
+                                type = Event.NEWS;
+                                break;
+                            case R.id.rbt_event:
+                                type = Event.EVENT;
+                                break;
+                        }
+                        event.setType(type);
                         event.setTitle(binding.etTitle.getText().toString());
                         event.setMessage(binding.etMessage.getText().toString());
                         event.setImageRefs(new ArrayList<>());
