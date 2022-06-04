@@ -106,4 +106,6 @@
     <string name="hide"><a href="">Скрыть</a></string>
     <string name="data_load_error_try_again">Ошибка при загрузке данных\nПопробуйте снова</string>
     <string name="no_locate_address_data">Нет данных об адресе</string>
+    <string name="tv_loading">Загрузка</string>
+    <string name="loading_data">Загрузка данных...</string>
 </resources>

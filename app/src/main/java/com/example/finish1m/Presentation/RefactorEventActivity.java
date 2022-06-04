@@ -28,6 +28,7 @@ import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorProjectUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRefactorEventBinding;
 import com.example.finish1m.databinding.ActivityRefactorProjectBinding;
@@ -154,6 +155,8 @@ public class RefactorEventActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
+                        DialogLoading dialog = new DialogLoading(RefactorEventActivity.this, getString(R.string.loading_data));
+                        dialog.create(R.id.fragmentContainerView);
                         int type = Event.NEWS;
                         switch(binding.rgType.getCheckedRadioButtonId()){
                             case R.id.rbt_news:
@@ -171,18 +174,21 @@ public class RefactorEventActivity extends AppCompatActivity {
                             @Override
                             public void onSetData() {
                                 Toast.makeText(RefactorEventActivity.this, R.string.event_refactor_success, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onFailed() {
                                 Toast.makeText(RefactorEventActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onCanceled() {
                                 Toast.makeText(RefactorEventActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
                         });

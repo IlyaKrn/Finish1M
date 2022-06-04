@@ -24,6 +24,7 @@ import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewEventBinding;
 
@@ -67,6 +68,8 @@ public class CreateNewEventActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
+                        DialogLoading dialog = new DialogLoading(CreateNewEventActivity.this, getString(R.string.loading_data));
+                        dialog.create(R.id.fragmentContainerView);
                         try{
                             int type = Event.NEWS;
                             switch(binding.rgType.getCheckedRadioButtonId()){
@@ -88,28 +91,34 @@ public class CreateNewEventActivity extends AppCompatActivity {
                             createNewEventUseCase = new CreateNewEventUseCase(eventRepository, chatRepository, imageRepository, e, c, images, new OnSetDataListener() {
                                 @Override
                                 public void onSetData() {
-                                    if(finalType == Event.EVENT)
+                                    if(finalType == Event.EVENT) {
                                         Toast.makeText(CreateNewEventActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
-                                    else
+                                    }
+                                    else {
                                         Toast.makeText(CreateNewEventActivity.this, R.string.news_create_success, Toast.LENGTH_SHORT).show();
+                                    }
+                                    dialog.destroy();
                                     finish();
                                 }
 
                                 @Override
                                 public void onFailed() {
                                     Toast.makeText(CreateNewEventActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
 
                                 @Override
                                 public void onCanceled() {
                                     Toast.makeText(CreateNewEventActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
                             });
                             createNewEventUseCase.execute();
                         }catch (Exception e){
                             Toast.makeText(CreateNewEventActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                            dialog.destroy();
                         }
 
                     }

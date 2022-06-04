@@ -29,6 +29,7 @@ import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorProjectUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRefactorProjectBinding;
 
@@ -144,6 +145,8 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 final String title = binding.etTitle.getText().toString();
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
+                    DialogLoading dialog = new DialogLoading(RefactorProjectActivity.this, getString(R.string.loading_data));
+                    dialog.create(R.id.fragmentContainerView);
                     if(!TextUtils.isEmpty(title)){
                         project.setTitle(binding.etTitle.getText().toString());
                         project.setMessage(binding.etMessage.getText().toString());
@@ -152,18 +155,21 @@ public class RefactorProjectActivity extends AppCompatActivity {
                             @Override
                             public void onSetData() {
                                 Toast.makeText(RefactorProjectActivity.this, R.string.project_refactor_success, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onFailed() {
                                 Toast.makeText(RefactorProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onCanceled() {
                                 Toast.makeText(RefactorProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
                         });

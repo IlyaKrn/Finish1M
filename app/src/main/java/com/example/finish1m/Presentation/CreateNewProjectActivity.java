@@ -27,6 +27,7 @@ import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.CreateNewProjectUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewEventBinding;
 import com.example.finish1m.databinding.ActivityCreateNewProjectBinding;
@@ -70,6 +71,8 @@ public class CreateNewProjectActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
+                        DialogLoading dialog = new DialogLoading(CreateNewProjectActivity.this, getString(R.string.loading_data));
+                        dialog.create(R.id.fragmentContainerView);
                         try {
                             ArrayList<Message> ms = new ArrayList<>();
                             Message msg = new Message(getString(R.string.message_start_chat), null, null);
@@ -82,24 +85,28 @@ public class CreateNewProjectActivity extends AppCompatActivity {
                                 @Override
                                 public void onSetData() {
                                     Toast.makeText(CreateNewProjectActivity.this, R.string.event_create_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
 
                                 @Override
                                 public void onFailed() {
                                     Toast.makeText(CreateNewProjectActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
 
                                 @Override
                                 public void onCanceled() {
                                     Toast.makeText(CreateNewProjectActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
                             });
                             createNewProjectUseCase.execute();
                         }catch (Exception e){
                             Toast.makeText(CreateNewProjectActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                            dialog.destroy();
                         }
 
                     }

@@ -111,5 +111,12 @@
     </androidx.core.widget.NestedScrollView>
 
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:layout_marginHorizontal="24dp"
+        android:elevation="@dimen/dialog_elevation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </FrameLayout>

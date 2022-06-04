@@ -27,6 +27,7 @@ import com.example.finish1m.Domain.UseCases.GetUserByEmailUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorUserUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRefactorProjectBinding;
 import com.example.finish1m.databinding.ActivityRefactorUserBinding;
@@ -126,6 +127,8 @@ public class RefactorUserActivity extends AppCompatActivity {
                 final String lastName = binding.etLastname.getText().toString();
                 if(!TextUtils.isEmpty(firstName)){
                     if(!TextUtils.isEmpty(lastName)){
+                        DialogLoading dialog = new DialogLoading(RefactorUserActivity.this, getString(R.string.loading_data));
+                        dialog.create(R.id.fragmentContainerView);
                         user.setFirstName(binding.etFirstname.getText().toString());
                         user.setLastName(binding.etLastname.getText().toString());
                         user.setIconRef("");
@@ -133,18 +136,21 @@ public class RefactorUserActivity extends AppCompatActivity {
                             @Override
                             public void onSetData() {
                                 Toast.makeText(RefactorUserActivity.this, R.string.user_refactor_success, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onFailed() {
                                 Toast.makeText(RefactorUserActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onCanceled() {
                                 Toast.makeText(RefactorUserActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
                         });

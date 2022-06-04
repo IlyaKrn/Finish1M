@@ -31,6 +31,7 @@ import com.example.finish1m.Domain.UseCases.GetLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorLocateUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRefactorLocateBinding;
@@ -162,6 +163,8 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                 final String title = binding.etTitle.getText().toString();
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
+                    DialogLoading dialog = new DialogLoading(RefactorLocateActivity.this, getString(R.string.loading_data));
+                    dialog.create(R.id.fragmentContainerView);
                     if(!TextUtils.isEmpty(title)){
                         locate.setTitle(title);
                         locate.setMessage(message);
@@ -169,18 +172,21 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                             @Override
                             public void onSetData() {
                                 Toast.makeText(RefactorLocateActivity.this, R.string.locate_refactor_success, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onFailed() {
                                 Toast.makeText(RefactorLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onCanceled() {
                                 Toast.makeText(RefactorLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
                         });

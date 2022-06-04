@@ -28,6 +28,7 @@ import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.CreateNewFollowUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewFollowBinding;
 
@@ -68,6 +69,8 @@ public class CreateNewFollowActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(message)){
+                    DialogLoading dialog = new DialogLoading(CreateNewFollowActivity.this, getString(R.string.loading_data));
+                    dialog.create(R.id.fragmentContainerView);
                     try {
                         Follow f = new Follow(projectRepository.getNewId(), PresentationConfig.getUser().getEmail(), message, null);
 
@@ -75,24 +78,28 @@ public class CreateNewFollowActivity extends AppCompatActivity {
                             @Override
                             public void onSetData() {
                                 Toast.makeText(CreateNewFollowActivity.this, R.string.follow_create_success, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onFailed() {
                                 Toast.makeText(CreateNewFollowActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
 
                             @Override
                             public void onCanceled() {
                                 Toast.makeText(CreateNewFollowActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                dialog.destroy();
                                 finish();
                             }
                         });
                         createNewFollowUseCase.execute();
                     }catch (Exception e){
                         Toast.makeText(CreateNewFollowActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                        dialog.destroy();
                     }
 
                 }

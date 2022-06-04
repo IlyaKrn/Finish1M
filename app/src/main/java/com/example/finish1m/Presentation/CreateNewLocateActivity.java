@@ -25,6 +25,7 @@ import com.example.finish1m.Domain.Models.Locate;
 import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.UseCases.CreateNewLocateUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
+import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityCreateNewLocateBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -79,6 +80,8 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
+                        DialogLoading dialog = new DialogLoading(CreateNewLocateActivity.this, getString(R.string.loading_data));
+                        dialog.create(R.id.fragmentContainerView);
                         try {
                             ArrayList<Message> ms = new ArrayList<>();
                             Message msg = new Message(getString(R.string.message_start_chat), null, null);
@@ -91,24 +94,28 @@ public class CreateNewLocateActivity extends AppCompatActivity implements OnMapR
                                 @Override
                                 public void onSetData() {
                                     Toast.makeText(CreateNewLocateActivity.this, R.string.locate_create_success, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
 
                                 @Override
                                 public void onFailed() {
                                     Toast.makeText(CreateNewLocateActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
 
                                 @Override
                                 public void onCanceled() {
                                     Toast.makeText(CreateNewLocateActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    dialog.destroy();
                                     finish();
                                 }
                             });
                             createNewEventUseCase.execute();
                         }catch (Exception e){
                             Toast.makeText(CreateNewLocateActivity.this, R.string.try_again, Toast.LENGTH_SHORT).show();
+                            dialog.destroy();
                         }
 
                     }
