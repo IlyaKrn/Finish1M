@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ public abstract class Dialog extends Fragment {
     private static ArrayList<Dialog> currentDialogs = new ArrayList<>(); // текущие диалоги
 
     private OnDestroyListener onDestroyListener;
+
+    private int containerId;
 
     public Dialog(AppCompatActivity activity) {
         context = activity.getApplicationContext();
@@ -46,6 +49,7 @@ public abstract class Dialog extends Fragment {
     }
     // создание и уничтожение диалога
     public void create(int containerId){
+        this.containerId = containerId;
         // уничтожение всех предыдущих диалогов
         for (Dialog d : currentDialogs) {
             d.destroy();
@@ -64,6 +68,18 @@ public abstract class Dialog extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        setClickable(getActivity().findViewById(containerId).getRootView(), false);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        setClickable(getActivity().findViewById(containerId).getRootView(), true);
+    }
+
     public void setOnDestroyListener(OnDestroyListener onDestroyListener) {
         this.onDestroyListener = onDestroyListener;
     }
@@ -74,7 +90,7 @@ public abstract class Dialog extends Fragment {
     protected void defreeze(){
         setClickable((ViewGroup) rootView, true);
     }
-    public void setClickable(View view, boolean clickable) {
+    private void setClickable(View view, boolean clickable) {
         if (view != null) {
             view.setClickable(clickable);
             if (view instanceof ViewGroup) {
