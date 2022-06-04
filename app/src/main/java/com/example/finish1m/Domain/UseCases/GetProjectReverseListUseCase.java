@@ -26,7 +26,7 @@ public class GetProjectReverseListUseCase {
             @Override
             public void onGetData(ArrayList<Project> data) {
                 ArrayList<Project> temp = new ArrayList<>();
-                for (int i = data.size()-2; i >= 0; i--) {
+                for (int i = data.size()-1; i >= 0; i--) {
                     temp.add(data.get(i));
                 }
                 listener.onGetData(temp);
