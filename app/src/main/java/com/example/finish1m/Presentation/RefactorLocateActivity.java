@@ -78,6 +78,8 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                     googleMap.addMarker(new MarkerOptions().position(new LatLng(locate.getLatitude(), locate.getLongitude())));
                 binding.etMessage.setText(data.getMessage());
                 binding.etTitle.setText(data.getTitle());
+                if (locate.getImageRefs() == null)
+                    dialog.destroy();
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);

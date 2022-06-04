@@ -66,6 +66,8 @@ public class RefactorUserActivity extends AppCompatActivity {
                     user = data;
                     binding.etFirstname.setText(data.getFirstName());
                     binding.etLastname.setText(data.getLastName());
+                    if (user.getIconRef() == null)
+                        dialog.destroy();
                     GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, user.getIconRef(), new OnGetDataListener<Bitmap>() {
                         @Override
                         public void onGetData(Bitmap data) {

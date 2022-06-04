@@ -68,6 +68,8 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 project = data;
                 binding.etMessage.setText(data.getMessage());
                 binding.etTitle.setText(data.getTitle());
+                if (project.getImageRefs() == null)
+                    dialog.destroy();
                 final int[] count = {0};
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
