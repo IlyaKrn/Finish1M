@@ -125,7 +125,7 @@ public class RemoveFollowActivity extends AppCompatActivity {
                         removeFollowFromProjectUseCase.execute();
                     }
                 });
-                dialog.create(R.id.fragmentContainerView);
+                dialog.create(binding.fragmentContainerView);
 
             }
         });

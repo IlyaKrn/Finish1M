@@ -6,13 +6,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finish1m.R;
 
 import java.util.ArrayList;
 
@@ -30,7 +35,7 @@ public abstract class Dialog extends Fragment {
 
     private OnDestroyListener onDestroyListener;
 
-    private int containerId;
+    private FragmentContainerView containerView;
 
     public Dialog(AppCompatActivity activity) {
         context = activity.getApplicationContext();
@@ -48,21 +53,38 @@ public abstract class Dialog extends Fragment {
 
     }
     // создание и уничтожение диалога
-    public void create(int containerId){
-        this.containerId = containerId;
+    public void create(FragmentContainerView container){
+        this.containerView = container;
         // уничтожение всех предыдущих диалогов
         for (Dialog d : currentDialogs) {
             d.destroy();
         }
-        fragmentManager.beginTransaction().add(containerId, this).commit();
+        fragmentManager.beginTransaction().setCustomAnimations(R.anim.dialog_create, R.anim.dialog_destroy).add(containerView.getId(), this).commit();
         currentDialogs.add(this);
     }
     public void destroy(){
         try {
-            fragmentManager.beginTransaction().remove(this).commit();
-            if (onDestroyListener != null) {
-                onDestroyListener.onDestroy();
-            }
+            Animation animationDestroy = AnimationUtils.loadAnimation(getContext(), R.anim.dialog_destroy);
+            animationDestroy.setAnimationListener(new Animation.AnimationListener(){
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    fragmentManager.beginTransaction().remove(Dialog.this).commit();
+                    if (onDestroyListener != null) {
+                        onDestroyListener.onDestroy();
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            rootView.startAnimation(animationDestroy);
+
         } catch (Exception e){
             Log.w(LOG_TAG, e.getMessage());
         }
@@ -71,13 +93,13 @@ public abstract class Dialog extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        setClickable(getActivity().findViewById(containerId).getRootView(), false);
+        setClickable(containerView.getRootView(), false);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        setClickable(getActivity().findViewById(containerId).getRootView(), true);
+        setClickable(containerView.getRootView(), true);
     }
 
     public void setOnDestroyListener(OnDestroyListener onDestroyListener) {

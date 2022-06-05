@@ -206,7 +206,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             }
 
                         });
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(activity.findViewById(R.id.fragmentContainerView));
                     }
                     else {
                         DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Отказ от участия", "Да", "Вы действительно хотите отказаться от участия в мероприятии?", new OnConfirmListener() {
@@ -241,7 +241,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             }
 
                         });
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(activity.findViewById(R.id.fragmentContainerView));
                     }
                 }
             });
@@ -309,7 +309,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                                             deleteEventByIdUseCase.execute();
                                         }
                                     });
-                                    dialogConfirm.create(R.id.fragmentContainerView);
+                                    dialogConfirm.create(activity.findViewById(R.id.fragmentContainerView));
                                     break;
                             }
 

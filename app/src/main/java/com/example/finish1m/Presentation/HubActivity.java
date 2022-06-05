@@ -117,7 +117,7 @@ public class HubActivity extends AppCompatActivity {
                                 writeSQLiteUserUseCase.execute();
                             }
                         });
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(binding.fragmentContainerView);
                 break;
             case R.id.profile_refactor:
                 try {

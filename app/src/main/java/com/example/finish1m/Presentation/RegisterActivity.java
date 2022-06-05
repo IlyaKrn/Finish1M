@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             d.destroy();
                                         }
                                     });
-                                    dialog.create(R.id.fragmentContainerView);
+                                    dialog.create(binding.fragmentContainerView);
 
 
                                     final String firstName = binding.etUserName.getText().toString();

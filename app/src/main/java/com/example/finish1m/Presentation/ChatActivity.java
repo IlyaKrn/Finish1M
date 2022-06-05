@@ -127,7 +127,7 @@ public class ChatActivity extends AppCompatActivity {
                             removeMessageUseCase.execute();
                         }
                     });
-                    dialog.create(R.id.fragmentContainerView);
+                    dialog.create(binding.fragmentContainerView);
                 }
             }
         });

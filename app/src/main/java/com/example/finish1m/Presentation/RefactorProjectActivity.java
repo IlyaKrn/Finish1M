@@ -61,7 +61,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
         // получение и установка данных
         binding.btCreate.setClickable(false);
         DialogLoading dialog = new DialogLoading(RefactorProjectActivity.this, getString(R.string.loading_data));
-        dialog.create(R.id.fragmentContainerView);
+        dialog.create(binding.fragmentContainerView);
         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
@@ -152,7 +152,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     DialogLoading dialog = new DialogLoading(RefactorProjectActivity.this, getString(R.string.loading_data));
-                    dialog.create(R.id.fragmentContainerView);
+                    dialog.create(binding.fragmentContainerView);
                     if(!TextUtils.isEmpty(title)){
                         project.setTitle(binding.etTitle.getText().toString());
                         project.setMessage(binding.etMessage.getText().toString());

@@ -68,7 +68,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
         locateRepository = new LocateRepositoryImpl(this);
 
         DialogLoading dialog = new DialogLoading(RefactorLocateActivity.this, getString(R.string.loading_data));
-        dialog.create(R.id.fragmentContainerView);
+        dialog.create(binding.fragmentContainerView);
         getLocateByIdUseCase = new GetLocateByIdUseCase(locateRepository, getIntent().getStringExtra("locateId"), new OnGetDataListener<Locate>() {
             @Override
             public void onGetData(Locate data) {
@@ -170,7 +170,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(title)){
                     DialogLoading dialog = new DialogLoading(RefactorLocateActivity.this, getString(R.string.loading_data));
-                    dialog.create(R.id.fragmentContainerView);
+                    dialog.create(binding.fragmentContainerView);
                     if(!TextUtils.isEmpty(title)){
                         locate.setTitle(title);
                         locate.setMessage(message);
@@ -242,7 +242,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                         deleteEventByIdUseCase.execute();
                     }
                 });
-                dialog.create(R.id.fragmentContainerView);
+                dialog.create(binding.fragmentContainerView);
             }
         });
 

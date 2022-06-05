@@ -72,7 +72,7 @@ public class CreateNewProjectActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
                         DialogLoading dialog = new DialogLoading(CreateNewProjectActivity.this, getString(R.string.loading_data));
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(binding.fragmentContainerView);
                         try {
                             ArrayList<Message> ms = new ArrayList<>();
                             Message msg = new Message(getString(R.string.message_start_chat), null, null);

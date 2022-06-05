@@ -69,7 +69,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
                         DialogLoading dialog = new DialogLoading(CreateNewEventActivity.this, getString(R.string.loading_data));
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(binding.fragmentContainerView);
                         try{
                             int type = Event.NEWS;
                             switch(binding.rgType.getCheckedRadioButtonId()){

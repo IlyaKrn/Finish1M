@@ -70,7 +70,7 @@ public class CreateNewFollowActivity extends AppCompatActivity {
                 final String message = binding.etMessage.getText().toString();
                 if(!TextUtils.isEmpty(message)){
                     DialogLoading dialog = new DialogLoading(CreateNewFollowActivity.this, getString(R.string.loading_data));
-                    dialog.create(R.id.fragmentContainerView);
+                    dialog.create(binding.fragmentContainerView);
                     try {
                         Follow f = new Follow(projectRepository.getNewId(), PresentationConfig.getUser().getEmail(), message, null);
 

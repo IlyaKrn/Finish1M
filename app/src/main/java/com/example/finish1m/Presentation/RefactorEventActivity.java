@@ -62,7 +62,7 @@ public class RefactorEventActivity extends AppCompatActivity {
         // получение и установка данных
         binding.btCreate.setClickable(false);
         DialogLoading dialog = new DialogLoading(RefactorEventActivity.this, getString(R.string.loading_data));
-        dialog.create(R.id.fragmentContainerView);
+        dialog.create(binding.fragmentContainerView);
         getEventByIdUseCase = new GetEventByIdUseCase(eventRepository, getIntent().getStringExtra("eventId"), new OnGetDataListener<Event>() {
             @Override
             public void onGetData(Event data) {
@@ -162,7 +162,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(title)){
                     if(!TextUtils.isEmpty(title)){
                         DialogLoading dialog = new DialogLoading(RefactorEventActivity.this, getString(R.string.loading_data));
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(binding.fragmentContainerView);
                         int type = Event.NEWS;
                         switch(binding.rgType.getCheckedRadioButtonId()){
                             case R.id.rbt_news:

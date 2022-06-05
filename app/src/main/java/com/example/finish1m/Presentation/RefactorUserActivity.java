@@ -58,7 +58,7 @@ public class RefactorUserActivity extends AppCompatActivity {
 
         // получение и установка данных
         DialogLoading dialog = new DialogLoading(RefactorUserActivity.this, getString(R.string.loading_data));
-        dialog.create(R.id.fragmentContainerView);
+        dialog.create(binding.fragmentContainerView);
         try {
             getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<User>() {
                 @Override
@@ -140,7 +140,7 @@ public class RefactorUserActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(firstName)){
                     if(!TextUtils.isEmpty(lastName)){
                         DialogLoading dialog = new DialogLoading(RefactorUserActivity.this, getString(R.string.loading_data));
-                        dialog.create(R.id.fragmentContainerView);
+                        dialog.create(binding.fragmentContainerView);
                         user.setFirstName(binding.etFirstname.getText().toString());
                         user.setLastName(binding.etLastname.getText().toString());
                         user.setIconRef("");

@@ -248,7 +248,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                                             deleteProjectByIdUseCase.execute();
                                         }
                                     });
-                                    dialogConfirm.create(R.id.fragmentContainerView);
+                                    dialogConfirm.create(activity.findViewById(R.id.fragmentContainerView));
                                     break;
                             }
 
