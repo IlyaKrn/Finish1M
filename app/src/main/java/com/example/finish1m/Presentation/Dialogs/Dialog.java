@@ -90,18 +90,6 @@ public abstract class Dialog extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        setClickable(containerView.getRootView(), false);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        setClickable(containerView.getRootView(), true);
-    }
-
     public void setOnDestroyListener(OnDestroyListener onDestroyListener) {
         this.onDestroyListener = onDestroyListener;
     }
