@@ -48,14 +48,14 @@ public class ImageRepositoryImpl implements ImageRepository {
                                 getDefaultImage(listener);
                             }
                         else {
-                            Log.e(LOG_TAG, String.format("get image is failed (ref='%s'): &s", ref, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("get image is failed (ref='%s'): %s", ref, task.getException().getMessage()));
                             getDefaultImage(listener);
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get image is failed (ref='%s'): &s", ref, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get image is failed (ref='%s'): %s", ref, e.getMessage()));
             getDefaultImage(listener);
         }
     }
@@ -82,14 +82,14 @@ public class ImageRepositoryImpl implements ImageRepository {
                             listener.onSetData(FirebaseConfig.STORAGE_IMAGES_ALL + "/" + name);
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("write image is cancelled (ref='%s'): &s", FirebaseConfig.STORAGE_IMAGES_ALL + "/" + name, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write image is cancelled (ref='%s'): %s", FirebaseConfig.STORAGE_IMAGES_ALL + "/" + name, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("write image is failed (ref='null'): &s", e.getMessage()));
+            Log.e(LOG_TAG, String.format("write image is failed (ref='null'): %s", e.getMessage()));
             listener.onFailed();
         }
     }
@@ -118,7 +118,7 @@ public class ImageRepositoryImpl implements ImageRepository {
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get default image is failed (ref='null'): &s", e.getMessage()));
+            Log.e(LOG_TAG, String.format("get default image is failed (ref='null'): %s", e.getMessage()));
             listener.onFailed();
         }
     }

@@ -85,13 +85,13 @@ public class UserRepositoryImpl implements UserRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get user list is cancelled (size='%d'): &s", 0, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get user list is cancelled (size='%d'): %s", 0, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get user list is failed (size='%d'): &s", 0, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get user list is failed (size='%d'): %s", 0, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -127,13 +127,13 @@ public class UserRepositoryImpl implements UserRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get user is cancelled (id='%s'): &s", email, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get user is cancelled (id='%s'): %s", email, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get user is failed (id='%s'): &s", email, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get user is failed (id='%s'): %s", email, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -159,14 +159,14 @@ public class UserRepositoryImpl implements UserRepository {
                             listener.onSetData();
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("write user is cancelled (id='%s'): &s", email, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write user is cancelled (id='%s'): %s", email, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("write user is failed (id='%s'): &s", email, e.getMessage()));
+            Log.e(LOG_TAG, String.format("write user is failed (id='%s'): %s", email, e.getMessage()));
             listener.onFailed();
         }
 

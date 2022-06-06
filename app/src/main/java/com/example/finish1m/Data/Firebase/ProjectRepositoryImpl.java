@@ -59,13 +59,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get project list is cancelled (size='%d'): &s", 0, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get project list is cancelled (size='%d'): %s", 0, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get project list is failed (size='%d'): &s", 0, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get project list is failed (size='%d'): %s", 0, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -93,13 +93,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get project is cancelled (id='%s'): &s", eventId, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get project is cancelled (id='%s'): %s", eventId, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get project is failed (id='%s'): &s", eventId, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get project is failed (id='%s'): %s", eventId, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -117,14 +117,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                             listener.onSetData();
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("write project is cancelled (id='%s'): &s", id, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write project is cancelled (id='%s'): %s", id, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("write project is failed (id='%s'): &s", id, e.getMessage()));
+            Log.e(LOG_TAG, String.format("write project is failed (id='%s'): %s", id, e.getMessage()));
             listener.onFailed();
         }
     }

@@ -50,13 +50,13 @@ public class ChatRepositoryImpl implements ChatRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get chat is cancelled (id='%s'): &s", chatId, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get chat is cancelled (id='%s'): %s", chatId, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get chat is failed (id='%s'): &s", chatId, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get chat is failed (id='%s'): %s", chatId, e.getMessage()));
             listener.onFailed();
         }
 
@@ -75,18 +75,18 @@ public class ChatRepositoryImpl implements ChatRepository {
                             listener.onSetData();
                         }
                         else if (task.isCanceled()) {
-                            Log.e(LOG_TAG, String.format("write chat is cancelled (id='%s'): &s", id, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write chat is cancelled (id='%s'): %s", id, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("write chat is failed (id='%s'): &s", id, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write chat is failed (id='%s'): %s", id, task.getException().getMessage()));
                             listener.onFailed();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("write chat is failed (id='%s'): &s", id, e.getMessage()));
+            Log.e(LOG_TAG, String.format("write chat is failed (id='%s'): %s", id, e.getMessage()));
             listener.onFailed();
         }
     }

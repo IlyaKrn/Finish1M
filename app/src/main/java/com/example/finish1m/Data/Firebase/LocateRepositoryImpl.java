@@ -64,13 +64,13 @@ public class LocateRepositoryImpl implements LocateRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get locate list is cancelled (size='%d'): &s", 0, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get locate list is cancelled (size='%d'): %s", 0, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get event locate is failed (size='%d'): &s", 0, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get event locate is failed (size='%d'): %s", 0, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -98,13 +98,13 @@ public class LocateRepositoryImpl implements LocateRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get locate is cancelled (id='%s'): &s", locateId, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get locate is cancelled (id='%s'): %s", locateId, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get locate is failed (id='%s'): &s", locateId, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get locate is failed (id='%s'): %s", locateId, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -164,14 +164,14 @@ public class LocateRepositoryImpl implements LocateRepository {
                             listener.onSetData();
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("write locate is cancelled (id='%s'): &s", id, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write locate is cancelled (id='%s'): %s", id, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("write locate is failed (id='%s'): &s", id, e.getMessage()));
+            Log.e(LOG_TAG, String.format("write locate is failed (id='%s'): %s", id, e.getMessage()));
             listener.onFailed();
         }
     }

@@ -58,13 +58,13 @@ public class EventRepositoryImpl implements EventRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get event list is cancelled (size='%d'): &s", 0, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get event list is cancelled (size='%d'): %s", 0, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get event list is failed (size='%d'): &s", 0, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get event list is failed (size='%d'): %s", 0, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -92,13 +92,13 @@ public class EventRepositoryImpl implements EventRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
-                        Log.e(LOG_TAG, String.format("get event is cancelled (id='%s'): &s", eventId, error.getMessage()));
+                        Log.e(LOG_TAG, String.format("get event is cancelled (id='%s'): %s", eventId, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("get event is failed (id='%s'): &s", eventId, e.getMessage()));
+            Log.e(LOG_TAG, String.format("get event is failed (id='%s'): %s", eventId, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -116,14 +116,14 @@ public class EventRepositoryImpl implements EventRepository {
                             listener.onSetData();
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("write event is cancelled (id='%s'): &s", id, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("write event is cancelled (id='%s'): %s", id, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("write event is failed (id='%s'): &s", id, e.getMessage()));
+            Log.e(LOG_TAG, String.format("write event is failed (id='%s'): %s", id, e.getMessage()));
             listener.onFailed();
         }
     }
