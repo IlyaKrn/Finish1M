@@ -1,6 +1,7 @@
 package com.example.finish1m.Data.Firebase;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthRepositoryImpl implements AuthRepository {
 
     private Context context;
+    private static final String LOG_TAG = "AuthRepositoryImpl";
+
     public AuthRepositoryImpl(Context context) {
         this.context = context;
     }
@@ -26,14 +29,19 @@ public class AuthRepositoryImpl implements AuthRepository {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (context != null) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) {
+                            Log.d(LOG_TAG, String.format("enter is success (email='%s', password='%s')", email, password));
                             listener.onSetData();
-                        else
+                        }
+                        else{
+                            Log.e(LOG_TAG, String.format("enter is cancelled (email='%s', password='%s'): %s", email, password, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("enter is failed (email='%s', password='%s'): %s", email, password, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -46,14 +54,19 @@ public class AuthRepositoryImpl implements AuthRepository {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (context != null) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) {
+                            Log.d(LOG_TAG, String.format("register is success (email='%s', password='%s')", email, password));
                             listener.onSetData();
-                        else
+                        }
+                        else {
+                            Log.e(LOG_TAG, String.format("enter is cancelled (email='%s', password='%s'): %s", email, password, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("enter is failed (email='%s', password='%s'): %s", email, password, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -66,14 +79,19 @@ public class AuthRepositoryImpl implements AuthRepository {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) {
+                            Log.d(LOG_TAG, String.format("verification email is success (email='%s', password='%s')", email));
                             listener.onSetData();
-                        else
+                        }
+                        else {
+                            Log.e(LOG_TAG, String.format("verification email is cancelled (email='%s', password='%s'): %s", email, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("verification email is failed (email='%s', password='%s'): %s", email, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -86,14 +104,19 @@ public class AuthRepositoryImpl implements AuthRepository {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) {
                             listener.onSetData();
-                        else
+                            Log.d(LOG_TAG, String.format("reset password email is success (email='%s', password='%s')", email));
+                        }
+                        else {
+                            Log.e(LOG_TAG, String.format("reset password email is cancelled (email='%s', password='%s'): %s", email, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("reset password email is failed (email='%s', password='%s'): %s", email, e.getMessage()));
             listener.onFailed();
         }
     }

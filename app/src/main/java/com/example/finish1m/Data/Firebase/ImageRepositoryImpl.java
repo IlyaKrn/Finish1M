@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 public class ImageRepositoryImpl implements ImageRepository {
 
     private Context context;
+    private static final String LOG_TAG = "ImageRepositoryImpl";
 
     private static final int MAX_IMAGE_SIZE = 13_000_000;
 
@@ -38,17 +39,23 @@ public class ImageRepositoryImpl implements ImageRepository {
                 public void onComplete(@NonNull Task<byte[]> task) {
                     if (context != null) {
                         if (task.isSuccessful())
-                            if (task.getResult() != null)
+                            if (task.getResult() != null) {
+                                Log.d(LOG_TAG, String.format("get image is success (ref='%s')", ref));
                                 listener.onGetData(BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length));
+                            }
                             else {
+                                Log.e(LOG_TAG, String.format("get image list is void data (ref='%s': no data in database)", ref));
                                 getDefaultImage(listener);
                             }
-                        else
+                        else {
+                            Log.e(LOG_TAG, String.format("get image is failed (ref='%s'): &s", ref, task.getException().getMessage()));
                             getDefaultImage(listener);
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("get image is failed (ref='%s'): &s", ref, e.getMessage()));
             getDefaultImage(listener);
         }
     }
@@ -61,16 +68,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 
             if (bitmap.getAllocationByteCount() > MAX_IMAGE_SIZE){
                 int coeff = bitmap.getAllocationByteCount()/MAX_IMAGE_SIZE;
-                Log.e("coeff", coeff+"");
-                Log.e("pre", bitmap.getByteCount()+"");
-                Log.e("pre height", bitmap.getHeight()+"");
-                Log.e("pre width", bitmap.getWidth()+"");
-                Log.e("post expected height", bitmap.getHeight()/coeff+"");
-                Log.e("post expected width", bitmap.getWidth()/coeff+"");
                 bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()/coeff, bitmap.getHeight()/coeff, false);
-                Log.e("post", bitmap.getByteCount()+"");
-                Log.e("post height", bitmap.getHeight()+"");
-                Log.e("post width", bitmap.getWidth()+"");
             }
 
 
@@ -79,14 +77,19 @@ public class ImageRepositoryImpl implements ImageRepository {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     if (context != null) {
-                        if (task.isSuccessful())
+                        if (task.isSuccessful()) {
+                            Log.d(LOG_TAG, String.format("write image is success (ref='%s')", FirebaseConfig.STORAGE_IMAGES_ALL + "/" + name));
                             listener.onSetData(FirebaseConfig.STORAGE_IMAGES_ALL + "/" + name);
-                        else
+                        }
+                        else {
+                            Log.e(LOG_TAG, String.format("write image is cancelled (ref='%s'): &s", FirebaseConfig.STORAGE_IMAGES_ALL + "/" + name, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("write image is failed (ref='null'): &s", e.getMessage()));
             listener.onFailed();
         }
     }
@@ -99,17 +102,23 @@ public class ImageRepositoryImpl implements ImageRepository {
                 public void onComplete(@NonNull Task<byte[]> task) {
                     if (context != null) {
                         if (task.isSuccessful())
-                            if (task.getResult() != null)
+                            if (task.getResult() != null) {
+                                Log.d(LOG_TAG, String.format("get default image is success (ref='%s')", FirebaseConfig.STORAGE_DEFAULT_ICON));
                                 listener.onGetData(BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length));
+                            }
                             else {
+                                Log.d(LOG_TAG, String.format("get default image is void data (ref='%s'): no data in database", FirebaseConfig.STORAGE_DEFAULT_ICON));
                                 listener.onVoidData();
                             }
-                        else
+                        else {
+                            Log.d(LOG_TAG, String.format("get default image is cancelled (ref='%s'): %s", FirebaseConfig.STORAGE_DEFAULT_ICON, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("get default image is failed (ref='null'): &s", e.getMessage()));
             listener.onFailed();
         }
     }

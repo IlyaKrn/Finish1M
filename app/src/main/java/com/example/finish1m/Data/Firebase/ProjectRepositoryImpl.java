@@ -3,6 +3,7 @@ package com.example.finish1m.Data.Firebase;
 import static com.example.finish1m.Data.Firebase.Database.FirebaseConfig.DATABASE_PROJECT;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ProjectRepositoryImpl implements ProjectRepository {
 
     private Context context;
+    private static final String LOG_TAG = "ProjectRepositoryImpl";
 
     public ProjectRepositoryImpl(Context context) {
         this.context = context;
@@ -42,10 +44,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                             assert l != null;
                             temp.add(l);
                         }
-                        if(temp.size() > 0)
+                        if(temp.size() > 0) {
+                            Log.d(LOG_TAG, String.format("get project list is success (size='%d')", temp.size()));
                             listener.onGetData(temp);
-                        else
+                        }
+                        else{
+                            Log.e(LOG_TAG, String.format("get project list is void data (size='%d': no data in database)", 0));
                             listener.onVoidData();
+                        }
                     }
 
                 }
@@ -53,11 +59,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
+                        Log.e(LOG_TAG, String.format("get project list is cancelled (size='%d'): &s", 0, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("get project list is failed (size='%d'): &s", 0, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -72,9 +80,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                     if (context != null) {
                         Project l = snapshot.getValue(Project.class);
                         if (l != null) {
+                            Log.d(LOG_TAG, String.format("get project is success (id='%s')", eventId));
                             listener.onGetData(l);
                         }
                         else {
+                            Log.e(LOG_TAG, String.format("get project is void data (id='%s': no data in database)", eventId));
                             listener.onVoidData();
                         }
                     }
@@ -83,11 +93,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
+                        Log.e(LOG_TAG, String.format("get project is cancelled (id='%s'): &s", eventId, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("get project is failed (id='%s'): &s", eventId, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -100,14 +112,19 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) {
+                            Log.d(LOG_TAG, String.format("write project is success (id='%s')", id));
                             listener.onSetData();
-                        else
+                        }
+                        else {
+                            Log.e(LOG_TAG, String.format("write project is cancelled (id='%s'): &s", id, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("write project is failed (id='%s'): &s", id, e.getMessage()));
             listener.onFailed();
         }
     }

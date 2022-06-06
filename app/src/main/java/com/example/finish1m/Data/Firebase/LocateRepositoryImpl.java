@@ -5,6 +5,7 @@ import static com.example.finish1m.Data.Firebase.Database.FirebaseConfig.DATABAS
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -28,6 +29,7 @@ import java.util.Locale;
 public class LocateRepositoryImpl implements LocateRepository {
 
     private Context context;
+    private static final String LOG_TAG = "LocateRepositoryImpl";
 
     public LocateRepositoryImpl(Context context) {
         this.context = context;
@@ -47,10 +49,14 @@ public class LocateRepositoryImpl implements LocateRepository {
                             assert l != null;
                             temp.add(l);
                         }
-                        if(temp.size() > 0)
+                        if(temp.size() > 0) {
+                            Log.d(LOG_TAG, String.format("get locate list is success (size='%d')", temp.size()));
                             listener.onGetData(temp);
-                        else
+                        }
+                        else{
+                            Log.e(LOG_TAG, String.format("get locate list is void data (size='%d': no data in database)", 0));
                             listener.onVoidData();
+                        }
                     }
 
                 }
@@ -58,11 +64,13 @@ public class LocateRepositoryImpl implements LocateRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
+                        Log.e(LOG_TAG, String.format("get locate list is cancelled (size='%d'): &s", 0, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("get event locate is failed (size='%d'): &s", 0, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -77,9 +85,11 @@ public class LocateRepositoryImpl implements LocateRepository {
                     if (context != null) {
                         Locate l = snapshot.getValue(Locate.class);
                         if (l != null) {
+                            Log.d(LOG_TAG, String.format("get locate is success (id='%s')", locateId));
                             listener.onGetData(l);
                         }
                         else {
+                            Log.e(LOG_TAG, String.format("get locate is void data (id='%s': no data in database)", locateId));
                             listener.onVoidData();
                         }
                     }
@@ -88,11 +98,13 @@ public class LocateRepositoryImpl implements LocateRepository {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     if (context != null) {
+                        Log.e(LOG_TAG, String.format("get locate is cancelled (id='%s'): &s", locateId, error.getMessage()));
                         listener.onCanceled();
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("get locate is failed (id='%s'): &s", locateId, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -147,14 +159,19 @@ public class LocateRepositoryImpl implements LocateRepository {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) {
+                            Log.d(LOG_TAG, String.format("write locate is success (id='%s')", id));
                             listener.onSetData();
-                        else
+                        }
+                        else {
+                            Log.e(LOG_TAG, String.format("write locate is cancelled (id='%s'): &s", id, task.getException().getMessage()));
                             listener.onCanceled();
+                        }
                     }
                 }
             });
         } catch (Exception e){
+            Log.e(LOG_TAG, String.format("write locate is failed (id='%s'): &s", id, e.getMessage()));
             listener.onFailed();
         }
     }

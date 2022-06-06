@@ -7,12 +7,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import com.example.finish1m.Domain.Interfaces.NotificationRepository;
 
 public class NotificationRepositoryImpl implements NotificationRepository {
 
     private Context context;
+    private static final String LOG_TAG = "NotificationRepository";
 
     public NotificationRepositoryImpl(Context context) {
         this.context = context;
@@ -38,6 +40,7 @@ public class NotificationRepositoryImpl implements NotificationRepository {
             NotificationManager notificationManager=(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(notificationChannel);
             notificationManager.notify(1,notification);
+            Log.d(LOG_TAG, String.format("sent notification (title=%s, message=%s)", title, message));
         }
     }
 }
