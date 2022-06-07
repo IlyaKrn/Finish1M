@@ -33,7 +33,7 @@ public class Video {
     public int comments;
     @SerializedName("date")
     @Expose
-    public int date;
+    public long date;
     @SerializedName("description")
     @Expose
     public String description;

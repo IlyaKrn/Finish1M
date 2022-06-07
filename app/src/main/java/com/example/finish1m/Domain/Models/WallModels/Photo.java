@@ -12,7 +12,7 @@ public class Photo {
     public int albumId;
     @SerializedName("date")
     @Expose
-    public int date;
+    public long date;
     @SerializedName("id")
     @Expose
     public int id;

@@ -18,7 +18,7 @@ public class CopyHistory {
     public int fromId;
     @SerializedName("date")
     @Expose
-    public int date;
+    public long date;
     @SerializedName("post_type")
     @Expose
     public String postType;

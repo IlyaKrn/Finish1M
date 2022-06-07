@@ -36,8 +36,17 @@ public class VKRepositoryImpl implements VKRepository {
             service.getWallById(VKConfig.MAIN_WALL_ID, VKConfig.ACCESS_TOKEN).enqueue(new Callback<WallModel>() {
                 @Override
                 public void onResponse(Call<WallModel> call, Response<WallModel> response) {
-               //     if
-                 //   listener.onGet(response.body());
+                    if(response.isSuccessful()){
+                        if(response.body() != null && response.body().response != null){
+                            listener.onGetData(response.body());
+                        }
+                        else{
+                            listener.onVoidData();
+                        }
+                    }
+                    else{
+                        listener.onFailed();
+                    }
                 }
 
                 @Override

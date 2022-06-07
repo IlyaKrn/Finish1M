@@ -18,7 +18,7 @@ public class Item {
     public int ownerId;
     @SerializedName("date")
     @Expose
-    public int date;
+    public long date;
     @SerializedName("marked_as_ads")
     @Expose
     public int markedAsAds;

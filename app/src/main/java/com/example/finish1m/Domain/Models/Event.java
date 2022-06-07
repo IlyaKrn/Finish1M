@@ -15,15 +15,17 @@ public class Event {
     private String title; // заголовок
     private String message; // описание
     private String chatId; // id чата для события
+    private long date;
     private ArrayList<String> imageRefs; // ссылки на изображения
     private ArrayList<String> members; // заявки на участие
 
-    public Event(String id, int type, String title, String message, String chatId, ArrayList<String> imageRefs, ArrayList<String> members) {
+    public Event(String id, int type, String title, String message, String chatId, long date, ArrayList<String> imageRefs, ArrayList<String> members) {
         this.id = id;
         this.type = type;
         this.title = title;
         this.message = message;
         this.chatId = chatId;
+        this.date = date;
         this.imageRefs = imageRefs;
         this.members = members;
     }
@@ -106,6 +108,14 @@ public class Event {
                 ", imageRefs=" + imageRefs +
                 ", members=" + members +
                 '}';
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 }
 
