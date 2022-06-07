@@ -15,6 +15,7 @@ import com.example.finish1m.Domain.Models.WallModels.CopyHistory;
 import com.example.finish1m.Domain.Models.WallModels.Item;
 import com.example.finish1m.Domain.Models.WallModels.WallModel;
 import com.example.finish1m.Presentation.PresentationConfig;
+import com.example.finish1m.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -68,7 +69,7 @@ public class VKRepositoryImpl implements VKRepository {
                                     }
                                     if (item.copyHistory != null) {
                                         for (CopyHistory copyHistory : item.copyHistory) {
-                                            e.setMessage(e.getMessage() + "\n\nПереслано от <a href=\"\">https/m.vk.com/" + copyHistory.fromId + "</a>:\n" + copyHistory.text);
+                                            e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
                                                 for (Attachment a : copyHistory.attachments) {
                                                     iRefs.add("");
@@ -140,7 +141,7 @@ public class VKRepositoryImpl implements VKRepository {
                                     }
                                     if (item.copyHistory != null) {
                                         for (CopyHistory copyHistory : item.copyHistory) {
-                                            e.setMessage(e.getMessage() + "\n\nПереслано от <a href=\"\">https/m.vk.com/" + copyHistory.fromId + "</a>:\n" + copyHistory.text);
+                                            e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
                                                 for (Attachment a : copyHistory.attachments) {
                                                     iRefs.add("");
@@ -211,7 +212,7 @@ public class VKRepositoryImpl implements VKRepository {
                                         }
                                         if (item.copyHistory != null) {
                                             for (CopyHistory copyHistory : item.copyHistory) {
-                                                e.setMessage(e.getMessage() + "\n\nПереслано от <a href=\"\">https/m.vk.com/" + copyHistory.fromId + "</a>:\n" + copyHistory.text);
+                                                e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                                 if (copyHistory.attachments != null) {
                                                     for (Attachment a : copyHistory.attachments) {
                                                         iRefs.add("");
@@ -285,7 +286,7 @@ public class VKRepositoryImpl implements VKRepository {
                                         }
                                         if (item.copyHistory != null) {
                                             for (CopyHistory copyHistory : item.copyHistory) {
-                                                e.setMessage(e.getMessage() + "\n\nПереслано от <a href=\"\">https/m.vk.com/" + copyHistory.fromId + "</a>:\n" + copyHistory.text);
+                                                e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                                 if (copyHistory.attachments != null) {
                                                     for (Attachment a : copyHistory.attachments) {
                                                         iRefs.add("");

@@ -13,6 +13,7 @@
 
         <TextView
             android:id="@+id/tv_title"
+            android:singleLine="true"
             android:gravity="center_horizontal"
             style="@style/text.title.second" />
 

@@ -40,9 +40,9 @@ public class GetEventReverseListUseCase {
                             @Override
                             public int compare(Event event, Event t1) {
                                 if (event.getDate() > t1.getDate())
-                                    return 1;
-                                else if (event.getDate() < t1.getDate())
                                     return -1;
+                                else if (event.getDate() < t1.getDate())
+                                    return 1;
                                 else
                                     return 0;
                             }
