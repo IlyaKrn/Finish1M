@@ -23,24 +23,22 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     // отправка уведомления
     @Override
     public void sendNotification(String title, String message) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent=new Intent();
-            String CHANNEL_ID="MYCHANNEL";
-            NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_LOW);
-            PendingIntent pendingIntent= PendingIntent.getActivity(context,1,intent,0);
-            Notification notification=new Notification.Builder(context,CHANNEL_ID)
-                    .setContentText(title)
-                    .setContentTitle(message)
-                    .setContentIntent(pendingIntent)
-                    .addAction(android.R.drawable.sym_action_chat,title,pendingIntent)
-                    .setChannelId(CHANNEL_ID)
-                    .setSmallIcon(android.R.drawable.sym_action_chat)
-                    .build();
+        Intent intent=new Intent();
+        String CHANNEL_ID="MYCHANNEL";
+        NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_LOW);
+        PendingIntent pendingIntent= PendingIntent.getActivity(context,1,intent,0);
+        Notification notification=new Notification.Builder(context,CHANNEL_ID)
+                .setContentText(title)
+                .setContentTitle(message)
+                .setContentIntent(pendingIntent)
+                .addAction(android.R.drawable.sym_action_chat,title,pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.sym_action_chat)
+                .build();
 
-            NotificationManager notificationManager=(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(notificationChannel);
-            notificationManager.notify(1,notification);
-            Log.d(LOG_TAG, String.format("sent notification (title=%s, message=%s)", title, message));
-        }
+        NotificationManager notificationManager=(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(1,notification);
+        Log.d(LOG_TAG, String.format("sent notification (title=%s, message=%s)", title, message));
     }
 }
