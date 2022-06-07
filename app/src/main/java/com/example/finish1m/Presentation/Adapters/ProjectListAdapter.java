@@ -113,9 +113,9 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 if (!PresentationConfig.getUser().isAdmin()){
                     btMenu.setVisibility(View.GONE);
                     btUsers.setVisibility(View.GONE);
+                    btChat.setVisibility(View.VISIBLE);
                 }
                 else {
-                    btChat.setVisibility(View.VISIBLE);
                     btUsers.setVisibility(View.VISIBLE);
                 }
             } catch (Exception e) {

@@ -86,6 +86,7 @@ public class ProjectsFragment extends Fragment {
             if(!PresentationConfig.getUser().isAdmin())
                 binding.btAddProject.setVisibility(View.GONE);
         }catch (Exception e){
+            binding.btAddProject.setVisibility(View.GONE);
             Toast.makeText(getContext(), R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
         }
 
