@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -135,7 +136,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
 
 
             if (item.getType() == Event.NEWS){
-                btChat.setVisibility(View.GONE);
+            //    btChat.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
                 btReg.setVisibility(View.GONE);
             }
@@ -252,23 +253,47 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             btChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(activity, ChatActivity.class);
-                    intent.putExtra("chatId", item.getChatId());
-                    activity.startActivity(intent);
+                    if(item.getDataSource() == Event.DATA_SOURCE_FIREBASE) {
+                        Intent intent = new Intent(activity, ChatActivity.class);
+                        intent.putExtra("chatId", item.getChatId());
+                        activity.startActivity(intent);
+                    }
+                    else{
+                        DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Действие недоступно", "Перейти", "Данное действие недоступно в приложении. Перейдите в ВК", new OnConfirmListener() {
+                            @Override
+                            public void onConfirm(DialogConfirm d) {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/club197453413?w=wall-197453413_%s", item.getId().substring(1)) + "%2Fall"));
+                                activity.startActivity(browserIntent);
+                            }
+                        });
+                        dialog.create(activity.findViewById(R.id.fragmentContainerView));
+                    }
                 }
             });
             // открытие списка пользователей
             btUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
-                    Intent intent = new Intent(activity, UserListActivity.class);
-                    if (item.getMembers() == null)
-                        item.setMembers(new ArrayList<>());
-                    intent.putExtra("user_size", item.getMembers().size());
-                    for (int i = 0; i < item.getMembers().size(); i++) {
-                        intent.putExtra("user" + i, item.getMembers().get(i));
+                    if(item.getDataSource() == Event.DATA_SOURCE_FIREBASE) {
+                        Intent intent = new Intent(activity, UserListActivity.class);
+                        if (item.getMembers() == null)
+                            item.setMembers(new ArrayList<>());
+                        intent.putExtra("user_size", item.getMembers().size());
+                        for (int i = 0; i < item.getMembers().size(); i++) {
+                            intent.putExtra("user" + i, item.getMembers().get(i));
+                        }
+                        activity.startActivity(intent);
                     }
-                    activity.startActivity(intent);
+                    else{
+                        DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Действие недоступно", "Перейти", "Данное действие недоступно в приложении. Перейдите в ВК", new OnConfirmListener() {
+                            @Override
+                            public void onConfirm(DialogConfirm d) {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/club197453413?w=wall-197453413_%s", item.getId().substring(1)) + "%2Fall"));
+                                activity.startActivity(browserIntent);
+                            }
+                        });
+                        dialog.create(activity.findViewById(R.id.fragmentContainerView));
+                    }
                 }
             });
             // открытие меню с изменением и удалением
@@ -282,37 +307,61 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             switch(menuItem.getItemId()) {
                                 case R.id.refactor:
-                                    Intent intent = new Intent(activity, RefactorEventActivity.class);
-                                    intent.putExtra("eventId", item.getId());
-                                    activity.startActivity(intent);
+                                    if(item.getDataSource() == Event.DATA_SOURCE_FIREBASE) {
+                                        Intent intent = new Intent(activity, RefactorEventActivity.class);
+                                        intent.putExtra("eventId", item.getId());
+                                        activity.startActivity(intent);
+                                    }
+                                    else{
+                                        DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Действие недоступно", "Перейти", "Данное действие недоступно в приложении. Перейдите в ВК", new OnConfirmListener() {
+                                            @Override
+                                            public void onConfirm(DialogConfirm d) {
+                                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/club197453413?w=wall-197453413_%s", item.getId().substring(1)) + "%2Fall"));
+                                                activity.startActivity(browserIntent);
+                                            }
+                                        });
+                                        dialog.create(activity.findViewById(R.id.fragmentContainerView));
+                                    }
                                     break;
                                 case R.id.delete:
-                                    DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить публикацию?", new OnConfirmListener() {
-                                        @Override
-                                        public void onConfirm(DialogConfirm d) {
-                                            DeleteEventByIdUseCase deleteEventByIdUseCase = new DeleteEventByIdUseCase(eventRepository, item.getId(), new OnSetDataListener() {
-                                                @Override
-                                                public void onSetData() {
-                                                    Toast.makeText(context, R.string.event_delete_success, Toast.LENGTH_SHORT).show();
-                                                    d.destroy();
-                                                }
+                                    if(item.getDataSource() == Event.DATA_SOURCE_FIREBASE) {
+                                        DialogConfirm dialogConfirm = new DialogConfirm((AppCompatActivity) activity, "Удаление", "Удалить", "Вы действительно хотите удалить публикацию?", new OnConfirmListener() {
+                                            @Override
+                                            public void onConfirm(DialogConfirm d) {
+                                                DeleteEventByIdUseCase deleteEventByIdUseCase = new DeleteEventByIdUseCase(eventRepository, item.getId(), new OnSetDataListener() {
+                                                    @Override
+                                                    public void onSetData() {
+                                                        Toast.makeText(context, R.string.event_delete_success, Toast.LENGTH_SHORT).show();
+                                                        d.destroy();
+                                                    }
 
-                                                @Override
-                                                public void onFailed() {
-                                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                                    d.destroy();
-                                                }
+                                                    @Override
+                                                    public void onFailed() {
+                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                                        d.destroy();
+                                                    }
 
-                                                @Override
-                                                public void onCanceled() {
-                                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                                    d.destroy();
-                                                }
-                                            });
-                                            deleteEventByIdUseCase.execute();
-                                        }
-                                    });
-                                    dialogConfirm.create(activity.findViewById(R.id.fragmentContainerView));
+                                                    @Override
+                                                    public void onCanceled() {
+                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                        d.destroy();
+                                                    }
+                                                });
+                                                deleteEventByIdUseCase.execute();
+                                            }
+                                        });
+                                        dialogConfirm.create(activity.findViewById(R.id.fragmentContainerView));
+                                    }
+                                    else{
+                                        DialogConfirm dialog = new DialogConfirm((AppCompatActivity) activity, "Действие недоступно", "Перейти", "Данное действие недоступно в приложении. Перейдите в ВК", new OnConfirmListener() {
+                                            @Override
+                                            public void onConfirm(DialogConfirm d) {
+                                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/club197453413?w=wall-197453413_%s", item.getId().substring(1)) + "%2Fall"));
+                                                activity.startActivity(browserIntent);
+                                            }
+                                        });
+                                        dialog.create(activity.findViewById(R.id.fragmentContainerView));
+                                    }
                                     break;
                             }
 

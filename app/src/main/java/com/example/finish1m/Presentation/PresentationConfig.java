@@ -5,6 +5,7 @@ import com.example.finish1m.Domain.Models.User;
 public class PresentationConfig {
 
     public static final String REF_VK_MAIN = "https://vk.com/club197453413";
+    public static final String REF_VK_WALL_POST_EXAMPLE = "https://vk.com/club197453413?w=wall-197453413_433%2Fall";
     public static final int SMALL_MESSAGE_SIZE = 200;
     public static User user; // текущий пользователь
 
