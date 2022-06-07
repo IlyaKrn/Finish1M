@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
+import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Event;
@@ -47,11 +48,13 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
 
     private ImageRepositoryImpl imageRepository;
     private EventRepositoryImpl eventRepository;
+    private VKRepositoryImpl vkRepository;
 
     public EventListAdapter(Activity activity, Context context, ArrayList<Event> items) {
         super(activity, context, items);
         this.imageRepository = new ImageRepositoryImpl(context);
         this.eventRepository = new EventRepositoryImpl(context);
+        this.vkRepository = new VKRepositoryImpl(context);
     }
 
     @Override
@@ -322,7 +325,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
 
 
             // получение и установка данных
-            GetEventByIdUseCase getEventListUseCase = new GetEventByIdUseCase(eventRepository, item.getId(), new OnGetDataListener<Event>() {
+            GetEventByIdUseCase getEventListUseCase = new GetEventByIdUseCase(eventRepository, vkRepository, item.getId(), new OnGetDataListener<Event>() {
                 @Override
                 public void onGetData(Event data) {
                     if (item.getImageRefs() != null) {

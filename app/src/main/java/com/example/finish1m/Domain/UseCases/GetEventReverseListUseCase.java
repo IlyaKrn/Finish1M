@@ -32,42 +32,16 @@ public class GetEventReverseListUseCase {
             @Override
             public void onGetData(ArrayList<Event> data) {
                 ArrayList<Event> temp = data;
-                vkRepository.getMainWall(new OnGetDataListener<WallModel>() {
+                vkRepository.getMainWall(new OnGetDataListener<ArrayList<Event>>() {
                     @Override
-                    public void onGetData(WallModel data) {
-                        for(Item item : data.response.items){
-                            String title = item.text;
-                            if(item.text.length() > TITLE_FROM_VK_SIZE){
-                                title = title.substring(0, TITLE_FROM_VK_SIZE)+"...";
-                            }
-                            Event e = new Event(String.valueOf(item.id), Event.NEWS, title, item.text, null, item.date, null, null);
-
-                            ArrayList<String> iRefs = new ArrayList<>();
-                            if(item.attachments != null){
-                                for (Attachment a : item.attachments){
-                                    iRefs.add("");
-                                }
-                            }
-                            if (item.copyHistory != null){
-                                for(CopyHistory copyHistory : item.copyHistory){
-                                    e.setMessage(e.getMessage() + "\n\nПереслано от <a href=\"\">https/m.vk.com/" + copyHistory.fromId + "</a>:\n" + copyHistory.text);
-                                    if(copyHistory.attachments != null){
-                                        for (Attachment a : copyHistory.attachments){
-                                            iRefs.add("");
-                                        }
-                                    }
-                                }
-                            }
-
-                            e.setImageRefs(iRefs);
-                            temp.add(e);
-                        }
+                    public void onGetData(ArrayList<Event> data) {
+                        temp.addAll(data);
                         temp.sort(new Comparator<Event>() {
                             @Override
                             public int compare(Event event, Event t1) {
-                                if(event.getDate() > t1.getDate())
+                                if (event.getDate() > t1.getDate())
                                     return 1;
-                                else if(event.getDate() < t1.getDate())
+                                else if (event.getDate() < t1.getDate())
                                     return -1;
                                 else
                                     return 0;

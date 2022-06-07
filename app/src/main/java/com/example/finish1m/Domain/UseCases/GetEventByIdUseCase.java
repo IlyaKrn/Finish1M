@@ -1,5 +1,8 @@
 package com.example.finish1m.Domain.UseCases;
 
+import android.util.Log;
+
+import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.EventRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Event;
@@ -8,17 +11,30 @@ import com.example.finish1m.Domain.Models.Event;
 
 public class GetEventByIdUseCase {
 
-    private EventRepository repository;
+    private EventRepository eventRepository;
+    private VKRepositoryImpl vkRepository;
+
     private String id;
     private OnGetDataListener<Event> listener;
 
-    public GetEventByIdUseCase(EventRepository repository, String id, OnGetDataListener<Event> listener) {
-        this.repository = repository;
+    public GetEventByIdUseCase(EventRepository eventRepository, VKRepositoryImpl vkRepository, String id, OnGetDataListener<Event> listener) {
+        this.eventRepository = eventRepository;
+        this.vkRepository = vkRepository;
         this.id = id;
         this.listener = listener;
     }
 
     public void execute(){
-        repository.getEventById(id, listener);
+        try {
+            if (Integer.parseInt(String.valueOf(id.charAt(0))) == Event.DATA_SOURCE_FIREBASE) {
+                eventRepository.getEventById(id.substring(0, id.length() - 1), listener);
+            } else if (Integer.parseInt(String.valueOf(id.charAt(0))) == Event.DATA_SOURCE_VK) {
+                vkRepository.getEventMainWallById(id.substring(0, id.length() - 1), listener);
+
+            }
+        }catch (NumberFormatException e){
+            listener.onFailed();
+            Log.e("GetEventByIdUseCase", e.getMessage());
+        }
     }
 }

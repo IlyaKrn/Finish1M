@@ -86,7 +86,7 @@ public class CreateNewEventActivity extends AppCompatActivity {
                             ArrayList<String> mms = new ArrayList<>();
                             mms.add(PresentationConfig.getUser().getEmail());
                             Chat c = new Chat(chatRepository.getNewId(), ms, mms);
-                            Event e = new Event(eventRepository.getNewId(), type, title, message, c.getId(), System.currentTimeMillis(), null, null);
+                            Event e = new Event(Event.DATA_SOURCE_FIREBASE + eventRepository.getNewId(), type, Event.DATA_SOURCE_FIREBASE, title, message, c.getId(), System.currentTimeMillis(), null, null);
                             int finalType = type;
                             createNewEventUseCase = new CreateNewEventUseCase(eventRepository, chatRepository, imageRepository, e, c, images, new OnSetDataListener() {
                                 @Override

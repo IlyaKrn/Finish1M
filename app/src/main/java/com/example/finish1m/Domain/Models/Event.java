@@ -9,8 +9,12 @@ public class Event {
     public static final int NEWS = 1; // новость
     public static final int EVENT = 2; // мероприятие
 
+    public static final int DATA_SOURCE_FIREBASE = 1;
+    public static final int DATA_SOURCE_VK = 2;
+
     private String id;
     private int type; // тип
+    private int dataSource; // база даных
 
     private String title; // заголовок
     private String message; // описание
@@ -19,9 +23,10 @@ public class Event {
     private ArrayList<String> imageRefs; // ссылки на изображения
     private ArrayList<String> members; // заявки на участие
 
-    public Event(String id, int type, String title, String message, String chatId, long date, ArrayList<String> imageRefs, ArrayList<String> members) {
+    public Event(String id, int type, int dataSource, String title, String message, String chatId, long date, ArrayList<String> imageRefs, ArrayList<String> members) {
         this.id = id;
         this.type = type;
+        this.dataSource = dataSource;
         this.title = title;
         this.message = message;
         this.chatId = chatId;
@@ -116,6 +121,14 @@ public class Event {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    public int getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(int dataSource) {
+        this.dataSource = dataSource;
     }
 }
 

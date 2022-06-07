@@ -17,21 +17,17 @@ import android.widget.Toast;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
-import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
+import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Event;
-import com.example.finish1m.Domain.Models.Project;
 import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
-import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
-import com.example.finish1m.Domain.UseCases.RefactorProjectUseCase;
 import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.ActivityRefactorEventBinding;
-import com.example.finish1m.databinding.ActivityRefactorProjectBinding;
 
 import java.util.ArrayList;
 
@@ -41,6 +37,7 @@ public class RefactorEventActivity extends AppCompatActivity {
 
     private EventRepositoryImpl eventRepository;
     private ImageRepositoryImpl imageRepository;
+    private VKRepositoryImpl vkRepository;
 
     private GetEventByIdUseCase getEventByIdUseCase;
     private RefactorEventUseCase refactorEventUseCase;
@@ -57,13 +54,14 @@ public class RefactorEventActivity extends AppCompatActivity {
 
         eventRepository = new EventRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
+        this.vkRepository = new VKRepositoryImpl(this);
 
 
         // получение и установка данных
         binding.btCreate.setClickable(false);
         DialogLoading dialog = new DialogLoading(RefactorEventActivity.this, getString(R.string.loading_data));
         dialog.create(binding.fragmentContainerView);
-        getEventByIdUseCase = new GetEventByIdUseCase(eventRepository, getIntent().getStringExtra("eventId"), new OnGetDataListener<Event>() {
+        getEventByIdUseCase = new GetEventByIdUseCase(eventRepository, vkRepository, getIntent().getStringExtra("eventId"), new OnGetDataListener<Event>() {
             @Override
             public void onGetData(Event data) {
                 event = data;
