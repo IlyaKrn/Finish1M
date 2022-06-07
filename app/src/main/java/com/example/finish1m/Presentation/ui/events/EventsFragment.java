@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
+import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.UseCases.GetEventReverseListUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
-import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
@@ -30,6 +30,7 @@ public class EventsFragment extends Fragment {
     private FragmentEventsBinding binding;
 
     private EventRepositoryImpl eventRepository;
+    VKRepositoryImpl vkRepository;
 
     private GetEventReverseListUseCase getEventListUseCase;
 
@@ -40,9 +41,10 @@ public class EventsFragment extends Fragment {
         binding = FragmentEventsBinding.inflate(inflater, container, false);
 
         eventRepository = new EventRepositoryImpl(getContext());
+        vkRepository = new VKRepositoryImpl(getContext());
 
         // получение и установка данных
-        getEventListUseCase = new GetEventReverseListUseCase(eventRepository, new OnGetDataListener<ArrayList<Event>>() {
+        getEventListUseCase = new GetEventReverseListUseCase(eventRepository, vkRepository, new OnGetDataListener<ArrayList<Event>>() {
             @Override
             public void onGetData(ArrayList<Event> data) {
                 events.clear();
