@@ -13,6 +13,7 @@ import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.WallModels.Attachment;
 import com.example.finish1m.Domain.Models.WallModels.CopyHistory;
 import com.example.finish1m.Domain.Models.WallModels.Item;
+import com.example.finish1m.Domain.Models.WallModels.PostModel;
 import com.example.finish1m.Domain.Models.WallModels.WallModel;
 import com.example.finish1m.R;
 import com.google.gson.Gson;
@@ -211,48 +212,46 @@ public class VKRepositoryImpl implements VKRepository {
 
             VKApiService service = retrofit.create(VKApiService.class);
             String finalEventId = eventId;
-            service.getWallById(VKConfig.MAIN_WALL_ID, VKConfig.ACCESS_TOKEN).enqueue(new Callback<WallModel>() {
+            service.getEventById(VKConfig.MAIN_WALL_ID, VKConfig.MAIN_WALL_ID + "_" + eventId, VKConfig.ACCESS_TOKEN).enqueue(new Callback<PostModel>() {
                 @Override
-                public void onResponse(@NonNull Call<WallModel> call, @NonNull Response<WallModel> response) {
+                public void onResponse(@NonNull Call<PostModel> call, @NonNull Response<PostModel> response) {
                     if(response.isSuccessful()){
                         if(response.body() != null && response.body().response != null){
                             if(response.body().response.items != null){
                                 Event e = null;
-                                for (Item item : response.body().response.items){
-                                    if(finalEventId.equals(item.id+"")){
-                                        String title = item.text.split("\n")[0];
-                                        e = new Event(Event.DATA_SOURCE_VK + "" + item.id, Event.NEWS, Event.DATA_SOURCE_VK, title, item.text, null, item.date, null, null);
+                                if(response.body().response.items.get(0) != null){
+                                    String title = response.body().response.items.get(0).text.split("\n")[0];
+                                    e = new Event(Event.DATA_SOURCE_VK + "" + response.body().response.items.get(0).id, Event.NEWS, Event.DATA_SOURCE_VK, title, response.body().response.items.get(0).text, null, response.body().response.items.get(0).date, null, null);
 
-                                        ArrayList<String> iRefs = new ArrayList<>();
-                                        if (item.attachments != null) {
-                                            for (Attachment a : item.attachments) {
-                                                if(a.type.equals("photo"))
-                                                    iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
-                                                else{
-                                                    iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
-                                                }
+                                    ArrayList<String> iRefs = new ArrayList<>();
+                                    if (response.body().response.items.get(0).attachments != null) {
+                                        for (Attachment a : response.body().response.items.get(0).attachments) {
+                                            if(a.type.equals("photo"))
+                                                iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                            else{
+                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
                                             }
                                         }
-                                        if (item.copyHistory != null) {
-                                            for (CopyHistory copyHistory : item.copyHistory) {
-                                                e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
-                                                if (copyHistory.attachments != null) {
-                                                    for (Attachment a : copyHistory.attachments) {
-                                                        if(a.type.equals("photo"))
-                                                            iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
-                                                        else{
-                                                            iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
-                                                        }
+                                    }
+                                    if (response.body().response.items.get(0).copyHistory != null) {
+                                        for (CopyHistory copyHistory : response.body().response.items.get(0).copyHistory) {
+                                            e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
+                                            if (copyHistory.attachments != null) {
+                                                for (Attachment a : copyHistory.attachments) {
+                                                    if(a.type.equals("photo"))
+                                                        iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                    else{
+                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
                                                     }
                                                 }
                                             }
                                         }
-
-                                        e.setImageRefs(iRefs);
-                                        Log.d(LOG_TAG, String.format("get event from main wall is success (wallId='%s', eventId='%s')", VKConfig.MAIN_WALL_ID, finalEventId));
-                                        listener.onGetData(e);
-                                        break;
                                     }
+
+                                    e.setImageRefs(iRefs);
+                                    Log.d(LOG_TAG, String.format("get event from main wall is success (wallId='%s', eventId='%s')", VKConfig.MAIN_WALL_ID, finalEventId));
+                                    listener.onGetData(e);
+
                                 }
                                 if(e == null){
                                     Log.e(LOG_TAG, String.format("get event from main wall is void data (wallId='%s', eventId='%s'): no data in wall)", VKConfig.MAIN_WALL_ID, finalEventId));
@@ -272,7 +271,7 @@ public class VKRepositoryImpl implements VKRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<WallModel> call, @NonNull Throwable throwable) {
+                public void onFailure(@NonNull Call<PostModel> call, @NonNull Throwable throwable) {
                     Log.e(LOG_TAG, String.format("get event from main wall is failed (wallId='%s', eventId='%s'): %s", VKConfig.MAIN_WALL_ID, finalEventId, throwable.getMessage()));
                     listener.onFailed();
                 }
@@ -297,47 +296,46 @@ public class VKRepositoryImpl implements VKRepository {
 
             VKApiService service = retrofit.create(VKApiService.class);
             String finalEventId = eventId;
-            service.getWallById(wallId, VKConfig.ACCESS_TOKEN).enqueue(new Callback<WallModel>() {
+            service.getEventById(wallId, wallId + "_" + eventId, VKConfig.ACCESS_TOKEN).enqueue(new Callback<PostModel>() {
                 @Override
-                public void onResponse(@NonNull Call<WallModel> call, @NonNull Response<WallModel> response) {
+                public void onResponse(@NonNull Call<PostModel> call, @NonNull Response<PostModel> response) {
                     if(response.isSuccessful()){
                         if(response.body() != null && response.body().response != null){
                             if(response.body().response.items != null){
                                 Event e = null;
-                                for (Item item : response.body().response.items){
-                                    if(finalEventId.equals(item.id+"")){
-                                        String title = item.text.split("\n")[0];
-                                        e = new Event(Event.DATA_SOURCE_VK + "" + item.id, Event.NEWS, Event.DATA_SOURCE_VK, title, item.text, null, item.date, null, null);
+                                if(response.body().response.items.get(0) != null){
+                                    String title = response.body().response.items.get(0).text.split("\n")[0];
+                                    e = new Event(Event.DATA_SOURCE_VK + "" + response.body().response.items.get(0).id, Event.NEWS, Event.DATA_SOURCE_VK, title, response.body().response.items.get(0).text, null, response.body().response.items.get(0).date, null, null);
 
-                                        ArrayList<String> iRefs = new ArrayList<>();
-                                        if (item.attachments != null) {
-                                            for (Attachment a : item.attachments) {
-                                                if(a.type.equals("photo"))
-                                                    iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
-                                                else{
-                                                    iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
-                                                }
+                                    ArrayList<String> iRefs = new ArrayList<>();
+                                    if (response.body().response.items.get(0).attachments != null) {
+                                        for (Attachment a : response.body().response.items.get(0).attachments) {
+                                            if(a.type.equals("photo"))
+                                                iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                            else{
+                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
                                             }
                                         }
-                                        if (item.copyHistory != null) {
-                                            for (CopyHistory copyHistory : item.copyHistory) {
-                                                e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
-                                                if (copyHistory.attachments != null) {
-                                                    for (Attachment a : copyHistory.attachments) {
-                                                        if(a.type.equals("photo"))
-                                                            iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
-                                                        else{
-                                                            iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
-                                                        }
+                                    }
+                                    if (response.body().response.items.get(0).copyHistory != null) {
+                                        for (CopyHistory copyHistory : response.body().response.items.get(0).copyHistory) {
+                                            e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
+                                            if (copyHistory.attachments != null) {
+                                                for (Attachment a : copyHistory.attachments) {
+                                                    if(a.type.equals("photo"))
+                                                        iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                    else{
+                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
                                                     }
                                                 }
                                             }
                                         }
-
-                                        e.setImageRefs(iRefs);
-                                        Log.d(LOG_TAG, String.format("get event from wall is success (wallId='%s', eventId='%s')", wallId, finalEventId));
-                                        listener.onGetData(e);
                                     }
+
+                                    e.setImageRefs(iRefs);
+                                    Log.d(LOG_TAG, String.format("get event from main wall is success (wallId='%s', eventId='%s')", VKConfig.MAIN_WALL_ID, finalEventId));
+                                    listener.onGetData(e);
+
                                 }
                                 if(e == null){
                                     Log.e(LOG_TAG, String.format("get event from wall is void data (wallId='%s', eventId='%s'): no data in wall)", wallId, finalEventId));
@@ -357,7 +355,7 @@ public class VKRepositoryImpl implements VKRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<WallModel> call, @NonNull Throwable throwable) {
+                public void onFailure(@NonNull Call<PostModel> call, @NonNull Throwable throwable) {
                     Log.e(LOG_TAG, String.format("get event from wall is failed (wallId='%s', eventId='%s'): %s", wallId, finalEventId, throwable.getMessage()));
                     listener.onFailed();
                 }
