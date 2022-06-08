@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "831973676297",
-    "firebase_url": "https://forthepurityofarzamasreg-afc0f-default-rtdb.firebaseio.com",
-    "project_id": "forthepurityofarzamasreg-afc0f",
-    "storage_bucket": "forthepurityofarzamasreg-afc0f.appspot.com"
+    "project_number": "85448383470",
+    "firebase_url": "https://forthepurityofarzamasreg-6d593-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "forthepurityofarzamasreg-6d593",
+    "storage_bucket": "forthepurityofarzamasreg-6d593.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:831973676297:android:7653cbba2449fe9238afd8",
+        "mobilesdk_app_id": "1:85448383470:android:0c52cb432b459273e4ccff",
         "android_client_info": {
           "package_name": "com.example.finish1m"
         }
       },
       "oauth_client": [
         {
-          "client_id": "831973676297-l0lnk6lumeghsmd9u4llpsscpcl84lgm.apps.googleusercontent.com",
+          "client_id": "85448383470-ndrh0hqkoe43q1jrhrv36skan00pcgqn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD4PpZKqHiD9RopFMLflDdSJOFHJiLvDPg"
+          "current_key": "AIzaSyADXIguvVtY1l7qqv4r5c7RhR5G0YHP9NE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "831973676297-l0lnk6lumeghsmd9u4llpsscpcl84lgm.apps.googleusercontent.com",
+              "client_id": "85448383470-ndrh0hqkoe43q1jrhrv36skan00pcgqn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

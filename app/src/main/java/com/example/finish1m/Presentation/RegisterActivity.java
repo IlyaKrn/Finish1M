@@ -59,6 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
         binding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // скрытие собщенией об ошибках при изменении данных в полях ввода
+                binding.tvEmailErr.setVisibility(View.GONE);
+                binding.tvPasswordErr.setVisibility(View.GONE);
+                binding.tvSecondPasswordErr.setVisibility(View.GONE);
+                binding.tvNameErr.setVisibility(View.GONE);
+                binding.tvFamilyErr.setVisibility(View.GONE);
+
                 final String email = binding.etEmail.getText().toString();
                 final String password = binding.etPassword.getText().toString();
                 if(!TextUtils.isEmpty(email)) {
@@ -265,32 +273,5 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // скрытие собщенией об ошибках при изменении данных в полях ввода
-        TextWatcher textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                binding.tvEmailErr.setVisibility(View.GONE);
-                binding.tvPasswordErr.setVisibility(View.GONE);
-                binding.tvSecondPasswordErr.setVisibility(View.GONE);
-                binding.tvNameErr.setVisibility(View.GONE);
-                binding.tvFamilyErr.setVisibility(View.GONE);
-            }
-        };
-
-        binding.etEmail.addTextChangedListener(textWatcher);
-        binding.etPassword.addTextChangedListener(textWatcher);
-        binding.etSecondPassword.addTextChangedListener(textWatcher);
-        binding.etUserName.addTextChangedListener(textWatcher);
-        binding.etUserFamily.addTextChangedListener(textWatcher);
     }
 }
