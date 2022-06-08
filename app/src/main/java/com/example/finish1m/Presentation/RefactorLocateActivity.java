@@ -19,12 +19,10 @@ import android.widget.Toast;
 import com.example.finish1m.Data.Firebase.ChatRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.LocateRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
-import com.example.finish1m.Domain.Models.Chat;
 import com.example.finish1m.Domain.Models.Locate;
-import com.example.finish1m.Domain.Models.Message;
-import com.example.finish1m.Domain.UseCases.CreateNewLocateUseCase;
 import com.example.finish1m.Domain.UseCases.DeleteLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetLocateByIdUseCase;
@@ -50,6 +48,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
 
     private LocateRepositoryImpl locateRepository;
     private ChatRepositoryImpl chatRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private ImageRepositoryImpl imageRepository;
     private RefactorLocateUseCase refactorLocateUseCase;
     private GetLocateByIdUseCase getLocateByIdUseCase;
@@ -65,7 +64,10 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
         binding = ActivityRefactorLocateBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        chatRepository = new ChatRepositoryImpl(this);
+        imageRepository = new ImageRepositoryImpl(this);
         locateRepository = new LocateRepositoryImpl(this);
+        vkImageRepository = new VKImageRepositoryImpl(this);
 
         DialogLoading dialog = new DialogLoading(RefactorLocateActivity.this, getString(R.string.loading_data));
         dialog.create(binding.fragmentContainerView);
@@ -84,7 +86,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
                     for (String s : data.getImageRefs()){
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
                             public void onGetData(Bitmap data1) {
                                 count[0]++;
@@ -150,9 +152,7 @@ public class RefactorLocateActivity extends AppCompatActivity implements OnMapRe
         getLocateByIdUseCase.execute();
 
 
-        locateRepository = new LocateRepositoryImpl(this);
-        chatRepository = new ChatRepositoryImpl(this);
-        imageRepository = new ImageRepositoryImpl(this);
+
 
         // закрытие активности
         binding.btClose.setOnClickListener(new View.OnClickListener() {

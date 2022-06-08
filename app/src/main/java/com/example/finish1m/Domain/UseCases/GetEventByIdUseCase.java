@@ -27,14 +27,13 @@ public class GetEventByIdUseCase {
     public void execute(){
         try {
             if (Integer.parseInt(String.valueOf(id.charAt(0))) == Event.DATA_SOURCE_FIREBASE) {
-                eventRepository.getEventById(id.substring(0, id.length() - 1), listener);
+                eventRepository.getEventById(id, listener);
             } else if (Integer.parseInt(String.valueOf(id.charAt(0))) == Event.DATA_SOURCE_VK) {
-                vkRepository.getEventMainWallById(id.substring(0, id.length() - 1), listener);
-
+                vkRepository.getEventMainWallById(id, listener);
             }
         }catch (NumberFormatException e){
             listener.onFailed();
-            Log.e("GetEventByIdUseCase", e.getMessage());
+            Log.e("GetEventByIdUseCase", "id:" + id + e.getMessage());
         }
     }
 }

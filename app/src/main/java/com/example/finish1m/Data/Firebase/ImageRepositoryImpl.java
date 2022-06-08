@@ -44,7 +44,7 @@ public class ImageRepositoryImpl implements ImageRepository {
                                 listener.onGetData(BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length));
                             }
                             else {
-                                Log.e(LOG_TAG, String.format("get image list is void data (ref='%s': no data in database)", ref));
+                                Log.e(LOG_TAG, String.format("get image is void data (ref='%s': no data in database)", ref));
                                 getDefaultImage(listener);
                             }
                         else {
@@ -94,8 +94,14 @@ public class ImageRepositoryImpl implements ImageRepository {
         }
     }
 
+    @Override
+    public String getRoot6Chars() {
+        return "images";
+    }
+
     // получуние стандартного изображения
-    private void getDefaultImage(OnGetDataListener<Bitmap> listener){
+    @Override
+    public void getDefaultImage(OnGetDataListener<Bitmap> listener){
         try {
             FirebaseStorage.getInstance().getReference().child(FirebaseConfig.STORAGE_DEFAULT_ICON).getBytes(1024 * 1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
                 @Override

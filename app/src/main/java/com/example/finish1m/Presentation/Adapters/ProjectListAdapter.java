@@ -20,31 +20,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
-import com.example.finish1m.Domain.Interfaces.ProjectRepository;
-import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.Models.Follow;
 import com.example.finish1m.Domain.Models.Project;
-import com.example.finish1m.Domain.UseCases.DeleteEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.DeleteProjectByIdUseCase;
-import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
-import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
 import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewFollowActivity;
 import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
 import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.FollowsListActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
-import com.example.finish1m.Presentation.RefactorEventActivity;
 import com.example.finish1m.Presentation.RefactorProjectActivity;
 import com.example.finish1m.Presentation.RemoveFollowActivity;
-import com.example.finish1m.Presentation.UserListActivity;
 import com.example.finish1m.R;
 
 import java.util.ArrayList;
@@ -54,12 +47,14 @@ import java.util.ArrayList;
 public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.ViewHolder>{
 
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private ProjectRepositoryImpl projectRepository;
 
     public ProjectListAdapter(Activity activity, Context context, ArrayList<Project> items) {
         super(activity, context, items);
         this.imageRepository = new ImageRepositoryImpl(context);
         this.projectRepository = new ProjectRepositoryImpl(context);
+        vkImageRepository = new VKImageRepositoryImpl(context);
     }
 
     @Override
@@ -266,7 +261,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 public void onGetData(Project data) {
                     if (item.getImageRefs() != null) {
                         for (int i = 0; i < item.getImageRefs().size(); i++) {
-                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
                                 @Override
                                 public void onGetData(Bitmap data1) {
                                     if(item.getId().equals(data.getId()));{

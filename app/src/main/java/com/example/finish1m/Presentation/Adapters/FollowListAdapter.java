@@ -3,11 +3,9 @@ package com.example.finish1m.Presentation.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Models.Follow;
 import com.example.finish1m.Domain.Models.User;
@@ -31,11 +30,13 @@ import java.util.ArrayList;
 public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHolder> {
 
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private UserRepositoryImpl userRepository;
     public FollowListAdapter(Activity activity, Context context, ArrayList<Follow> items) {
         super(activity, context, items);
         imageRepository = new ImageRepositoryImpl(context);
         userRepository = new UserRepositoryImpl(context);
+        vkImageRepository = new VKImageRepositoryImpl(context);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
                     public void onGetData(User data) {
                         if(item.getUserEmail().equals(data.getEmail())) {
                             for (String ref : item.getImageRefs()) {
-                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, ref, new OnGetDataListener<Bitmap>() {
+                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, ref, new OnGetDataListener<Bitmap>() {
                                     @Override
                                     public void onGetData(Bitmap data) {
                                         glImages.addImage(data);
@@ -159,7 +160,7 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
                     u = data;
                     if (u.getEmail().equals(item.getUserEmail())) {
                         tvName.setText(data.getFirstName());
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
                             @Override
                             public void onGetData(Bitmap data) {
                                 if (u.getEmail().equals(item.getUserEmail())) {

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
@@ -37,6 +38,7 @@ public class RefactorEventActivity extends AppCompatActivity {
 
     private EventRepositoryImpl eventRepository;
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private VKRepositoryImpl vkRepository;
 
     private GetEventByIdUseCase getEventByIdUseCase;
@@ -54,7 +56,8 @@ public class RefactorEventActivity extends AppCompatActivity {
 
         eventRepository = new EventRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
-        this.vkRepository = new VKRepositoryImpl(this);
+        vkRepository = new VKRepositoryImpl(this);
+        vkImageRepository = new VKImageRepositoryImpl(this);
 
 
         // получение и установка данных
@@ -73,7 +76,7 @@ public class RefactorEventActivity extends AppCompatActivity {
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
                     for (String s : data.getImageRefs()){
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
                             public void onGetData(Bitmap data1) {
                                 count[0]++;

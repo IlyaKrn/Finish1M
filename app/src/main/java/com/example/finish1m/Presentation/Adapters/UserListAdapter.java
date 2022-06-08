@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.User;
@@ -34,12 +35,14 @@ import java.util.ArrayList;
 public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
     private UserRepositoryImpl userRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private ImageRepositoryImpl imageRepository;
 
     public UserListAdapter(Activity activity, Context context, ArrayList<User> items) {
         super(activity, context, items);
         userRepository = new UserRepositoryImpl(context);
         imageRepository = new ImageRepositoryImpl(context);
+        vkImageRepository = new VKImageRepositoryImpl(context);
     }
 
     // создание холдера
@@ -83,7 +86,7 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
                 @Override
                 public void onGetData(User data) {
                     if (data.getEmail().equals(item.getEmail())){
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
                             @Override
                             public void onGetData(Bitmap data1) {
                                 if (data.getEmail().equals(item.getEmail())){

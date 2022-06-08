@@ -14,14 +14,13 @@ import com.example.finish1m.Domain.Models.WallModels.Attachment;
 import com.example.finish1m.Domain.Models.WallModels.CopyHistory;
 import com.example.finish1m.Domain.Models.WallModels.Item;
 import com.example.finish1m.Domain.Models.WallModels.WallModel;
-import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +63,11 @@ public class VKRepositoryImpl implements VKRepository {
                                     ArrayList<String> iRefs = new ArrayList<>();
                                     if (item.attachments != null) {
                                         for (Attachment a : item.attachments) {
-                                            iRefs.add("");
+                                            if(a.type.equals("photo"))
+                                                iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                            else{
+                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                            }
                                         }
                                     }
                                     if (item.copyHistory != null) {
@@ -72,7 +75,11 @@ public class VKRepositoryImpl implements VKRepository {
                                             e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
                                                 for (Attachment a : copyHistory.attachments) {
-                                                    iRefs.add("");
+                                                    if(a.type.equals("photo"))
+                                                        iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                    else{
+                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                    }
                                                 }
                                             }
                                         }
@@ -136,7 +143,11 @@ public class VKRepositoryImpl implements VKRepository {
                                     ArrayList<String> iRefs = new ArrayList<>();
                                     if (item.attachments != null) {
                                         for (Attachment a : item.attachments) {
-                                            iRefs.add("");
+                                            if(a.type.equals("photo"))
+                                                iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                            else{
+                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                            }
                                         }
                                     }
                                     if (item.copyHistory != null) {
@@ -144,7 +155,11 @@ public class VKRepositoryImpl implements VKRepository {
                                             e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
                                                 for (Attachment a : copyHistory.attachments) {
-                                                    iRefs.add("");
+                                                    if(a.type.equals("photo"))
+                                                        iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                    else{
+                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                    }
                                                 }
                                             }
                                         }
@@ -184,6 +199,9 @@ public class VKRepositoryImpl implements VKRepository {
     @Override
     public void getEventMainWallById(String eventId, OnGetDataListener<Event> listener) {
         try {
+
+            eventId = eventId.substring(1);
+
             Gson gson = new GsonBuilder().create();
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -192,6 +210,7 @@ public class VKRepositoryImpl implements VKRepository {
                     .build();
 
             VKApiService service = retrofit.create(VKApiService.class);
+            String finalEventId = eventId;
             service.getWallById(VKConfig.MAIN_WALL_ID, VKConfig.ACCESS_TOKEN).enqueue(new Callback<WallModel>() {
                 @Override
                 public void onResponse(@NonNull Call<WallModel> call, @NonNull Response<WallModel> response) {
@@ -200,14 +219,18 @@ public class VKRepositoryImpl implements VKRepository {
                             if(response.body().response.items != null){
                                 Event e = null;
                                 for (Item item : response.body().response.items){
-                                    if(eventId.equals(item.id+"")){
+                                    if(finalEventId.equals(item.id+"")){
                                         String title = item.text.split("\n")[0];
                                         e = new Event(Event.DATA_SOURCE_VK + "" + item.id, Event.NEWS, Event.DATA_SOURCE_VK, title, item.text, null, item.date, null, null);
 
                                         ArrayList<String> iRefs = new ArrayList<>();
                                         if (item.attachments != null) {
                                             for (Attachment a : item.attachments) {
-                                                iRefs.add("");
+                                                if(a.type.equals("photo"))
+                                                    iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                else{
+                                                    iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                }
                                             }
                                         }
                                         if (item.copyHistory != null) {
@@ -215,37 +238,42 @@ public class VKRepositoryImpl implements VKRepository {
                                                 e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                                 if (copyHistory.attachments != null) {
                                                     for (Attachment a : copyHistory.attachments) {
-                                                        iRefs.add("");
+                                                        if(a.type.equals("photo"))
+                                                            iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                        else{
+                                                            iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
 
                                         e.setImageRefs(iRefs);
-                                        Log.d(LOG_TAG, String.format("get event from main wall is success (wallId='%s', eventId='%s')", VKConfig.MAIN_WALL_ID, eventId));
+                                        Log.d(LOG_TAG, String.format("get event from main wall is success (wallId='%s', eventId='%s')", VKConfig.MAIN_WALL_ID, finalEventId));
                                         listener.onGetData(e);
+                                        break;
                                     }
                                 }
                                 if(e == null){
-                                    Log.e(LOG_TAG, String.format("get event from main wall is void data (wallId='%s', eventId='%s'): no data in wall)", VKConfig.MAIN_WALL_ID, eventId));
+                                    Log.e(LOG_TAG, String.format("get event from main wall is void data (wallId='%s', eventId='%s'): no data in wall)", VKConfig.MAIN_WALL_ID, finalEventId));
                                     listener.onVoidData();
                                 }
                             }
                         }
                         else{
-                            Log.e(LOG_TAG, String.format("get event from main wall is void data (wallId='%s', eventId='%s'): no data in wall)", VKConfig.MAIN_WALL_ID, eventId));
+                            Log.e(LOG_TAG, String.format("get event from main wall is void data (wallId='%s', eventId='%s'): no data in wall)", VKConfig.MAIN_WALL_ID, finalEventId));
                             listener.onVoidData();
                         }
                     }
                     else{
-                        Log.e(LOG_TAG, String.format("get event from main wall is cancelled (wallId='%s', eventId='%s'): Call not success", VKConfig.MAIN_WALL_ID, eventId));
+                        Log.e(LOG_TAG, String.format("get event from main wall is cancelled (wallId='%s', eventId='%s'): Call not success", VKConfig.MAIN_WALL_ID, finalEventId));
                         listener.onCanceled();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<WallModel> call, @NonNull Throwable throwable) {
-                    Log.e(LOG_TAG, String.format("get event from main wall is failed (wallId='%s', eventId='%s'): %s", VKConfig.MAIN_WALL_ID, eventId, throwable.getMessage()));
+                    Log.e(LOG_TAG, String.format("get event from main wall is failed (wallId='%s', eventId='%s'): %s", VKConfig.MAIN_WALL_ID, finalEventId, throwable.getMessage()));
                     listener.onFailed();
                 }
             });
@@ -258,6 +286,8 @@ public class VKRepositoryImpl implements VKRepository {
     @Override
     public void getEventById(String wallId, String eventId, OnGetDataListener<Event> listener) {
         try {
+
+            eventId = eventId.substring(1);
             Gson gson = new GsonBuilder().create();
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -266,6 +296,7 @@ public class VKRepositoryImpl implements VKRepository {
                     .build();
 
             VKApiService service = retrofit.create(VKApiService.class);
+            String finalEventId = eventId;
             service.getWallById(wallId, VKConfig.ACCESS_TOKEN).enqueue(new Callback<WallModel>() {
                 @Override
                 public void onResponse(@NonNull Call<WallModel> call, @NonNull Response<WallModel> response) {
@@ -274,14 +305,18 @@ public class VKRepositoryImpl implements VKRepository {
                             if(response.body().response.items != null){
                                 Event e = null;
                                 for (Item item : response.body().response.items){
-                                    if(eventId.equals(item.id+"")){
+                                    if(finalEventId.equals(item.id+"")){
                                         String title = item.text.split("\n")[0];
                                         e = new Event(Event.DATA_SOURCE_VK + "" + item.id, Event.NEWS, Event.DATA_SOURCE_VK, title, item.text, null, item.date, null, null);
 
                                         ArrayList<String> iRefs = new ArrayList<>();
                                         if (item.attachments != null) {
                                             for (Attachment a : item.attachments) {
-                                                iRefs.add("");
+                                                if(a.type.equals("photo"))
+                                                    iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                else{
+                                                    iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                }
                                             }
                                         }
                                         if (item.copyHistory != null) {
@@ -289,37 +324,41 @@ public class VKRepositoryImpl implements VKRepository {
                                                 e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                                 if (copyHistory.attachments != null) {
                                                     for (Attachment a : copyHistory.attachments) {
-                                                        iRefs.add("");
+                                                        if(a.type.equals("photo"))
+                                                            iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
+                                                        else{
+                                                            iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
 
                                         e.setImageRefs(iRefs);
-                                        Log.d(LOG_TAG, String.format("get event from wall is success (wallId='%s', eventId='%s')", wallId, eventId));
+                                        Log.d(LOG_TAG, String.format("get event from wall is success (wallId='%s', eventId='%s')", wallId, finalEventId));
                                         listener.onGetData(e);
                                     }
                                 }
                                 if(e == null){
-                                    Log.e(LOG_TAG, String.format("get event from wall is void data (wallId='%s', eventId='%s'): no data in wall)", wallId, eventId));
+                                    Log.e(LOG_TAG, String.format("get event from wall is void data (wallId='%s', eventId='%s'): no data in wall)", wallId, finalEventId));
                                     listener.onVoidData();
                                 }
                             }
                         }
                         else{
-                            Log.e(LOG_TAG, String.format("get event from wall is void data (wallId='%s', eventId='%s'): no data in wall)", wallId, eventId));
+                            Log.e(LOG_TAG, String.format("get event from wall is void data (wallId='%s', eventId='%s'): no data in wall)", wallId, finalEventId));
                             listener.onVoidData();
                         }
                     }
                     else{
-                        Log.e(LOG_TAG, String.format("get event from wall is cancelled (wallId='%s', eventId='%s'): Call not success", wallId, eventId));
+                        Log.e(LOG_TAG, String.format("get event from wall is cancelled (wallId='%s', eventId='%s'): Call not success", wallId, finalEventId));
                         listener.onCanceled();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<WallModel> call, @NonNull Throwable throwable) {
-                    Log.e(LOG_TAG, String.format("get event from wall is failed (wallId='%s', eventId='%s'): %s", wallId, eventId, throwable.getMessage()));
+                    Log.e(LOG_TAG, String.format("get event from wall is failed (wallId='%s', eventId='%s'): %s", wallId, finalEventId, throwable.getMessage()));
                     listener.onFailed();
                 }
             });

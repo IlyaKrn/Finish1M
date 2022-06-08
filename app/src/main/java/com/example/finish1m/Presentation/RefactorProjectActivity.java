@@ -13,18 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
-import com.example.finish1m.Domain.Models.Chat;
-import com.example.finish1m.Domain.Models.Event;
-import com.example.finish1m.Domain.Models.Message;
 import com.example.finish1m.Domain.Models.Project;
-import com.example.finish1m.Domain.UseCases.CreateNewEventUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorProjectUseCase;
@@ -41,6 +37,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
     private ProjectRepositoryImpl projectRepository;
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
 
     private GetProjectByIdUseCase getProjectByIdUseCase;
     private RefactorProjectUseCase refactorProjectUseCase;
@@ -57,6 +54,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
 
         projectRepository = new ProjectRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
+        vkImageRepository = new VKImageRepositoryImpl(this);
 
         // получение и установка данных
         binding.btCreate.setClickable(false);
@@ -74,7 +72,7 @@ public class RefactorProjectActivity extends AppCompatActivity {
                 if(data.getImageRefs() != null) {
                     binding.btCreate.setClickable(false);
                     for (String s : data.getImageRefs()){
-                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, s, new OnGetDataListener<Bitmap>() {
+                        GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, s, new OnGetDataListener<Bitmap>() {
                             @Override
                             public void onGetData(Bitmap data1) {
                                 count[0]++;

@@ -2,7 +2,6 @@ package com.example.finish1m.Presentation;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,24 +14,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.User;
-import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetUserByEmailUseCase;
-import com.example.finish1m.Domain.UseCases.RefactorEventUseCase;
 import com.example.finish1m.Domain.UseCases.RefactorUserUseCase;
-import com.example.finish1m.Presentation.Adapters.ImageListAdapter;
 import com.example.finish1m.Presentation.Dialogs.DialogLoading;
 import com.example.finish1m.R;
-import com.example.finish1m.databinding.ActivityRefactorProjectBinding;
 import com.example.finish1m.databinding.ActivityRefactorUserBinding;
-
-import java.util.ArrayList;
 
 public class RefactorUserActivity extends AppCompatActivity {
 
@@ -40,6 +33,7 @@ public class RefactorUserActivity extends AppCompatActivity {
 
     private UserRepositoryImpl userRepository;
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
 
     private GetUserByEmailUseCase getUserByEmailUseCase;
     private RefactorUserUseCase refactorUserUseCase;
@@ -55,6 +49,7 @@ public class RefactorUserActivity extends AppCompatActivity {
 
         userRepository = new UserRepositoryImpl(this);
         imageRepository = new ImageRepositoryImpl(this);
+        vkImageRepository = new VKImageRepositoryImpl(this);
 
         // получение и установка данных
         DialogLoading dialog = new DialogLoading(RefactorUserActivity.this, getString(R.string.loading_data));
@@ -68,7 +63,7 @@ public class RefactorUserActivity extends AppCompatActivity {
                     binding.etLastname.setText(data.getLastName());
                     if (user.getIconRef() == null)
                         dialog.destroy();
-                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, user.getIconRef(), new OnGetDataListener<Bitmap>() {
+                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, user.getIconRef(), new OnGetDataListener<Bitmap>() {
                         @Override
                         public void onGetData(Bitmap data) {
                             image = data;

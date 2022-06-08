@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
 
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private EventRepositoryImpl eventRepository;
     private VKRepositoryImpl vkRepository;
 
@@ -56,6 +58,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
         this.imageRepository = new ImageRepositoryImpl(context);
         this.eventRepository = new EventRepositoryImpl(context);
         this.vkRepository = new VKRepositoryImpl(context);
+        vkImageRepository = new VKImageRepositoryImpl(context);
     }
 
     @Override
@@ -379,7 +382,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 public void onGetData(Event data) {
                     if (item.getImageRefs() != null) {
                         for (int i = 0; i < item.getImageRefs().size(); i++) {
-                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, item.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
                                 @Override
                                 public void onGetData(Bitmap data1) {
                                     if(item.getId().equals(data.getId()));{

@@ -3,7 +3,6 @@ package com.example.finish1m.Presentation.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.UserRepository;
 import com.example.finish1m.Domain.Models.Message;
@@ -36,6 +35,7 @@ import java.util.Map;
 public class MessageListAdapter extends Adapter<Message, MessageListAdapter.ViewHolder>{
 
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private UserRepository userRepository;
 
     private Map<String, Bitmap> savedIcons = new HashMap<>(); // кэш картинок
@@ -46,6 +46,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
         super(activity, context, items);
         this.imageRepository = new ImageRepositoryImpl(context);
         this.userRepository = new UserRepositoryImpl(context);
+        vkImageRepository = new VKImageRepositoryImpl(context);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             if (item.getImageRefs() != null){
                 int[] count = {0};
                 for (String ref : item.getImageRefs()){
-                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, ref, new OnGetDataListener<Bitmap>() {
+                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, ref, new OnGetDataListener<Bitmap>() {
                         @Override
                         public void onGetData(Bitmap data) {
                             if (item.getUserEmail() != null) {
@@ -173,7 +174,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                                 u = data;
                                 if (u.getEmail().equals(item.getUserEmail())) {
                                     notMy_tvName.setText(data.getFirstName());
-                                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
+                                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
                                         @Override
                                         public void onGetData(Bitmap data) {
                                             if (u.getEmail().equals(item.getUserEmail())) {

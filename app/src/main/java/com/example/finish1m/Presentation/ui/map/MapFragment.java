@@ -3,29 +3,23 @@ package com.example.finish1m.Presentation.ui.map;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.LocateRepositoryImpl;
+import com.example.finish1m.Data.VK.VKImageRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
-import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Locate;
-import com.example.finish1m.Domain.UseCases.DeleteLocateByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetLocateListUseCase;
 import com.example.finish1m.Presentation.Adapters.MapInfoWindowAdapter;
-import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewLocateActivity;
-import com.example.finish1m.Presentation.Dialogs.DialogConfirm;
-import com.example.finish1m.Presentation.Dialogs.OnConfirmListener;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.Presentation.RefactorLocateActivity;
 import com.example.finish1m.R;
@@ -49,6 +43,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap googleMap;
     private LocateRepositoryImpl locateRepository;
     private ImageRepositoryImpl imageRepository;
+    private VKImageRepositoryImpl vkImageRepository;
     private MapInfoWindowAdapter adapter;
     private GetLocateListUseCase getLocateListUseCase;
 
@@ -63,6 +58,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         locateRepository = new LocateRepositoryImpl(getContext());
         imageRepository = new ImageRepositoryImpl(getContext());
+        vkImageRepository = new VKImageRepositoryImpl(getContext());
 
         // получение и установка данных
         getLocateListUseCase = new GetLocateListUseCase(locateRepository, new OnGetDataListener<ArrayList<Locate>>() {
@@ -76,7 +72,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     cache.put(l, new ArrayList<>());
                     if (l.getImageRefs() != null) {
                         for (int i = 0; i < l.getImageRefs().size(); i++) {
-                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
                                 @Override
                                 public void onGetData(Bitmap data) {
                                     count[0]++;
