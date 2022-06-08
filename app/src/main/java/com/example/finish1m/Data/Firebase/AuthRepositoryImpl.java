@@ -80,18 +80,18 @@ public class AuthRepositoryImpl implements AuthRepository {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (context != null) {
                         if(task.isSuccessful()) {
-                            Log.d(LOG_TAG, String.format("verification email is success (email='%s', password='%s')", email));
+                            Log.d(LOG_TAG, String.format("verification email is success (email='%s')", email));
                             listener.onSetData();
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("verification email is cancelled (email='%s', password='%s'): %s", email, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("verification email is cancelled (email='%s'): %s", email, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("verification email is failed (email='%s', password='%s'): %s", email, e.getMessage()));
+            Log.e(LOG_TAG, String.format("verification email is failed (email='%s'", email, e.getMessage()));
             listener.onFailed();
         }
     }
@@ -106,17 +106,17 @@ public class AuthRepositoryImpl implements AuthRepository {
                     if (context != null) {
                         if(task.isSuccessful()) {
                             listener.onSetData();
-                            Log.d(LOG_TAG, String.format("reset password email is success (email='%s', password='%s')", email));
+                            Log.d(LOG_TAG, String.format("reset password email is success (email='%s')", email));
                         }
                         else {
-                            Log.e(LOG_TAG, String.format("reset password email is cancelled (email='%s', password='%s'): %s", email, task.getException().getMessage()));
+                            Log.e(LOG_TAG, String.format("reset password email is cancelled (email='%s'): %s", email, task.getException().getMessage()));
                             listener.onCanceled();
                         }
                     }
                 }
             });
         } catch (Exception e){
-            Log.e(LOG_TAG, String.format("reset password email is failed (email='%s', password='%s'): %s", email, e.getMessage()));
+            Log.e(LOG_TAG, String.format("reset password email is failed (email='%s'): %s", email, e.getMessage()));
             listener.onFailed();
         }
     }

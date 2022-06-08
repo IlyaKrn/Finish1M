@@ -63,7 +63,9 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = binding.etPassword.getText().toString();
                 if(!TextUtils.isEmpty(email)) {
                     if (!TextUtils.isEmpty(email)){
-                        if (new CheckConnectionUseCase(new ConnectionRepositoryImpl(RegisterActivity.this)).execute()) {     // записть пользователя в FirebaseAuth
+                        if (new CheckConnectionUseCase(new ConnectionRepositoryImpl(RegisterActivity.this)).execute()) {
+                            binding.btResendVerificationEmail.setVisibility(View.VISIBLE);
+                            // записть пользователя в FirebaseAuth
                             registerWithEmailAndPasswordUseCase = new RegisterWithEmailAndPasswordUseCase(authRepository, userRepository, email, password, new OnSetDataListener() {
                                 @Override
                                 public void onSetData() {
@@ -235,7 +237,13 @@ public class RegisterActivity extends AppCompatActivity {
                         sendVerificationEmailUseCase = new SendVerificationEmailUseCase(authRepository, email, new OnSetDataListener() {
                             @Override
                             public void onSetData() {
-                                Toast.makeText(RegisterActivity.this, R.string.email_verification_email_sended, Toast.LENGTH_SHORT).show();
+                                DialogConfirm dialog = new DialogConfirm(RegisterActivity.this, "Верификация", "Ок", "Вам на почту было отправлено письмо для прохождения верификации", new OnConfirmListener() {
+                                    @Override
+                                    public void onConfirm(DialogConfirm d) {
+                                        d.destroy();
+                                    }
+                                });
+                                dialog.create(binding.fragmentContainerView);
                             }
 
                             @Override
