@@ -3,6 +3,7 @@ package com.example.finish1m.Data.Firebase;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import com.example.finish1m.Data.Firebase.Database.FirebaseConfig;
 import com.example.finish1m.Domain.Interfaces.ImageRepository;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetImageListener;
+import com.example.finish1m.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
@@ -114,18 +116,18 @@ public class ImageRepositoryImpl implements ImageRepository {
                             }
                             else {
                                 Log.d(LOG_TAG, String.format("get default image is void data (ref='%s'): no data in database", FirebaseConfig.STORAGE_DEFAULT_ICON));
-                                listener.onVoidData();
+                                listener.onGetData(((BitmapDrawable)context.getDrawable(R.drawable.default_image)).getBitmap());
                             }
                         else {
                             Log.d(LOG_TAG, String.format("get default image is cancelled (ref='%s'): %s", FirebaseConfig.STORAGE_DEFAULT_ICON, task.getException().getMessage()));
-                            listener.onCanceled();
+                            listener.onGetData(((BitmapDrawable)context.getDrawable(R.drawable.default_image)).getBitmap());
                         }
                     }
                 }
             });
         } catch (Exception e){
             Log.e(LOG_TAG, String.format("get default image is failed (ref='null'): %s", e.getMessage()));
-            listener.onFailed();
+            listener.onGetData(((BitmapDrawable)context.getDrawable(R.drawable.default_image)).getBitmap());
         }
     }
 
