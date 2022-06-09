@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,21 +73,21 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
     public class ViewHolder extends Holder<Message> {
 
 
-        private final TableMessageImages notMy_tlImages;
+        private final GridLayout notMy_tlImages;
         private final ProgressBar notMy_progressImage;
         private final TextView notMy_tvMessage;
         private final TextView notMy_tvName;
         private final IconView notMy_ivIcon;
         private final View notMy_itemBody;
 
-        private final TableMessageImages my_tlImages;
+        private final GridLayout my_tlImages;
         private final View my_itemBody;
         private final TextView my_tvMessage;
         private final TextView my_tvName;
 
         private final View system_itemBody;
         private final TextView system_tvMessage;
-        private final TableMessageImages system_tlImages;
+        private final GridLayout system_tlImages;
 
         User u; // пользователь
 
@@ -118,9 +120,9 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             // если отправитель - null, то используется system_ часть разметки
 
             // установка данных
-            system_tlImages.removeBitmaps();
-            notMy_tlImages.removeBitmaps();
-            my_tlImages.removeBitmaps();
+            system_tlImages.removeAllViews();
+            notMy_tlImages.removeAllViews();
+            my_tlImages.removeAllViews();
             if (item.getImageRefs() != null){
                 int[] count = {0};
                 for (String ref : item.getImageRefs()){
@@ -130,15 +132,21 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                             if (item.getUserEmail() != null) {
                                 try {
                                     if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
-                                        my_tlImages.addImage(data);
+                                        ImageView iv = new ImageView(context);
+                                        iv.setImageBitmap(data);
+                                        my_tlImages.addView(iv);
                                     } else {
-                                        notMy_tlImages.addImage(data);
+                                        ImageView iv = new ImageView(context);
+                                        iv.setImageBitmap(data);
+                                        notMy_tlImages.addView(iv);
                                     }
                                 } catch (Exception e) {
                                     Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                system_tlImages.addImage(data);
+                                ImageView iv = new ImageView(context);
+                                iv.setImageBitmap(data);
+                                system_tlImages.addView(iv);
                             }
                         }
 
@@ -173,9 +181,9 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                 }
             }
             else {
-                system_tlImages.removeBitmaps();
-                notMy_tlImages.removeBitmaps();
-                my_tlImages.removeBitmaps();
+                system_tlImages.removeAllViews();
+                notMy_tlImages.removeAllViews();
+                my_tlImages.removeAllViews();
             }
 
 

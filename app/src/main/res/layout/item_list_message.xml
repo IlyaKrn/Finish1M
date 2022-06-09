@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/not_my_item_body"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginEnd="@dimen/message_margin"
         android:visibility="gone"
         android:orientation="horizontal">
@@ -53,7 +53,7 @@
                 android:id="@+id/not_my_tv_message"
                 style="@style/text.paragraph.main" />
 
-            <com.example.finish1m.Presentation.Views.TableMessageImages
+            <GridLayout
                 android:id="@+id/not_my_lv_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -68,8 +68,8 @@
 
     <LinearLayout
         android:id="@+id/my_item_body"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
         android:layout_gravity="end"
@@ -80,14 +80,18 @@
 
         <TextView
             android:id="@+id/my_tv_user_name"
-            style="@style/text.span.second" />
+            style="@style/text.span.second"
+            android:layout_gravity="end"/>
+
 
         <TextView
             android:id="@+id/my_tv_message"
-            style="@style/text.paragraph.main"/>
+            style="@style/text.paragraph.main"
+            android:layout_gravity="end"/>
 
 
-        <com.example.finish1m.Presentation.Views.TableMessageImages
+
+        <GridLayout
             android:id="@+id/my_lv_images"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -112,7 +116,7 @@
             android:layout_gravity="center"
             android:textAlignment="center"/>
 
-        <com.example.finish1m.Presentation.Views.TableMessageImages
+        <GridLayout
             android:id="@+id/system_lv_images"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
