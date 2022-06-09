@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -67,7 +68,7 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
         private TextView tvEmail;
         private TextView tvName;
         private TextView tvMessage;
-        private TableMessageImages glImages;
+        private GridLayout glImages;
 
         private ImageView ivImage;
         private ProgressBar progressImage;
@@ -92,7 +93,7 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
             tvEmail.setText(item.getUserEmail());
             tvMessage.setText(item.getMessage());
 
-            glImages.removeBitmaps();
+            glImages.removeAllViews();
 
             // получение и установка данных
 
@@ -105,7 +106,9 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
                                 GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, ref, new OnGetDataListener<Bitmap>() {
                                     @Override
                                     public void onGetData(Bitmap data) {
-                                        glImages.addImage(data);
+                                        ImageView iv = new ImageView(context);
+                                        iv.setImageBitmap(data);
+                                        glImages.addView(iv);
                                     }
 
                                     @Override
