@@ -100,34 +100,38 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(Message item, int position) {
-                if(PresentationConfig.user.isAdmin()){
-                    DialogConfirm dialog = new DialogConfirm(ChatActivity.this, "Удалнение сообщения", "Удалить", "Вы действительно хотите удалить сообщение?", new OnConfirmListener() {
-                        @Override
-                        public void onConfirm(DialogConfirm d) {
-                            d.freeze();
-                            removeMessageUseCase = new RemoveMessageUseCase(chatRepository, getIntent().getStringExtra("chatId"), position, new OnSetDataListener() {
-                                @Override
-                                public void onSetData() {
-                                    Toast.makeText(ChatActivity.this, R.string.message_delete_success, Toast.LENGTH_SHORT).show();
-                                    d.destroy();
-                                }
+                try {
+                    if(PresentationConfig.getUser().isAdmin()){
+                        DialogConfirm dialog = new DialogConfirm(ChatActivity.this, "Удалнение сообщения", "Удалить", "Вы действительно хотите удалить сообщение?", new OnConfirmListener() {
+                            @Override
+                            public void onConfirm(DialogConfirm d) {
+                                d.freeze();
+                                removeMessageUseCase = new RemoveMessageUseCase(chatRepository, getIntent().getStringExtra("chatId"), position, new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+                                        Toast.makeText(ChatActivity.this, R.string.message_delete_success, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
 
-                                @Override
-                                public void onFailed() {
-                                    Toast.makeText(ChatActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                                    d.destroy();
-                                }
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(ChatActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
 
-                                @Override
-                                public void onCanceled() {
-                                    Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                    d.destroy();
-                                }
-                            });
-                            removeMessageUseCase.execute();
-                        }
-                    });
-                    dialog.create(binding.fragmentContainerView);
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(ChatActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+                                });
+                                removeMessageUseCase.execute();
+                            }
+                        });
+                        dialog.create(binding.fragmentContainerView);
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ChatActivity.this, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
                 }
             }
         });

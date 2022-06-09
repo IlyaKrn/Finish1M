@@ -32,7 +32,7 @@ public class GetImageByRefUseCase {
         if(cache.get(ref) != null) {
             listener.onGetData(cache.get(ref));
         }
-        else if(ref.length() >= 6) {
+        else if(ref != null && ref.length() >= 6) {
             if (ref.substring(0, 6).equals(imageRepository.getRoot6Chars())) {
                 imageRepository.getImageByRef(ref, new OnGetDataListener<Bitmap>() {
                     @Override
@@ -43,17 +43,17 @@ public class GetImageByRefUseCase {
 
                     @Override
                     public void onVoidData() {
-                        listener.onVoidData();
+                        imageRepository.getDefaultImage(listener);
                     }
 
                     @Override
                     public void onFailed() {
-                        listener.onFailed();
+                        imageRepository.getDefaultImage(listener);
                     }
 
                     @Override
                     public void onCanceled() {
-                        listener.onCanceled();
+                        imageRepository.getDefaultImage(listener);
                     }
                 });
             }

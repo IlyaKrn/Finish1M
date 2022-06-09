@@ -123,8 +123,13 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             boolean isRegistered = false;
             if (item.getFollows() != null) {
                 for (Follow s : item.getFollows()) {
-                    if (s.getUserEmail().equals(PresentationConfig.user.getEmail())) {
-                        isRegistered = true;
+                    try {
+                        if (s.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
+                            isRegistered = true;
+                            break;
+                        }
+                    } catch (Exception e) {
+                        isRegistered = false;
                         break;
                     }
                 }

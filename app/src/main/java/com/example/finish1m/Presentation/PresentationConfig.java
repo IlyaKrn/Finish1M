@@ -7,7 +7,7 @@ public class PresentationConfig {
     public static final String REF_VK_MAIN = "https://vk.com/club197453413";
     public static final String REF_VK_WALL_POST_EXAMPLE = "https://vk.com/club197453413?w=wall-197453413_433%2Fall";
     public static final int SMALL_MESSAGE_SIZE = 200;
-    public static User user; // текущий пользователь
+    private static User user; // текущий пользователь
 
     public static User getUser() throws Exception {
         synchronized (PresentationConfig.class) {
