@@ -63,24 +63,28 @@ public class VKRepositoryImpl implements VKRepository {
 
                                     ArrayList<String> iRefs = new ArrayList<>();
                                     if (item.attachments != null) {
+                                        int position = 0;
                                         for (Attachment a : item.attachments) {
                                             if(a.type.equals("photo"))
                                                 iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                             else{
-                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, VKConfig.MAIN_WALL_ID, item.id, position));
                                             }
+                                            position++;
                                         }
                                     }
                                     if (item.copyHistory != null) {
                                         for (CopyHistory copyHistory : item.copyHistory) {
                                             e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
+                                                int position = 0;
                                                 for (Attachment a : copyHistory.attachments) {
                                                     if(a.type.equals("photo"))
                                                         iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                                     else{
-                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                        Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, VKConfig.MAIN_WALL_ID, item.id, position));
                                                     }
+                                                    position++;
                                                 }
                                             }
                                         }
@@ -143,24 +147,28 @@ public class VKRepositoryImpl implements VKRepository {
 
                                     ArrayList<String> iRefs = new ArrayList<>();
                                     if (item.attachments != null) {
+                                        int position = 0;
                                         for (Attachment a : item.attachments) {
                                             if(a.type.equals("photo"))
                                                 iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                             else{
-                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, id, item.id, position));
                                             }
+                                            position++;
                                         }
                                     }
                                     if (item.copyHistory != null) {
                                         for (CopyHistory copyHistory : item.copyHistory) {
                                             e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
+                                                int position = 0;
                                                 for (Attachment a : copyHistory.attachments) {
                                                     if(a.type.equals("photo"))
                                                         iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                                     else{
-                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                        Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, id, item.id, position));
                                                     }
+                                                    position++;
                                                 }
                                             }
                                         }
@@ -212,6 +220,7 @@ public class VKRepositoryImpl implements VKRepository {
 
             VKApiService service = retrofit.create(VKApiService.class);
             String finalEventId = eventId;
+            String finalEventId1 = eventId;
             service.getEventById(VKConfig.MAIN_WALL_ID, VKConfig.MAIN_WALL_ID + "_" + eventId, VKConfig.ACCESS_TOKEN).enqueue(new Callback<PostModel>() {
                 @Override
                 public void onResponse(@NonNull Call<PostModel> call, @NonNull Response<PostModel> response) {
@@ -225,24 +234,28 @@ public class VKRepositoryImpl implements VKRepository {
 
                                     ArrayList<String> iRefs = new ArrayList<>();
                                     if (response.body().response.items.get(0).attachments != null) {
+                                        int position = 0;
                                         for (Attachment a : response.body().response.items.get(0).attachments) {
                                             if(a.type.equals("photo"))
                                                 iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                             else{
-                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, VKConfig.MAIN_WALL_ID, finalEventId1, position));
                                             }
+                                            position++;
                                         }
                                     }
                                     if (response.body().response.items.get(0).copyHistory != null) {
                                         for (CopyHistory copyHistory : response.body().response.items.get(0).copyHistory) {
                                             e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
+                                                int position = 0;
                                                 for (Attachment a : copyHistory.attachments) {
                                                     if(a.type.equals("photo"))
                                                         iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                                     else{
-                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                        Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, VKConfig.MAIN_WALL_ID, finalEventId1, position));
                                                     }
+                                                    position++;
                                                 }
                                             }
                                         }
@@ -296,6 +309,7 @@ public class VKRepositoryImpl implements VKRepository {
 
             VKApiService service = retrofit.create(VKApiService.class);
             String finalEventId = eventId;
+            String finalEventId1 = eventId;
             service.getEventById(wallId, wallId + "_" + eventId, VKConfig.ACCESS_TOKEN).enqueue(new Callback<PostModel>() {
                 @Override
                 public void onResponse(@NonNull Call<PostModel> call, @NonNull Response<PostModel> response) {
@@ -309,24 +323,28 @@ public class VKRepositoryImpl implements VKRepository {
 
                                     ArrayList<String> iRefs = new ArrayList<>();
                                     if (response.body().response.items.get(0).attachments != null) {
+                                        int position = 0;
                                         for (Attachment a : response.body().response.items.get(0).attachments) {
                                             if(a.type.equals("photo"))
                                                 iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                             else{
-                                                iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, wallId, finalEventId1, position));
                                             }
+                                            position++;
                                         }
                                     }
                                     if (response.body().response.items.get(0).copyHistory != null) {
                                         for (CopyHistory copyHistory : response.body().response.items.get(0).copyHistory) {
                                             e.setMessage(e.getMessage() + "\n\n" + context.getString(R.string.copy_from_history) + copyHistory.fromId + ":\n\n" + copyHistory.text);
                                             if (copyHistory.attachments != null) {
+                                                int position = 0;
                                                 for (Attachment a : copyHistory.attachments) {
                                                     if(a.type.equals("photo"))
                                                         iRefs.add(a.photo.sizes.get(a.photo.sizes.size()-1).url);
                                                     else{
-                                                        iRefs.add(a.type.toUpperCase(Locale.ROOT)+"_UNDER_DEVELOPMENT");
+                                                        Log.e(LOG_TAG, String.format("unsupported type of attachment '%s' (wallId=%s, eventId=%s, position=%d)", a.type, wallId, finalEventId1, position));
                                                     }
+                                                    position++;
                                                 }
                                             }
                                         }
