@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
@@ -46,6 +47,11 @@ import java.util.ArrayList;
 
 public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.ViewHolder>{
 
+    private boolean isNotifiedError = false;
+    private boolean isNotifiedCancelled = false;
+    private boolean isNotifiedVoidData = false;
+
+
     private ImageRepositoryImpl imageRepository;
     private VKImageRepositoryImpl vkImageRepository;
     private ProjectRepositoryImpl projectRepository;
@@ -55,6 +61,14 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
         this.imageRepository = new ImageRepositoryImpl(context);
         this.projectRepository = new ProjectRepositoryImpl(context);
         vkImageRepository = new VKImageRepositoryImpl(context);
+        registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                isNotifiedError = false;
+                isNotifiedCancelled = false;
+                isNotifiedVoidData = false;
+            }
+        });
     }
 
     @Override
@@ -278,17 +292,26 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
 
                                 @Override
                                 public void onVoidData() {
-
+                                    if(!isNotifiedVoidData) {
+                                        isNotifiedVoidData = true;
+                                        Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 @Override
                                 public void onFailed() {
-                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                    if(!isNotifiedError) {
+                                        isNotifiedError = true;
+                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 @Override
                                 public void onCanceled() {
-                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    if(!isNotifiedCancelled) {
+                                        isNotifiedCancelled = true;
+                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                             getImageByRefUseCase.execute();
@@ -298,17 +321,26 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
 
                 @Override
                 public void onVoidData() {
-                    Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    if(!isNotifiedVoidData) {
+                        isNotifiedVoidData = true;
+                        Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onFailed() {
-                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                    if(!isNotifiedError) {
+                        isNotifiedError = true;
+                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onCanceled() {
-                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    if(!isNotifiedCancelled) {
+                        isNotifiedCancelled = true;
+                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             getProjectListUseCase.execute();

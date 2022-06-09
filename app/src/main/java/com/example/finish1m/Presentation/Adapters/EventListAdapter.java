@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
@@ -48,6 +49,10 @@ import java.util.ArrayList;
 
 public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder> {
 
+    private boolean isNotifiedError = false;
+    private boolean isNotifiedCancelled = false;
+    private boolean isNotifiedVoidData = false;
+
     private ImageRepositoryImpl imageRepository;
     private VKImageRepositoryImpl vkImageRepository;
     private EventRepositoryImpl eventRepository;
@@ -59,6 +64,14 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
         this.eventRepository = new EventRepositoryImpl(context);
         this.vkRepository = new VKRepositoryImpl(context);
         vkImageRepository = new VKImageRepositoryImpl(context);
+        registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                isNotifiedError = false;
+                isNotifiedCancelled = false;
+                isNotifiedVoidData = false;
+            }
+        });
     }
 
     @Override
@@ -394,17 +407,26 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
 
                                 @Override
                                 public void onVoidData() {
-
+                                    if(!isNotifiedVoidData) {
+                                        isNotifiedVoidData = true;
+                                        Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 @Override
                                 public void onFailed() {
-                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                    if(!isNotifiedError) {
+                                        isNotifiedError = true;
+                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 @Override
                                 public void onCanceled() {
-                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    if(!isNotifiedCancelled) {
+                                        isNotifiedCancelled = true;
+                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                             getImageByRefUseCase.execute();
@@ -414,17 +436,26 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
 
                 @Override
                 public void onVoidData() {
-                    Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    if(!isNotifiedVoidData) {
+                        isNotifiedVoidData = true;
+                        Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onFailed() {
-                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                    if(!isNotifiedError) {
+                        isNotifiedError = true;
+                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onCanceled() {
-                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    if(!isNotifiedCancelled) {
+                        isNotifiedCancelled = true;
+                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             getEventListUseCase.execute();

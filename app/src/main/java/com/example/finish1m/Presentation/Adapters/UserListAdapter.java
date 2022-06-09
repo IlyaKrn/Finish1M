@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
@@ -34,6 +35,11 @@ import java.util.ArrayList;
 
 public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
+    private boolean isNotifiedError = false;
+    private boolean isNotifiedCancelled = false;
+    private boolean isNotifiedVoidData = false;
+
+
     private UserRepositoryImpl userRepository;
     private VKImageRepositoryImpl vkImageRepository;
     private ImageRepositoryImpl imageRepository;
@@ -43,6 +49,14 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
         userRepository = new UserRepositoryImpl(context);
         imageRepository = new ImageRepositoryImpl(context);
         vkImageRepository = new VKImageRepositoryImpl(context);
+        registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                isNotifiedError = false;
+                isNotifiedCancelled = false;
+                isNotifiedVoidData = false;
+            }
+        });
     }
 
     // создание холдера
@@ -98,17 +112,26 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
                             @Override
                             public void onVoidData() {
-
+                                if(!isNotifiedVoidData) {
+                                    isNotifiedVoidData = true;
+                                    Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onFailed() {
-
+                                if(!isNotifiedError) {
+                                    isNotifiedError = true;
+                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onCanceled() {
-
+                                if(!isNotifiedCancelled) {
+                                    isNotifiedCancelled = true;
+                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         getImageByRefUseCase.execute();
@@ -118,17 +141,26 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
                 @Override
                 public void onVoidData() {
-
+                    if(!isNotifiedVoidData) {
+                        isNotifiedVoidData = true;
+                        Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onFailed() {
-
+                    if(!isNotifiedError) {
+                        isNotifiedError = true;
+                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onCanceled() {
-
+                    if(!isNotifiedCancelled) {
+                        isNotifiedCancelled = true;
+                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             getUserByEmailUseCase.execute();
@@ -156,12 +188,12 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
                                                     @Override
                                                     public void onFailed() {
-
+                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                                                     }
 
                                                     @Override
                                                     public void onCanceled() {
-
+                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                                 refactorUserUseCase.execute();
@@ -176,12 +208,12 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
                                                     @Override
                                                     public void onFailed() {
-
+                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                                                     }
 
                                                     @Override
                                                     public void onCanceled() {
-
+                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                                 refactorUserUseCase1.execute();
@@ -196,12 +228,12 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
                                                     @Override
                                                     public void onFailed() {
-
+                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                                                     }
 
                                                     @Override
                                                     public void onCanceled() {
-
+                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                                 refactorUserUseCase3.execute();
@@ -216,12 +248,12 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
 
                                                     @Override
                                                     public void onFailed() {
-
+                                                        Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show();
                                                     }
 
                                                     @Override
                                                     public void onCanceled() {
-
+                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                                 refactorUserUseCase4.execute();

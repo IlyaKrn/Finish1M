@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finish1m.Data.Firebase.ImageRepositoryImpl;
 import com.example.finish1m.Data.Firebase.UserRepositoryImpl;
@@ -29,14 +31,29 @@ import java.util.ArrayList;
 
 public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHolder> {
 
+    private boolean isNotifiedError = false;
+    private boolean isNotifiedCancelled = false;
+    private boolean isNotifiedVoidData = false;
+
+
     private ImageRepositoryImpl imageRepository;
     private VKImageRepositoryImpl vkImageRepository;
     private UserRepositoryImpl userRepository;
+
+
     public FollowListAdapter(Activity activity, Context context, ArrayList<Follow> items) {
         super(activity, context, items);
         imageRepository = new ImageRepositoryImpl(context);
         userRepository = new UserRepositoryImpl(context);
         vkImageRepository = new VKImageRepositoryImpl(context);
+        registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                isNotifiedError = false;
+                isNotifiedCancelled = false;
+                isNotifiedVoidData = false;
+            }
+        });
     }
 
     @Override
@@ -93,17 +110,26 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
 
                                     @Override
                                     public void onVoidData() {
-
+                                        if(!isNotifiedVoidData) {
+                                            isNotifiedVoidData = true;
+                                            Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
 
                                     @Override
                                     public void onFailed() {
-
+                                        if(!isNotifiedError) {
+                                            isNotifiedError = true;
+                                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
 
                                     @Override
                                     public void onCanceled() {
-
+                                        if(!isNotifiedCancelled) {
+                                            isNotifiedCancelled = true;
+                                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 });
                                 getImageByRefUseCase.execute();
@@ -113,17 +139,26 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
 
                     @Override
                     public void onVoidData() {
-
+                        if(!isNotifiedVoidData) {
+                            isNotifiedVoidData = true;
+                            Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onFailed() {
-
+                        if(!isNotifiedError) {
+                            isNotifiedError = true;
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onCanceled() {
-
+                        if(!isNotifiedCancelled) {
+                            isNotifiedCancelled = true;
+                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 getUserByEmailUseCase.execute();
@@ -172,17 +207,26 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
 
                             @Override
                             public void onVoidData() {
-
+                                if(!isNotifiedVoidData) {
+                                    isNotifiedVoidData = true;
+                                    Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onFailed() {
-
+                                if(!isNotifiedError) {
+                                    isNotifiedError = true;
+                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
                             public void onCanceled() {
-
+                                if(!isNotifiedCancelled) {
+                                    isNotifiedCancelled = true;
+                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         getImageByRefUseCase.execute();
@@ -191,17 +235,26 @@ public class FollowListAdapter extends Adapter<Follow, FollowListAdapter.ViewHol
 
                 @Override
                 public void onVoidData() {
-
+                    if(!isNotifiedVoidData) {
+                        isNotifiedVoidData = true;
+                        Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onFailed() {
-
+                    if(!isNotifiedError) {
+                        isNotifiedError = true;
+                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
                 public void onCanceled() {
-
+                    if(!isNotifiedCancelled) {
+                        isNotifiedCancelled = true;
+                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             getUserByEmailUseCase.execute();
