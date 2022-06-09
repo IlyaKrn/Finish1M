@@ -89,6 +89,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
         private Button btUsers;
         private ImageButton btMenu;
         private Button btChat;
+        private Button btOpenInVk;
         private TextView tvReadMore;
 
 
@@ -103,6 +104,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             btChat = itemView.findViewById(R.id.bt_chat);
             btMenu = itemView.findViewById(R.id.bt_menu);
             tvReadMore = itemView.findViewById(R.id.tv_read_more);
+            btOpenInVk = itemView.findViewById(R.id.bt_open_in_vk);
         }
 
         @Override
@@ -150,6 +152,13 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 btUsers.setVisibility(View.VISIBLE);
             }
 
+            if(item.getDataSource() == Event.DATA_SOURCE_VK){
+                btOpenInVk.setVisibility(View.VISIBLE);
+            }
+            else{
+                btOpenInVk.setVisibility(View.GONE);
+            }
+
 
             if (item.getType() == Event.NEWS){
             //    btChat.setVisibility(View.GONE);
@@ -188,6 +197,14 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 tvReadMore.setVisibility(View.GONE);
             }
 
+            // открыть в вк
+            btOpenInVk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/club197453413?w=wall-197453413_%s", item.getId().substring(1)) + "%2Fall"));
+                    activity.startActivity(browserIntent);
+                }
+            });
 
             // создание заявки
             boolean finalIsRegistered = isRegistered;

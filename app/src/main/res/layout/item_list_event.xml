@@ -82,5 +82,12 @@
         android:layout_height="wrap_content"
         android:text="@string/bt_user_list"
         style="@style/button.default"/>
+    <Button
+        android:id="@+id/bt_open_in_vk"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_open_in_vk"
+        style="@style/button.default"/>
 
 </LinearLayout>
