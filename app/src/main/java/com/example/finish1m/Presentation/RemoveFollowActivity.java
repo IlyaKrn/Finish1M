@@ -2,6 +2,7 @@ package com.example.finish1m.Presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.example.finish1m.databinding.ActivityRemoveFollowBinding;
 
 import java.util.ArrayList;
 
-public class RemoveFollowActivity extends AppCompatActivity {
+public class RemoveFollowActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private ActivityRemoveFollowBinding binding;
 
@@ -41,8 +42,10 @@ public class RemoveFollowActivity extends AppCompatActivity {
         binding = ActivityRemoveFollowBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // получение и установка данных
         projectRepository = new ProjectRepositoryImpl(this);
+
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
+        // получение и установка данных
         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
@@ -142,5 +145,53 @@ public class RemoveFollowActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onRefresh() {
+        // получение и установка данных
+        getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
+            @Override
+            public void onGetData(Project data) {
+                follows.clear();
+                binding.noElements.setVisibility(View.VISIBLE);
+                if(data.getFollows() != null) {
+                    binding.noElements.setVisibility(View.GONE);
+                    for(Follow f : data.getFollows()){
+                        try {
+                            if(f.getUserEmail().equals(PresentationConfig.getUser().getEmail()))
+                                follows.add(f);
+                        }catch (Exception e){
+                            Toast.makeText(RemoveFollowActivity.this, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+                            follows.clear();
+                            break;
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onVoidData() {
+                follows.clear();
+                adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.VISIBLE);
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailed() {
+                Toast.makeText(RemoveFollowActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onCanceled() {
+                Toast.makeText(RemoveFollowActivity.this, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        getProjectByIdUseCase.execute();
     }
 }

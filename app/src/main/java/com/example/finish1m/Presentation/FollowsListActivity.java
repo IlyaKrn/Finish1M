@@ -2,6 +2,7 @@ package com.example.finish1m.Presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import com.example.finish1m.databinding.ActivityFollowsListBinding;
 
 import java.util.ArrayList;
 
-public class FollowsListActivity extends AppCompatActivity {
+public class FollowsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ActivityFollowsListBinding binding;
 
@@ -38,17 +39,10 @@ public class FollowsListActivity extends AppCompatActivity {
 
         projectRepository = new ProjectRepositoryImpl(this);
 
-       /* for (int i = 0; i < 3; i++){
-            ArrayList<String> ir = new ArrayList<>();
-            ir.add("images/all/-N1TEqCF_sJVqEq9E7F4");
-            Follow f = new Follow("fgdfgdfgdfg0", "ilyakornoukhov@gmail.com", "dfgdfgdfgdfgdfgdf", ir);
-            follows.add(f);
-        }
-
-        */
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
 
         // получение и установка данных
-         getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
+        getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
             @Override
             public void onGetData(Project data) {
                 follows.clear();
@@ -99,5 +93,42 @@ public class FollowsListActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onRefresh() {
+        // получение и установка данных
+        getProjectByIdUseCase = new GetProjectByIdUseCase(projectRepository, getIntent().getStringExtra("projectId"), new OnGetDataListener<Project>() {
+            @Override
+            public void onGetData(Project data) {
+                follows.clear();
+                binding.noElements.setVisibility(View.VISIBLE);
+                if(data.getFollows() != null) {
+                    follows.addAll(data.getFollows());
+                    binding.noElements.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onVoidData() {
+                follows.clear();
+                adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.VISIBLE);
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailed() {
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onCanceled() {
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        getProjectByIdUseCase.execute();
     }
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.finish1m.Data.Firebase.ProjectRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
@@ -25,7 +26,7 @@ import com.example.finish1m.databinding.FragmentProjectsBinding;
 import java.util.ArrayList;
 
 
-public class ProjectsFragment extends Fragment {
+public class ProjectsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private FragmentProjectsBinding binding;
 
@@ -38,8 +39,9 @@ public class ProjectsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProjectsBinding.inflate(inflater, container, false);
 
-        // получение и установка данных
         projectRepository = new ProjectRepositoryImpl(getContext());
+
+        // получение и установка данных
         getProjectListUseCase = new GetProjectReverseListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
             @Override
             public void onGetData(ArrayList<Project> data) {
@@ -68,6 +70,7 @@ public class ProjectsFragment extends Fragment {
         });
         getProjectListUseCase.execute();
 
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
         // установка адаптера
         adapter = new ProjectListAdapter(getActivity(), getContext(), projects);
         binding.rvProjects.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -97,5 +100,41 @@ public class ProjectsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        // получение и установка данных
+        getProjectListUseCase = new GetProjectReverseListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
+            @Override
+            public void onGetData(ArrayList<Project> data) {
+                projects.clear();
+                projects.addAll(data);
+                adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.GONE);
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onVoidData() {
+                projects.clear();
+                adapter.notifyDataSetChanged();
+                binding.noElements.setVisibility(View.VISIBLE);
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailed() {
+                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onCanceled() {
+                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        getProjectListUseCase.execute();
     }
 }

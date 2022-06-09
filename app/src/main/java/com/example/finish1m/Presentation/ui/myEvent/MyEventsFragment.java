@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.finish1m.Data.Firebase.EventRepositoryImpl;
 import com.example.finish1m.Data.VK.VKRepositoryImpl;
@@ -27,7 +28,7 @@ import com.example.finish1m.databinding.FragmentMyEventsBinding;
 import java.util.ArrayList;
 
 
-public class MyEventsFragment extends Fragment {
+public class MyEventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private FragmentMyEventsBinding binding;
 
@@ -45,6 +46,7 @@ public class MyEventsFragment extends Fragment {
         eventRepository = new EventRepositoryImpl(getContext());
         vkRepository = new VKRepositoryImpl(getContext());
 
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
         // получение списка моих мероприятий
         try {
             getEventListUseCase = new GetEventsByUserIdUseCase(eventRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<ArrayList<Event>>() {
@@ -109,5 +111,47 @@ public class MyEventsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        try {
+            getEventListUseCase = new GetEventsByUserIdUseCase(eventRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<ArrayList<Event>>() {
+                @Override
+                public void onGetData(ArrayList<Event> data) {
+                    events.clear();
+                    events.addAll(data);
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onVoidData() {
+                    events.clear();
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.VISIBLE);
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onFailed() {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onCanceled() {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(), R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            events.clear();
+            binding.noElements.setVisibility(View.VISIBLE);
+            binding.swipeRefreshLayout.setRefreshing(false);
+        }
+        getEventListUseCase.execute();
     }
 }
