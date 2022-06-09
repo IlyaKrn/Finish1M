@@ -28,6 +28,8 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     private static final int MAX_IMAGE_SIZE = 13_000_000;
 
+    private Bitmap default_image;
+
     public ImageRepositoryImpl(Context context) {
         this.context = context;
     }
@@ -108,6 +110,7 @@ public class ImageRepositoryImpl implements ImageRepository {
             FirebaseStorage.getInstance().getReference().child(FirebaseConfig.STORAGE_DEFAULT_ICON).getBytes(1024 * 1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
                 @Override
                 public void onComplete(@NonNull Task<byte[]> task) {
+                    default_image = BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length);
                     if (context != null) {
                         if (task.isSuccessful())
                             if (task.getResult() != null) {
