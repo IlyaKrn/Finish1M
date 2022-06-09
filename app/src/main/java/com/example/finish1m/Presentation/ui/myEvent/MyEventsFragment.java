@@ -17,6 +17,7 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.VKRepository;
 import com.example.finish1m.Domain.Models.Event;
 import com.example.finish1m.Domain.UseCases.GetEventReverseListUseCase;
+import com.example.finish1m.Domain.UseCases.GetEventsByUserIdUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
@@ -32,7 +33,7 @@ public class MyEventsFragment extends Fragment {
 
     private EventRepositoryImpl eventRepository;
 
-    private GetEventReverseListUseCase getEventListUseCase;
+    private GetEventsByUserIdUseCase getEventListUseCase;
 
     private EventListAdapter adapter;
     private ArrayList<Event> events = new ArrayList<>(); // список мероприятий
@@ -45,47 +46,38 @@ public class MyEventsFragment extends Fragment {
         vkRepository = new VKRepositoryImpl(getContext());
 
         // получение списка моих мероприятий
-        getEventListUseCase = new GetEventReverseListUseCase(eventRepository, vkRepository, new OnGetDataListener<ArrayList<Event>>() {
-            @Override
-            public void onGetData(ArrayList<Event> data) {
-                events.clear();
-                for(Event e : data){
-                    if(e.getMembers() != null) {
-                        for (String s : e.getMembers()) {
-                            try {
-                                if (s.equals(PresentationConfig.getUser().getEmail())) {
-                                    events.add(e);
-                                    break;
-                                }
-                            }catch (Exception e1){
-                                Toast.makeText(getContext(), R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
-                                events.clear();
-                            }
-
-                        }
-                    }
+        try {
+            getEventListUseCase = new GetEventsByUserIdUseCase(eventRepository, PresentationConfig.getUser().getEmail(), new OnGetDataListener<ArrayList<Event>>() {
+                @Override
+                public void onGetData(ArrayList<Event> data) {
+                    events.clear();
+                    events.addAll(data);
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
                 }
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.GONE);
-            }
 
-            @Override
-            public void onVoidData() {
-                events.clear();
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.VISIBLE);
-            }
+                @Override
+                public void onVoidData() {
+                    events.clear();
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.VISIBLE);
+                }
 
-            @Override
-            public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailed() {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCanceled() {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(), R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            events.clear();
+            binding.noElements.setVisibility(View.VISIBLE);
+        }
         getEventListUseCase.execute();
 
         // установка адаптера
