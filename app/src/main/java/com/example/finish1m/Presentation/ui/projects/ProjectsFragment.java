@@ -20,6 +20,7 @@ import com.example.finish1m.Presentation.Adapters.ProjectListAdapter;
 import com.example.finish1m.Presentation.ChatActivity;
 import com.example.finish1m.Presentation.CreateNewProjectActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
+import com.example.finish1m.Presentation.ui.myEvent.MyEventsFragment;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.FragmentProjectsBinding;
 
@@ -45,27 +46,35 @@ public class ProjectsFragment extends Fragment implements SwipeRefreshLayout.OnR
         getProjectListUseCase = new GetProjectReverseListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
             @Override
             public void onGetData(ArrayList<Project> data) {
-                projects.clear();
-                projects.addAll(data);
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.GONE);
+                if(ProjectsFragment.this.isAdded()) {
+                    projects.clear();
+                    projects.addAll(data);
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onVoidData() {
-                projects.clear();
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.VISIBLE);
+                if(ProjectsFragment.this.isAdded()) {
+                    projects.clear();
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                if(ProjectsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                if(ProjectsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         getProjectListUseCase.execute();
@@ -108,31 +117,39 @@ public class ProjectsFragment extends Fragment implements SwipeRefreshLayout.OnR
         getProjectListUseCase = new GetProjectReverseListUseCase(projectRepository, new OnGetDataListener<ArrayList<Project>>() {
             @Override
             public void onGetData(ArrayList<Project> data) {
-                projects.clear();
-                projects.addAll(data);
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.GONE);
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(ProjectsFragment.this.isAdded()) {
+                    projects.clear();
+                    projects.addAll(data);
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onVoidData() {
-                projects.clear();
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.VISIBLE);
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(ProjectsFragment.this.isAdded()) {
+                    projects.clear();
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.VISIBLE);
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(ProjectsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(ProjectsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
         getProjectListUseCase.execute();

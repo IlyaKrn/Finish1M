@@ -20,6 +20,7 @@ import com.example.finish1m.Domain.UseCases.GetEventReverseListUseCase;
 import com.example.finish1m.Presentation.Adapters.EventListAdapter;
 import com.example.finish1m.Presentation.CreateNewEventActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
+import com.example.finish1m.Presentation.ui.myEvent.MyEventsFragment;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.FragmentEventsBinding;
 
@@ -49,27 +50,35 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         getEventListUseCase = new GetEventReverseListUseCase(eventRepository, vkRepository, new OnGetDataListener<ArrayList<Event>>() {
             @Override
             public void onGetData(ArrayList<Event> data) {
-                events.clear();
-                events.addAll(data);
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.GONE);
+                if(EventsFragment.this.isAdded()) {
+                    events.clear();
+                    events.addAll(data);
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onVoidData() {
-                events.clear();
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.VISIBLE);
+                if(EventsFragment.this.isAdded()) {
+                    events.clear();
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                if(EventsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                if(EventsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         getEventListUseCase.execute();
@@ -113,31 +122,39 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         getEventListUseCase = new GetEventReverseListUseCase(eventRepository, vkRepository, new OnGetDataListener<ArrayList<Event>>() {
             @Override
             public void onGetData(ArrayList<Event> data) {
-                events.clear();
-                events.addAll(data);
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.GONE);
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(EventsFragment.this.isAdded()) {
+                    events.clear();
+                    events.addAll(data);
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.GONE);
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onVoidData() {
-                events.clear();
-                adapter.notifyDataSetChanged();
-                binding.noElements.setVisibility(View.VISIBLE);
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(EventsFragment.this.isAdded()) {
+                    events.clear();
+                    adapter.notifyDataSetChanged();
+                    binding.noElements.setVisibility(View.VISIBLE);
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(EventsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(EventsFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
         getEventListUseCase.execute();

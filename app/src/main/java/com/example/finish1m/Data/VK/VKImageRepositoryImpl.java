@@ -29,24 +29,26 @@ public class VKImageRepositoryImpl implements VKImageRepository {
     @Override
     public void getImageByRef(String ref, OnGetDataListener<Bitmap> listener) {
         try {
-
             Picasso.get().load(ref).into(new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    if (bitmap != null){
-                        Log.d(LOG_TAG, String.format("get image from vk is success (ref='%s')", ref));
-                        listener.onGetData(bitmap);
-                    }
-                    else{
-                        Log.e(LOG_TAG, String.format("get image from vk list is void data (ref='%s': no data in database)", ref));
-                        listener.onVoidData();
+                    if (context != null) {
+                        if (bitmap != null) {
+                            Log.d(LOG_TAG, String.format("get image from vk is success (ref='%s')", ref));
+                            listener.onGetData(bitmap);
+                        } else {
+                            Log.e(LOG_TAG, String.format("get image from vk list is void data (ref='%s': no data in database)", ref));
+                            listener.onVoidData();
+                        }
                     }
                 }
 
                 @Override
                 public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                    Log.e(LOG_TAG, String.format("get image from vk is failed (ref='%s'): %s", ref, e.getMessage()));
-                    listener.onFailed();
+                    if (context != null) {
+                        Log.e(LOG_TAG, String.format("get image from vk is failed (ref='%s'): %s", ref, e.getMessage()));
+                        listener.onFailed();
+                    }
                 }
 
                 @Override
@@ -57,8 +59,10 @@ public class VKImageRepositoryImpl implements VKImageRepository {
 
 
         } catch (Exception e) {
-            Log.e(LOG_TAG, String.format("get image from vk is failed (ref='%s'): %s", ref, Arrays.toString(Arrays.stream(e.getStackTrace()).toArray())));
-            listener.onFailed();
+            if (context != null) {
+                Log.e(LOG_TAG, String.format("get image from vk is failed (ref='%s'): %s", ref, Arrays.toString(Arrays.stream(e.getStackTrace()).toArray())));
+                listener.onFailed();
+            }
         }
 
     }

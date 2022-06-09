@@ -23,6 +23,7 @@ import com.example.finish1m.Presentation.Adapters.MapInfoWindowAdapter;
 import com.example.finish1m.Presentation.CreateNewLocateActivity;
 import com.example.finish1m.Presentation.PresentationConfig;
 import com.example.finish1m.Presentation.RefactorLocateActivity;
+import com.example.finish1m.Presentation.ui.myEvent.MyEventsFragment;
 import com.example.finish1m.R;
 import com.example.finish1m.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -66,46 +67,48 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, SwipeRe
         getLocateListUseCase = new GetLocateListUseCase(locateRepository, new OnGetDataListener<ArrayList<Locate>>() {
             @Override
             public void onGetData(ArrayList<Locate> data) {
-                Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>(); // картинки для загрузки в адаптер
-                locates.clear();
-                locates.addAll(data);
-                for (Locate l : locates){
-                    final int[] count = {0};
-                    cache.put(l, new ArrayList<>());
-                    if (l.getImageRefs() != null) {
-                        for (int i = 0; i < l.getImageRefs().size(); i++) {
-                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
-                                @Override
-                                public void onGetData(Bitmap data) {
-                                    count[0]++;
-                                    cache.get(l).add(data);
-                                    adapter.loadCache(cache);
-                                }
+                if(MapFragment.this.isAdded()) {
+                    Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>(); // картинки для загрузки в адаптер
+                    locates.clear();
+                    locates.addAll(data);
+                    for (Locate l : locates) {
+                        final int[] count = {0};
+                        cache.put(l, new ArrayList<>());
+                        if (l.getImageRefs() != null) {
+                            for (int i = 0; i < l.getImageRefs().size(); i++) {
+                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                                    @Override
+                                    public void onGetData(Bitmap data) {
+                                        count[0]++;
+                                        cache.get(l).add(data);
+                                        adapter.loadCache(cache);
+                                    }
 
-                                @Override
-                                public void onVoidData() {
-                                    count[0]++;
-                                    adapter.loadCache(cache);
-                                }
+                                    @Override
+                                    public void onVoidData() {
+                                        count[0]++;
+                                        adapter.loadCache(cache);
+                                    }
 
-                                @Override
-                                public void onFailed() {
-                                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                                }
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                                    }
 
-                                @Override
-                                public void onCanceled() {
-                                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            getImageByRefUseCase.execute();
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                getImageByRefUseCase.execute();
+                            }
                         }
                     }
-                }
-                if (googleMap != null) {
-                    googleMap.clear();
-                    for (Locate l : locates){
-                        googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                    if (googleMap != null) {
+                        googleMap.clear();
+                        for (Locate l : locates) {
+                            googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                        }
                     }
                 }
 
@@ -113,12 +116,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, SwipeRe
 
             @Override
             public void onVoidData() {
-                locates.clear();
-                if (googleMap != null) {
-                    googleMap.clear();
-                    for (Locate l : locates) {
-                        if (googleMap != null) {
-                            googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                if(MapFragment.this.isAdded()) {
+                    locates.clear();
+                    if (googleMap != null) {
+                        googleMap.clear();
+                        for (Locate l : locates) {
+                            if (googleMap != null) {
+                                googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                            }
                         }
                     }
                 }
@@ -127,12 +132,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, SwipeRe
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                if(MapFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                if(MapFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
@@ -221,77 +230,84 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, SwipeRe
         getLocateListUseCase = new GetLocateListUseCase(locateRepository, new OnGetDataListener<ArrayList<Locate>>() {
             @Override
             public void onGetData(ArrayList<Locate> data) {
-                Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>(); // картинки для загрузки в адаптер
-                locates.clear();
-                locates.addAll(data);
-                for (Locate l : locates){
-                    final int[] count = {0};
-                    cache.put(l, new ArrayList<>());
-                    if (l.getImageRefs() != null) {
-                        for (int i = 0; i < l.getImageRefs().size(); i++) {
-                            GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
-                                @Override
-                                public void onGetData(Bitmap data) {
-                                    count[0]++;
-                                    cache.get(l).add(data);
-                                    adapter.loadCache(cache);
-                                }
+                if(MapFragment.this.isAdded()) {
+                    Map<Locate, ArrayList<Bitmap>> cache = new HashMap<>(); // картинки для загрузки в адаптер
+                    locates.clear();
+                    locates.addAll(data);
+                    for (Locate l : locates) {
+                        final int[] count = {0};
+                        cache.put(l, new ArrayList<>());
+                        if (l.getImageRefs() != null) {
+                            for (int i = 0; i < l.getImageRefs().size(); i++) {
+                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, l.getImageRefs().get(i), new OnGetDataListener<Bitmap>() {
+                                    @Override
+                                    public void onGetData(Bitmap data) {
+                                        count[0]++;
+                                        cache.get(l).add(data);
+                                        adapter.loadCache(cache);
+                                    }
 
-                                @Override
-                                public void onVoidData() {
-                                    count[0]++;
-                                    adapter.loadCache(cache);
-                                }
+                                    @Override
+                                    public void onVoidData() {
+                                        count[0]++;
+                                        adapter.loadCache(cache);
+                                    }
 
-                                @Override
-                                public void onFailed() {
-                                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                                }
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                                    }
 
-                                @Override
-                                public void onCanceled() {
-                                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            getImageByRefUseCase.execute();
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                getImageByRefUseCase.execute();
+                            }
                         }
                     }
-                }
-                if (googleMap != null) {
-                    googleMap.clear();
-                    for (Locate l : locates){
-                        googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                    if (googleMap != null) {
+                        googleMap.clear();
+                        for (Locate l : locates) {
+                            googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                        }
                     }
+                    binding.swipeRefreshLayout.setRefreshing(false);
                 }
-                binding.swipeRefreshLayout.setRefreshing(false);
-
             }
 
             @Override
             public void onVoidData() {
-                locates.clear();
-                if (googleMap != null) {
-                    googleMap.clear();
-                    for (Locate l : locates) {
-                        if (googleMap != null) {
-                            googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                if(MapFragment.this.isAdded()) {
+                    locates.clear();
+                    if (googleMap != null) {
+                        googleMap.clear();
+                        for (Locate l : locates) {
+                            if (googleMap != null) {
+                                googleMap.addMarker(new MarkerOptions().position(new LatLng(l.getLatitude(), l.getLongitude())));
+                            }
                         }
                     }
+                    binding.swipeRefreshLayout.setRefreshing(false);
                 }
-                binding.swipeRefreshLayout.setRefreshing(false);
             }
 
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(MapFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onCanceled() {
-                Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshLayout.setRefreshing(false);
+                if(MapFragment.this.isAdded()) {
+                    Toast.makeText(getContext(), R.string.access_denied, Toast.LENGTH_SHORT).show();
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
         });
