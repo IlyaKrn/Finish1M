@@ -110,20 +110,24 @@ public class ImageRepositoryImpl implements ImageRepository {
             FirebaseStorage.getInstance().getReference().child(FirebaseConfig.STORAGE_DEFAULT_ICON).getBytes(1024 * 1024 * 1024).addOnCompleteListener(new OnCompleteListener<byte[]>() {
                 @Override
                 public void onComplete(@NonNull Task<byte[]> task) {
-                    default_image = BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length);
-                    if (context != null) {
-                        if (task.isSuccessful())
-                            if (task.getResult() != null) {
-                                Log.d(LOG_TAG, String.format("get default image is success (ref='%s')", FirebaseConfig.STORAGE_DEFAULT_ICON));
-                                listener.onGetData(BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length));
-                            }
+                    if (default_image != null){
+                        listener.onGetData(default_image);
+                    }
+                    else {
+                        default_image = BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length);
+                        if (context != null) {
+                            if (task.isSuccessful())
+                                if (task.getResult() != null) {
+                                    Log.d(LOG_TAG, String.format("get default image is success (ref='%s')", FirebaseConfig.STORAGE_DEFAULT_ICON));
+                                    listener.onGetData(BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length));
+                                } else {
+                                    Log.d(LOG_TAG, String.format("get default image is void data (ref='%s'): no data in database", FirebaseConfig.STORAGE_DEFAULT_ICON));
+                                    listener.onGetData(((BitmapDrawable) context.getDrawable(R.drawable.default_image)).getBitmap());
+                                }
                             else {
-                                Log.d(LOG_TAG, String.format("get default image is void data (ref='%s'): no data in database", FirebaseConfig.STORAGE_DEFAULT_ICON));
-                                listener.onGetData(((BitmapDrawable)context.getDrawable(R.drawable.default_image)).getBitmap());
+                                Log.d(LOG_TAG, String.format("get default image is cancelled (ref='%s'): %s", FirebaseConfig.STORAGE_DEFAULT_ICON, task.getException().getMessage()));
+                                listener.onGetData(((BitmapDrawable) context.getDrawable(R.drawable.default_image)).getBitmap());
                             }
-                        else {
-                            Log.d(LOG_TAG, String.format("get default image is cancelled (ref='%s'): %s", FirebaseConfig.STORAGE_DEFAULT_ICON, task.getException().getMessage()));
-                            listener.onGetData(((BitmapDrawable)context.getDrawable(R.drawable.default_image)).getBitmap());
                         }
                     }
                 }
