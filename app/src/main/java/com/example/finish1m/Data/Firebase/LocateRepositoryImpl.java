@@ -152,8 +152,9 @@ public class LocateRepositoryImpl implements LocateRepository {
             } catch (Exception e){
                 address = context.getString(R.string.no_locate_address_data);
             }
-
-            locate.setAddress(address);
+            if (locate != null) {
+                locate.setAddress(address);
+            }
 
             FirebaseDatabase.getInstance().getReference(DATABASE_LOCATE).child(id).setValue(locate).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
