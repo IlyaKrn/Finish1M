@@ -38,7 +38,7 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
-    private boolean isAdmin = false;
+    private User user = null;
 
 
     private UserRepositoryImpl userRepository;
@@ -59,9 +59,10 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
             }
         });
         try {
-            isAdmin = PresentationConfig.getUser().isAdmin();
+            user = PresentationConfig.getUser();
         } catch (Exception e) {
             Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            items.clear();
         }
     }
 
@@ -172,8 +173,8 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
             getUserByEmailUseCase.execute();
 
             // кнопка меню
-            if(isAdmin){
-                if (!PresentationConfig.getUser().getEmail().equals(item.getEmail())) {
+            if(user.isAdmin()){
+                if (!user.getEmail().equals(item.getEmail())) {
                     btMenu.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

@@ -40,7 +40,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
-    private boolean isAdmin = false;
+    private User user = null;
 
 
     private ImageRepositoryImpl imageRepository;
@@ -65,9 +65,10 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
             }
         });
         try {
-            isAdmin = PresentationConfig.getUser().isAdmin();
+            user = PresentationConfig.getUser();
         } catch (Exception e) {
             Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            items.clear();
         }
     }
 
@@ -136,18 +137,14 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                         @Override
                         public void onGetData(Bitmap data) {
                             if (item.getUserEmail() != null) {
-                                try {
-                                    if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
-                                        ImageView iv = new ImageView(context);
-                                        iv.setImageBitmap(data);
-                                        my_tlImages.addView(iv);
-                                    } else {
-                                        ImageView iv = new ImageView(context);
-                                        iv.setImageBitmap(data);
-                                        notMy_tlImages.addView(iv);
-                                    }
-                                } catch (Exception e) {
-                                    Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+                                if (item.getUserEmail().equals(user.getEmail())) {
+                                    ImageView iv = new ImageView(context);
+                                    iv.setImageBitmap(data);
+                                    my_tlImages.addView(iv);
+                                } else {
+                                    ImageView iv = new ImageView(context);
+                                    iv.setImageBitmap(data);
+                                    notMy_tlImages.addView(iv);
                                 }
                             } else {
                                 ImageView iv = new ImageView(context);
@@ -195,91 +192,87 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
 
 
             if (item.getUserEmail() != null) {
-                try {
-                    if (item.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
-                        showMyMessage();
-                        my_tvMessage.setText(item.getMessage());
-                        my_tvName.setText(R.string.my_message_name);
+                if (item.getUserEmail().equals(user.getEmail())) {
+                    showMyMessage();
+                    my_tvMessage.setText(item.getMessage());
+                    my_tvName.setText(R.string.my_message_name);
 
-                    }
-                    else {
-                        showNotMyMessage();
-                        notMy_ivIcon.setVisibility(View.GONE);
-                        notMy_progressImage.setVisibility(View.VISIBLE);
-                        notMy_tvMessage.setText(item.getMessage());
+                }
+                else {
+                    showNotMyMessage();
+                    notMy_ivIcon.setVisibility(View.GONE);
+                    notMy_progressImage.setVisibility(View.VISIBLE);
+                    notMy_tvMessage.setText(item.getMessage());
 
-                        GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
-                            @Override
-                            public void onGetData(User data) {
-                                u = data;
-                                if (u.getEmail().equals(item.getUserEmail())) {
-                                    notMy_tvName.setText(data.getFirstName());
-                                    GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
-                                        @Override
-                                        public void onGetData(Bitmap data) {
-                                            if (u.getEmail().equals(item.getUserEmail())) {
-                                                notMy_ivIcon.setImageBitmap(data);
-                                                notMy_ivIcon.setVisibility(View.VISIBLE);
-                                                notMy_progressImage.setVisibility(View.GONE);
-                                            }
+                    GetUserByEmailUseCase getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository, item.getUserEmail(), new OnGetDataListener<User>() {
+                        @Override
+                        public void onGetData(User data) {
+                            u = data;
+                            if (u.getEmail().equals(item.getUserEmail())) {
+                                notMy_tvName.setText(data.getFirstName());
+                                GetImageByRefUseCase getImageByRefUseCase = new GetImageByRefUseCase(imageRepository, vkImageRepository, data.getIconRef(), new OnGetDataListener<Bitmap>() {
+                                    @Override
+                                    public void onGetData(Bitmap data) {
+                                        if (u.getEmail().equals(item.getUserEmail())) {
+                                            notMy_ivIcon.setImageBitmap(data);
+                                            notMy_ivIcon.setVisibility(View.VISIBLE);
+                                            notMy_progressImage.setVisibility(View.GONE);
                                         }
+                                    }
 
-                                        @Override
-                                        public void onVoidData() {
-                                            if(!isNotifiedVoidData) {
-                                                isNotifiedVoidData = true;
-                                                Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
-                                            }
+                                    @Override
+                                    public void onVoidData() {
+                                        if(!isNotifiedVoidData) {
+                                            isNotifiedVoidData = true;
+                                            Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                                         }
+                                    }
 
-                                        @Override
-                                        public void onFailed() {
-                                            if(!isNotifiedError) {
-                                                isNotifiedError = true;
-                                                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                            }
+                                    @Override
+                                    public void onFailed() {
+                                        if(!isNotifiedError) {
+                                            isNotifiedError = true;
+                                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                                         }
+                                    }
 
-                                        @Override
-                                        public void onCanceled() {
-                                            if(!isNotifiedCancelled) {
-                                                isNotifiedCancelled = true;
-                                                Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                            }
+                                    @Override
+                                    public void onCanceled() {
+                                        if(!isNotifiedCancelled) {
+                                            isNotifiedCancelled = true;
+                                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                                         }
-                                    });
-                                    getImageByRefUseCase.execute();
-                                }
+                                    }
+                                });
+                                getImageByRefUseCase.execute();
                             }
+                        }
 
-                            @Override
-                            public void onVoidData() {
-                                if(!isNotifiedVoidData) {
-                                    isNotifiedVoidData = true;
-                                    Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
-                                }
+                        @Override
+                        public void onVoidData() {
+                            if(!isNotifiedVoidData) {
+                                isNotifiedVoidData = true;
+                                Toast.makeText(context, R.string.get_data_failed, Toast.LENGTH_SHORT).show();
                             }
+                        }
 
-                            @Override
-                            public void onFailed() {
-                                if(!isNotifiedError) {
-                                    isNotifiedError = true;
-                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                }
+                        @Override
+                        public void onFailed() {
+                            if(!isNotifiedError) {
+                                isNotifiedError = true;
+                                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                             }
+                        }
 
-                            @Override
-                            public void onCanceled() {
-                                if(!isNotifiedCancelled) {
-                                    isNotifiedCancelled = true;
-                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                }
+                        @Override
+                        public void onCanceled() {
+                            if(!isNotifiedCancelled) {
+                                isNotifiedCancelled = true;
+                                Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
                             }
-                        });
-                        getUserByEmailUseCase.execute();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    getUserByEmailUseCase.execute();
                 }
 
 

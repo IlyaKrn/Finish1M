@@ -28,6 +28,7 @@ import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Follow;
 import com.example.finish1m.Domain.Models.Project;
+import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.DeleteProjectByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetImageByRefUseCase;
 import com.example.finish1m.Domain.UseCases.GetProjectByIdUseCase;
@@ -50,8 +51,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
-    private boolean isAdmin = false;
-
+    private User user = null;
 
     private ImageRepositoryImpl imageRepository;
     private VKImageRepositoryImpl vkImageRepository;
@@ -71,9 +71,10 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             }
         });
         try {
-            isAdmin = PresentationConfig.getUser().isAdmin();
+            user = PresentationConfig.getUser();
         } catch (Exception e) {
             Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            items.clear();
         }
     }
 
@@ -125,7 +126,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btReg.setText("Записаться");
 
             btChat.setVisibility(View.VISIBLE);
-            if (!isAdmin){
+            if (!user.isAdmin()){
                 btMenu.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
             }
@@ -137,13 +138,8 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             boolean isRegistered = false;
             if (item.getFollows() != null) {
                 for (Follow s : item.getFollows()) {
-                    try {
-                        if (s.getUserEmail().equals(PresentationConfig.getUser().getEmail())) {
-                            isRegistered = true;
-                            break;
-                        }
-                    } catch (Exception e) {
-                        isRegistered = false;
+                    if (s.getUserEmail().equals(user.getEmail())) {
+                        isRegistered = true;
                         break;
                     }
                 }

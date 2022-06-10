@@ -29,6 +29,7 @@ import com.example.finish1m.Data.VK.VKRepositoryImpl;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnGetDataListener;
 import com.example.finish1m.Domain.Interfaces.Listeners.OnSetDataListener;
 import com.example.finish1m.Domain.Models.Event;
+import com.example.finish1m.Domain.Models.User;
 import com.example.finish1m.Domain.UseCases.AddUserToEventByEmailUseCase;
 import com.example.finish1m.Domain.UseCases.DeleteEventByIdUseCase;
 import com.example.finish1m.Domain.UseCases.GetEventByIdUseCase;
@@ -52,7 +53,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
-    private boolean isAdmin = false;
+    private User user = null;
 
     private ImageRepositoryImpl imageRepository;
     private VKImageRepositoryImpl vkImageRepository;
@@ -74,9 +75,10 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             }
         });
         try {
-            isAdmin = PresentationConfig.getUser().isAdmin();
+            user = PresentationConfig.getUser();
         } catch (Exception e) {
             Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            items.clear();
         }
     }
 
@@ -127,13 +129,9 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
             boolean isRegistered = false;
             if (item.getMembers() != null) {
                 for (String s : item.getMembers()) {
-                    try {
-                        if (s.equals(PresentationConfig.getUser().getEmail())) {
-                            isRegistered = true;
-                            break;
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+                    if (s.equals(user.getEmail())) {
+                        isRegistered = true;
+                        break;
                     }
                 }
             }
@@ -144,7 +142,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 btUsers.setVisibility(View.GONE);
                 btReg.setText("Записаться");
             }
-            if (!isAdmin){
+            if (!user.isAdmin()){
                 btMenu.setVisibility(View.GONE);
             }
             else {
@@ -216,30 +214,25 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                try {
-                                    AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
-                                        @Override
-                                        public void onSetData() {
-                                            d.destroy();
-                                        }
+                                AddUserToEventByEmailUseCase addUserToEventByEmailUseCase = new AddUserToEventByEmailUseCase(eventRepository, item, user.getEmail(), new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+                                        d.destroy();
+                                    }
 
-                                        @Override
-                                        public void onFailed() {
-                                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
 
-                                        @Override
-                                        public void onCanceled() {
-                                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
-                                    });
-                                    addUserToEventByEmailUseCase.execute();
-                                } catch (Exception e) {
-                                    Toast.makeText(context, R.string.try_again, Toast.LENGTH_SHORT).show();
-                                    d.destroy();
-                                }
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+                                });
+                                addUserToEventByEmailUseCase.execute();
                             }
 
                         });
@@ -250,31 +243,25 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                             @Override
                             public void onConfirm(DialogConfirm d) {
                                 d.freeze();
-                                try {
-                                    RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, PresentationConfig.getUser().getEmail(), new OnSetDataListener() {
-                                        @Override
-                                        public void onSetData() {
-                                            d.destroy();
-                                        }
+                                RemoveUserFromEventUseCase removeUserFromEventUseCase = new RemoveUserFromEventUseCase(eventRepository, item, user.getEmail(), new OnSetDataListener() {
+                                    @Override
+                                    public void onSetData() {
+                                        d.destroy();
+                                    }
 
-                                        @Override
-                                        public void onFailed() {
-                                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
+                                    @Override
+                                    public void onFailed() {
+                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
 
-                                        @Override
-                                        public void onCanceled() {
-                                            Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                            d.destroy();
-                                        }
-                                    });
-                                    removeUserFromEventUseCase.execute();
-                                } catch (Exception e) {
-                                    Toast.makeText(context, R.string.try_again, Toast.LENGTH_SHORT).show();
-                                    d.destroy();
-                                }
-
+                                    @Override
+                                    public void onCanceled() {
+                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                        d.destroy();
+                                    }
+                                });
+                                removeUserFromEventUseCase.execute();
                             }
 
                         });
