@@ -50,6 +50,7 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
+    private boolean isAdmin = false;
 
 
     private ImageRepositoryImpl imageRepository;
@@ -69,6 +70,11 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
                 isNotifiedVoidData = false;
             }
         });
+        try {
+            isAdmin = PresentationConfig.getUser().isAdmin();
+        } catch (Exception e) {
+            Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -119,18 +125,12 @@ public class ProjectListAdapter extends  Adapter<Project, ProjectListAdapter.Vie
             btReg.setText("Записаться");
 
             btChat.setVisibility(View.VISIBLE);
-            try {
-                if (!PresentationConfig.getUser().isAdmin()){
-                    btMenu.setVisibility(View.GONE);
-                    btUsers.setVisibility(View.GONE);
-                }
-                else {
-                    btUsers.setVisibility(View.VISIBLE);
-                }
-            } catch (Exception e) {
-                Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            if (!isAdmin){
                 btMenu.setVisibility(View.GONE);
                 btUsers.setVisibility(View.GONE);
+            }
+            else {
+                btUsers.setVisibility(View.VISIBLE);
             }
 
             // проверка наличия заявки от пользователя

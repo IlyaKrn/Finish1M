@@ -38,6 +38,7 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
+    private boolean isAdmin = false;
 
 
     private UserRepositoryImpl userRepository;
@@ -57,6 +58,11 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
                 isNotifiedVoidData = false;
             }
         });
+        try {
+            isAdmin = PresentationConfig.getUser().isAdmin();
+        } catch (Exception e) {
+            Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
     }
 
     // создание холдера
@@ -166,111 +172,107 @@ public class UserListAdapter extends Adapter<User, UserListAdapter.ViewHolder> {
             getUserByEmailUseCase.execute();
 
             // кнопка меню
-            try {
-                if(PresentationConfig.getUser().isAdmin()){
-                    if (!PresentationConfig.getUser().getEmail().equals(item.getEmail())) {
-                        btMenu.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                PopupMenu popup = new PopupMenu(context, view);
-                                popup.inflate(R.menu.popup_menu_user_list_item);
-                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                    @Override
-                                    public boolean onMenuItemClick(MenuItem menuItem) {
-                                        switch (menuItem.getItemId()) {
-                                            case R.id.set_admin:
-                                                item.setAdmin(true);
-                                                RefactorUserUseCase refactorUserUseCase = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
-                                                    @Override
-                                                    public void onSetData() {
-                                                        Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
-                                                    }
+            if(isAdmin){
+                if (!PresentationConfig.getUser().getEmail().equals(item.getEmail())) {
+                    btMenu.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            PopupMenu popup = new PopupMenu(context, view);
+                            popup.inflate(R.menu.popup_menu_user_list_item);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem menuItem) {
+                                    switch (menuItem.getItemId()) {
+                                        case R.id.set_admin:
+                                            item.setAdmin(true);
+                                            RefactorUserUseCase refactorUserUseCase = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
+                                                @Override
+                                                public void onSetData() {
+                                                    Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onFailed() {
-                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onFailed() {
+                                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onCanceled() {
-                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                                refactorUserUseCase.execute();
-                                                break;
-                                            case R.id.remove_admin:
-                                                item.setAdmin(false);
-                                                RefactorUserUseCase refactorUserUseCase1 = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
-                                                    @Override
-                                                    public void onSetData() {
-                                                        Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onCanceled() {
+                                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            refactorUserUseCase.execute();
+                                            break;
+                                        case R.id.remove_admin:
+                                            item.setAdmin(false);
+                                            RefactorUserUseCase refactorUserUseCase1 = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
+                                                @Override
+                                                public void onSetData() {
+                                                    Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onFailed() {
-                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onFailed() {
+                                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onCanceled() {
-                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                                refactorUserUseCase1.execute();
-                                                break;
-                                            case R.id.ban:
-                                                item.setBanned(true);
-                                                RefactorUserUseCase refactorUserUseCase3 = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
-                                                    @Override
-                                                    public void onSetData() {
-                                                        Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onCanceled() {
+                                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            refactorUserUseCase1.execute();
+                                            break;
+                                        case R.id.ban:
+                                            item.setBanned(true);
+                                            RefactorUserUseCase refactorUserUseCase3 = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
+                                                @Override
+                                                public void onSetData() {
+                                                    Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onFailed() {
-                                                        Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onFailed() {
+                                                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onCanceled() {
-                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                                refactorUserUseCase3.execute();
-                                                break;
-                                            case R.id.unban:
-                                                item.setBanned(false);
-                                                RefactorUserUseCase refactorUserUseCase4 = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
-                                                    @Override
-                                                    public void onSetData() {
-                                                        Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onCanceled() {
+                                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            refactorUserUseCase3.execute();
+                                            break;
+                                        case R.id.unban:
+                                            item.setBanned(false);
+                                            RefactorUserUseCase refactorUserUseCase4 = new RefactorUserUseCase(userRepository, item, new OnSetDataListener() {
+                                                @Override
+                                                public void onSetData() {
+                                                    Toast.makeText(context, "Пользователь " + item.getEmail() + " стал администратором", Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onFailed() {
-                                                        Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show();
-                                                    }
+                                                @Override
+                                                public void onFailed() {
+                                                    Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show();
+                                                }
 
-                                                    @Override
-                                                    public void onCanceled() {
-                                                        Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                                refactorUserUseCase4.execute();
-                                                break;
-                                        }
-                                        return false;
+                                                @Override
+                                                public void onCanceled() {
+                                                    Toast.makeText(context, R.string.access_denied, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            refactorUserUseCase4.execute();
+                                            break;
                                     }
-                                });
-                                popup.show();
-                            }
-                        });
-                        btMenu.setVisibility(View.VISIBLE);
-                    }
-
+                                    return false;
+                                }
+                            });
+                            popup.show();
+                        }
+                    });
+                    btMenu.setVisibility(View.VISIBLE);
                 }
-            } catch (Exception e) {
-                Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+
             }
         }
     }

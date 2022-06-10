@@ -52,6 +52,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
+    private boolean isAdmin = false;
 
     private ImageRepositoryImpl imageRepository;
     private VKImageRepositoryImpl vkImageRepository;
@@ -72,6 +73,11 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 isNotifiedVoidData = false;
             }
         });
+        try {
+            isAdmin = PresentationConfig.getUser().isAdmin();
+        } catch (Exception e) {
+            Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -138,17 +144,12 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 btUsers.setVisibility(View.GONE);
                 btReg.setText("Записаться");
             }
-            try {
-                if (!PresentationConfig.getUser().isAdmin()){
-                    btMenu.setVisibility(View.GONE);
-                }
-                else {
-                    btChat.setVisibility(View.VISIBLE);
-                    btUsers.setVisibility(View.VISIBLE);
-                }
-            } catch (Exception e) {
-                Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+            if (!isAdmin){
                 btMenu.setVisibility(View.GONE);
+            }
+            else {
+                btChat.setVisibility(View.VISIBLE);
+                btUsers.setVisibility(View.VISIBLE);
             }
 
             if(item.getDataSource() == Event.DATA_SOURCE_VK){

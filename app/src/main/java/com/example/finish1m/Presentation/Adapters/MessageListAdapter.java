@@ -40,6 +40,7 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
     private boolean isNotifiedError = false;
     private boolean isNotifiedCancelled = false;
     private boolean isNotifiedVoidData = false;
+    private boolean isAdmin = false;
 
 
     private ImageRepositoryImpl imageRepository;
@@ -63,6 +64,11 @@ public class MessageListAdapter extends Adapter<Message, MessageListAdapter.View
                 isNotifiedVoidData = false;
             }
         });
+        try {
+            isAdmin = PresentationConfig.getUser().isAdmin();
+        } catch (Exception e) {
+            Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
