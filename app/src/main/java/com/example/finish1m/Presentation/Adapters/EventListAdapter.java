@@ -148,8 +148,7 @@ public class EventListAdapter extends Adapter<Event, EventListAdapter.ViewHolder
                 }
             } catch (Exception e) {
                 Toast.makeText(context, R.string.data_load_error_try_again, Toast.LENGTH_SHORT).show();
-                btChat.setVisibility(View.VISIBLE);
-                btUsers.setVisibility(View.VISIBLE);
+                btMenu.setVisibility(View.GONE);
             }
 
             if(item.getDataSource() == Event.DATA_SOURCE_VK){
