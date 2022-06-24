@@ -13,14 +13,9 @@
         android:theme="@style/Theme.Finish1M.NoActionBar"
         android:name=".Presentation.App">
 
-        <!--
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />2
-            -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDvCw8iYt7NTjQ6wCWjW8fI5qxxoyyf6uM" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".Presentation.RemoveFollowActivity"
