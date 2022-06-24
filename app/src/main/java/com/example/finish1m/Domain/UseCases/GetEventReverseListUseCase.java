@@ -69,17 +69,116 @@ public class GetEventReverseListUseCase {
 
             @Override
             public void onVoidData() {
-                listener.onVoidData();
+                ArrayList<Event> temp = new ArrayList<>();
+                vkRepository.getMainWall(new OnGetDataListener<ArrayList<Event>>() {
+                    @Override
+                    public void onGetData(ArrayList<Event> data) {
+                        temp.addAll(data);
+                        temp.sort(new Comparator<Event>() {
+                            @Override
+                            public int compare(Event event, Event t1) {
+                                if (event.getDate() > t1.getDate())
+                                    return -1;
+                                else if (event.getDate() < t1.getDate())
+                                    return 1;
+                                else
+                                    return 0;
+                            }
+                        });
+                        listener.onGetData(temp);
+                    }
+
+                    @Override
+                    public void onVoidData() {
+                        listener.onVoidData();
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        listener.onFailed();
+                    }
+
+                    @Override
+                    public void onCanceled() {
+                        listener.onCanceled();
+                    }
+                });
             }
 
             @Override
             public void onFailed() {
-                listener.onFailed();
+                ArrayList<Event> temp = new ArrayList<>();
+                vkRepository.getMainWall(new OnGetDataListener<ArrayList<Event>>() {
+                    @Override
+                    public void onGetData(ArrayList<Event> data) {
+                        temp.addAll(data);
+                        temp.sort(new Comparator<Event>() {
+                            @Override
+                            public int compare(Event event, Event t1) {
+                                if (event.getDate() > t1.getDate())
+                                    return -1;
+                                else if (event.getDate() < t1.getDate())
+                                    return 1;
+                                else
+                                    return 0;
+                            }
+                        });
+                        listener.onGetData(temp);
+                    }
+
+                    @Override
+                    public void onVoidData() {
+                        listener.onVoidData();
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        listener.onFailed();
+                    }
+
+                    @Override
+                    public void onCanceled() {
+                        listener.onCanceled();
+                    }
+                });
             }
 
             @Override
             public void onCanceled() {
-                listener.onCanceled();
+                ArrayList<Event> temp = new ArrayList<>();
+                vkRepository.getMainWall(new OnGetDataListener<ArrayList<Event>>() {
+                    @Override
+                    public void onGetData(ArrayList<Event> data) {
+                        temp.addAll(data);
+                        temp.sort(new Comparator<Event>() {
+                            @Override
+                            public int compare(Event event, Event t1) {
+                                if (event.getDate() > t1.getDate())
+                                    return -1;
+                                else if (event.getDate() < t1.getDate())
+                                    return 1;
+                                else
+                                    return 0;
+                            }
+                        });
+                        listener.onGetData(temp);
+                    }
+
+                    @Override
+                    public void onVoidData() {
+                        listener.onVoidData();
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        listener.onFailed();
+                    }
+
+                    @Override
+                    public void onCanceled() {
+                        listener.onCanceled();
+                    }
+                });
             }
         });
     }
