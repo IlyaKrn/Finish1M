@@ -18,6 +18,7 @@
         android:id="@+id/fab_cancel"
         style="@style/fab.default"
         android:visibility="gone"
+        android:layout_marginBottom="112dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
     <fragment
